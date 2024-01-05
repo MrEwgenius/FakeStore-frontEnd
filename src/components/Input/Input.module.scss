@@ -1,0 +1,58 @@
+@import "../../styles/solors.scss";
+
+
+.input {
+  padding: 18px 20px;
+  background-color: $white;
+  border: 2px solid transparent;
+  outline: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: $secondary;
+  border-radius: 4px;
+  resize: none;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    border-color: $medium;
+  }
+  &:active {
+    border: 2px solid transparent;
+  }
+  &::placeholder {
+    color: $gray;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  color: $gray;
+  background-color: $light;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: $secondary;
+  margin-bottom: 8px;
+}
+.errorText {
+  color: $error;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 16px;
+}
+
+.errorInput {
+  border-color: $error;
+}
+
+.darkContainer {
+  .title {
+    color: $white;
+  }
+}

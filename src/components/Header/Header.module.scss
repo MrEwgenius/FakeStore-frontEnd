@@ -1,12 +1,8 @@
 .containerHeader {
     background-color: #181f5e;
-    height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 0 15px;
+    height: 120px;
     .containerMain {
-        width: 1200px;
-        margin: auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -20,8 +16,8 @@
             gap: 40px;
             align-items: center;
             .image {
-                width: 50px;
-                height: 50px;
+                width: 40px;
+                height: 40px;
                 background-color: #ffffff;
                 border-radius: 50%;
                 display: flex;
@@ -32,15 +28,18 @@
             .nav {
                 position: relative;
                 font-size: 31px;
-            color: #83e965;
+                color: #83e965;
 
                 cursor: pointer;
-               
 
                 img {
                     width: 30px;
                     object-fit: cover;
                 }
+            }
+            .checkUser{
+            background-color: #a1dd54;
+            
             }
         }
     }

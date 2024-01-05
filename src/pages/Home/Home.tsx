@@ -6,6 +6,8 @@ import styles from './Home.module.scss'
 import api from "../../api";
 import { ProductSelectors, getProductList } from "../../redux/reducers/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import FormPagesContainer from "src/components/FormPagesContainer/FormPagesContainer";
+import SignIn from "../SignIn/SignIn";
 
 const Home = () => {
 
@@ -19,8 +21,6 @@ const Home = () => {
     }, [dispatch]);
 
 
-    // Логируем полученные данные
-    console.log("Product List in Component:", productList);
 
 
 
@@ -29,25 +29,18 @@ const Home = () => {
             <Header />
 
             <div className={styles.outlet}>
-
+                {/* <FormPagesContainer additionalInfo={
+                    <div className={styles.additionalInfo}>
+                        {"Already have an account?"}
+                        <span className={styles.signIn}>Sign In</span>
+                    </div>
+                } title={"title"} btnTitle={"WAF"} onSubmit={()=>{}} >
+                    <div></div>
+                </FormPagesContainer> */}
                 <Outlet />
 
             </div>
-            {productList.map((product) => (
-                <div key={product.id}>
-                    <h3>{product.title}</h3>
-                    <p>{product.description}</p>
-                    {/* Рендеринг изображений */}
-                    {/* <div>{product.image}</div> */}
-                    <img className={styles.imagesContainer} src={product.image} alt="" />
-                    {/* <div className={styles.imagesContainer}>
-                        {product.images.map((imageUrl, index) => (
-                            <img key={index} src={imageUrl} alt={`Product ${index + 1}`} />
-                        ))}
-                    </div> */}
-                    {/* Другие данные продукта */}
-                </div>
-            ))}
+
             <div
                 className={styles.footer}
             >

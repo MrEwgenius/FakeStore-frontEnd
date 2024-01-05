@@ -1,0 +1,36 @@
+.containerCardItem {
+    width: 250px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .image {
+        img {
+            border-radius: 10px;
+            width: 100%;
+            object-fit: cover;
+            height: 270px;
+        }
+    }
+
+    .name {
+        cursor: pointer;
+    }
+    .price {
+        color: #929090;
+        margin-bottom: 7px;
+    }
+    .button {
+        height: 40px;
+        border-radius: 10px;
+        background-color: #0f0f0f;
+        color: #fff;
+        border: none;
+        transition: all 0.2s;
+        &:hover {
+            background-color: #444343;
+        }
+    }
+}
