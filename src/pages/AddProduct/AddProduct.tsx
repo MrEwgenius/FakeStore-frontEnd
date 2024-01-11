@@ -4,6 +4,7 @@ import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { ProductSelectors, addNewProduct, getProductList } from "src/redux/reducers/productSlice"
 import { ImageListType } from "react-images-uploading"
+import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 
 
 
@@ -29,13 +30,12 @@ const AddProduct: React.FC = () => {
     //     img: null,
     // });
 
-    const [info, setInfo] = useState([])
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
-    const [clothingType, setClothingType] = useState('')
-    const [price, setPrice] = useState(0)
-    const [brandId, setBrandId] = useState(0)
-    const [typeId, setTypeId] = useState(0)
+    const [clothingType, setClothingType] = useState('bike')
+    const [price, setPrice] = useState(1000)
+    const [brandId, setBrandId] = useState(1)
+    const [typeId, setTypeId] = useState(1)
     const [file, setFile] = useState<File | null>(null);
 
     const dispatch = useDispatch();
@@ -62,7 +62,20 @@ const AddProduct: React.FC = () => {
 
         setFile(e.target.files[0]);
     }
+
+    const error = useSelector(ProductSelectors.getError);
+    console.log(error);
+
+    useEffect(() => {
+        if (error) {
+            // Обработка ошибки, например, вывод сообщения пользователю
+            console.log('Error:', error.message);
+        }
+    }, [error]);
+
+
     const onSubmit = () => {
+
         const formData = new FormData()
         formData.append('name', name);
         formData.append('gender', gender);
@@ -70,16 +83,19 @@ const AddProduct: React.FC = () => {
         formData.append('price', `${price}`);
         formData.append('brandId', `${brandId}`)
         formData.append('typeId', `${typeId}`)
-        // formData.append('img', `${file}`)
         if (file) {
             formData.append('img', file);
         }
 
-        console.log(formData);
+
+
         dispatch(addNewProduct({
-            data: formData, callback: () => { }
+            data: formData, callback: () => { },
         }
         ))
+        console.log(formData);
+
+
 
     }
 
@@ -108,6 +124,11 @@ const AddProduct: React.FC = () => {
             </label>
             <br />
             <label>
+                clothingType:
+                <input type="text" name="clothingType" value={clothingType} onChange={(e) => setClothingType(e.target.value)} />
+            </label>
+            <br />
+            <label>
                 Gender:
                 <select name="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
                     <option value="male">man</option>
@@ -120,7 +141,8 @@ const AddProduct: React.FC = () => {
                 <input type="file" accept="image/*" onChange={selectFile} />
             </label>
             <br />
-            <button  type="submit">Submit</button>
+            {error && <div className={style.error}>{`${error.message}`}</div>}
+            <button type="submit">Submit</button>
         </form>
 
     )

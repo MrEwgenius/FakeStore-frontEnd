@@ -1,6 +1,6 @@
 .containerCardItem {
     width: 250px;
-    background-color: #fff;
+    background-color: #e4dede;
     padding: 15px;
     border-radius: 20px;
     display: flex;
@@ -32,5 +32,13 @@
         &:hover {
             background-color: #444343;
         }
+    }
+}
+.priceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .save {
+        cursor: pointer;
     }
 }

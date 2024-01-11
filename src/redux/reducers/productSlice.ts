@@ -10,13 +10,15 @@ import { AddPostDataPayload } from '../@types';
 type initialState = {
     selectedProduct: ProductListTypes,
     singleProduct: ProductTypes | null,
+    error: any | null;
 
 
 }
 
 const initialState: initialState = {
     selectedProduct: [],
-    singleProduct: null
+    singleProduct: null,
+    error: null,
 
 
 };
@@ -37,6 +39,15 @@ const productSlice = createSlice({
             state.singleProduct = action.payload;
         },
         addNewProduct: (_, __: PayloadAction<AddPostDataPayload>) => { },
+        // addNewProduct: (state, action: PayloadAction<ProductTypes | null>) => {
+        //     // Обновляем свойство addedProduct
+        //     state.addedProduct = action.payload;
+        // },
+        addNewProductFailure: (state, action: PayloadAction<any | null>) => {
+            state.error = action.payload;
+            console.log(action.payload);
+
+        },
 
 
     },
@@ -50,6 +61,7 @@ export const {
     getSingleProduct,
     setSingleProduct,
     addNewProduct,
+    addNewProductFailure
 
 
 } = productSlice.actions
@@ -58,6 +70,7 @@ export const ProductSelectors = {
 
     getProductLister: (state: Rootstate) => state.productReducer.selectedProduct,
     getSinglePost: (state: Rootstate) => state.productReducer.singleProduct,
+    getError: (state: Rootstate) => state.productReducer.error,
 
 
 }

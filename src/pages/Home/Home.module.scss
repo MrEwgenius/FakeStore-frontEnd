@@ -3,23 +3,24 @@
     flex-direction: column;
     // flex: 1;
     min-height: 100vh;
-    background-color: #ad8888;
+    // background-color: #ad8888;
+    width: 1440px;
 
+    margin: auto;
     .outlet {
         // background-color: #4b99a7;
         // margin-top: 30px;
-        margin-bottom: 40px;
+        // margin-bottom: 40px;
+
         flex: 1;
     }
     .footer {
-        // background-color: #1bcf93;
     }
 
     .imagesContainer {
         width: 210px;
         // display: flex;
-        img{
-            
+        img {
         }
     }
 }

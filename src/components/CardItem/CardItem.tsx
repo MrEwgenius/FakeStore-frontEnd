@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProductSelectors, getProductList } from "src/redux/reducers/productSlice";
 import style from './CardItem.module.scss'
 import { useNavigate } from "react-router-dom";
+import save from '../../assets/Save.svg'
 
 
 type CardsListProps = {
@@ -42,8 +43,10 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price }) => {
                 <img src={process.env.REACT_APP_API_URL + img} alt="" />
             </div>
             <h3 onClick={clickOnProduct} className={style.name}>{name}</h3>
-            <div className={style.price}> {price}$</div>
-            <button className={style.button} >Купить</button>
+            <div className={style.priceContainer}>
+                <div className={style.price}> {price}$</div>
+                <img className={style.save} src={save} alt="#" />
+            </div>
 
 
         </div>

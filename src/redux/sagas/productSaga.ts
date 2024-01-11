@@ -2,7 +2,7 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addNewProduct, getProductList, getSingleProduct, setProductList, setSingleProduct } from "../reducers/productSlice";
+import { addNewProduct, addNewProductFailure, getProductList, getSingleProduct, setProductList, setSingleProduct } from "../reducers/productSlice";
 import API from "../../api";
 import { ProductListTypes, ProductTypes } from "../../@types";
 import { AddPostDataPayload, ProductsData } from "../@types";
@@ -58,22 +58,30 @@ function* getSingleProductWorker(action: PayloadAction<string>) {
 
 function* addProductWorker(action: PayloadAction<AddPostDataPayload>) {
 
-    const { data, callback } = action.payload
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const { data, callback } = action.payload
+    if (accessToken) {
 
-    const response: ApiResponse<undefined> = yield call(
-        API.addProduct,
-        data,
-        // accessToken,
-    )
-    console.log(response);
-    if (response.data && response.ok) {
 
-        callback();
+        const response: ApiResponse<undefined> = yield call(
+            API.addProduct,
+            data,
+            accessToken,
+        )
+        if (response.data && response.ok) {
 
-    } else {
-        console.error('Add Post Error', response.problem);
+            callback();
 
+        } else {
+            // const error = new Error(response.data || 'Unknown error');
+            if (response.data) {
+                console.log('Add Post Error', response.data);
+
+
+                yield put(addNewProductFailure(response.data));
+            }
+
+        }
     }
 }
 

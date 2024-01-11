@@ -25,12 +25,12 @@ const getProduct = () => {
 
 
 
-const addProduct = (data: any) => {
+const addProduct = (data: any, token: string,) => {
     return API.post(
         `/product`, data, {
-        // headers: {
-        //     Authorization: `Bearer ${token}`,
-        // }
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
     },
     )
 };

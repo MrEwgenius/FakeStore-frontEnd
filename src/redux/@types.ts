@@ -12,6 +12,12 @@ export type PayloadWithDataAndCallback<Data> = {
     callback: () => void,
 }
 
+export type PayloadWithDataAndCallbackAndToken<Data> = {
+    data: Data,
+    token: string | null,
+    callback: () => void,
+}
+
 export type SignUpUserData = {
     email: string,
     password: string,
@@ -46,3 +52,4 @@ export type SignInResponseData = {
 
 export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>
 export type AddPostDataPayload = PayloadWithDataAndCallback<any>
+export type AddPostDataPayloadToken = PayloadWithDataAndCallbackAndToken<any>

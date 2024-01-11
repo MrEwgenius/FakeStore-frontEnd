@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import style from './Header.module.scss'
-import bucket from '../../assets/bucket.png'
-import user from '../../assets/check-user.svg'
-import search from '../../assets/search.svg'
+import backet from '../../assets/Backet.svg'
+import user from '../../assets/User.svg'
+import save from '../../assets/Save.svg'
 import classNames from "classnames"
 import { useNavigate } from "react-router-dom"
 import { RoutesList } from "src/pages/Router"
@@ -39,13 +39,29 @@ const Header = () => {
     return (
         <div className={style.containerHeader}>
             <div className={style.containerMain}>
-                <div className={style.logo}>FakeStore</div>
+                <div className={style.logo}>FAKESTORE</div>
+                <div className={style.sexsave}>
+                    <div>Женщины</div>
+                    <div>Мужчины</div>
+                    <div>
+                        <label className={style.label}>
+                            Поиск
+                            <input type="text" onChange={() => { }} />
+                        </label>
+                    </div>
+
+                </div>
+                <div className={style.language}>
+                    <div>RU</div>
+                    <div>EN</div>
+
+                </div>
                 <div className={style.wrapContainer}>
-                    <div onClick={clickOnHome} className={style.nav}>Home</div>
-                    <div onClick={clickOnProducts} className={style.nav}>Products</div>
-                    <div onClick={clickOnAddProduct} className={style.nav}>Add Product</div>
+                    {/* <div onClick={clickOnHome} className={style.nav}>Home</div> */}
+                    {/* <div onClick={clickOnProducts} className={style.nav}>Products</div> */}
+                    {/* <div onClick={clickOnAddProduct} className={style.nav}>Add Product</div> */}
                     <div className={classNames(style.nav, style.image)}>
-                        <img src={bucket} alt="#!" />
+                        <img src={backet} alt="#!" />
                     </div>
                     <div onClick={clickOnUser} className={classNames(style.nav, style.image,
                         { [style.checkUser]: isLoggedIn }
@@ -53,7 +69,7 @@ const Header = () => {
                         <img src={user} alt="#!" />
                     </div>
                     <div className={classNames(style.nav, style.image)}>
-                        <img src={search} alt="#!" />
+                        <img src={save} alt="#!" />
                     </div>
 
                 </div>

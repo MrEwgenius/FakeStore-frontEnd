@@ -1,0 +1,70 @@
+.containerAbaut {
+    margin-top: 80px;
+    height: 500px;
+    width: 100%;
+    background-color: #254a5a;
+    margin-bottom: 125px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    align-items: center;
+    flex-wrap: wrap;
+    .containerText {
+        .title {
+            color: #eae9e8;
+            font-family: Cormorant Garamond;
+            font-size: 90px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 90%;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            span {
+                color: #eae9e8;
+
+                font-family: Cormorant Garamond;
+                font-size: 30px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 90%; /* 27px */
+                letter-spacing: 6px;
+                text-transform: uppercase;
+                display: block;
+            }
+        }
+        .descr {
+            width: 498px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+    .containerImage {
+        margin-bottom: -133px;
+        position: relative;
+        img {
+            // display: none;
+        }
+        .elipse {
+            width: 125px;
+            height: 120px;
+            position: absolute;
+            top: -63px;
+            left: -60px;
+            background: url("../../img/Ellipse.png") no-repeat center center;
+        }
+        .line {
+            width: 318.804px;
+            height: 0.787px;
+            transform: rotate(-55.81deg);
+            flex-shrink: 0;
+            top: 43px;
+            left: -177px;
+            position: absolute;
+            background-color: #fff;
+            // background: url("../../img/line.png") no-repeat center center;
+        }
+    }
+}

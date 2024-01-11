@@ -1,0 +1,59 @@
+@import "../../styles/solors.scss";
+.containerWrapper {
+    // background-color: #f77979;
+    display: flex;
+    justify-content: center;
+    gap: 45px;
+}
+.carousel {
+    padding: 40px 0;
+    background-color: $primary;
+    color: $primary;
+    .carousel-indicators {
+        button {
+            background-color: #ff0000 !important; /* Красный цвет */
+            color: $primary !important;
+        }
+    }
+}
+.prevIcon {
+    width: 20px;
+    height: 20px;
+    background: #000;
+    // color: #000;
+}
+.img {
+    width: 230px;
+    height: 365px;
+    object-fit: cover;
+}
+.title {
+    text-align: center;
+    color: $primary-dark;
+    text-align: center;
+    font-family: Cormorant;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+.containerImg {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    .title {
+        color: $primary-dark;
+        font-family: Jost;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        text-transform: uppercase;
+    }
+    .price {
+        color: $primary-dark;
+        font-family: Jost;
+    }
+}
