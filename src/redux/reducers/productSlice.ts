@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { ProductListTypes, ProductTypes } from '../../@types';
+import { ProductListTypes, ProductTypes, SaveStatus } from '../../@types';
 import { AddPostDataPayload } from '../@types';
 
 
@@ -11,6 +11,7 @@ type initialState = {
     selectedProduct: ProductListTypes,
     singleProduct: ProductTypes | null,
     error: any | null;
+    savedProduct: ProductListTypes,
 
 
 }
@@ -19,6 +20,7 @@ const initialState: initialState = {
     selectedProduct: [],
     singleProduct: null,
     error: null,
+    savedProduct: [],
 
 
 };
@@ -45,8 +47,19 @@ const productSlice = createSlice({
         // },
         addNewProductFailure: (state, action: PayloadAction<any | null>) => {
             state.error = action.payload;
-            console.log(action.payload);
 
+        },
+        setSavedStatus: (state, action: PayloadAction<{ card: ProductTypes, status: SaveStatus }>) => {
+            const { card, status } = action.payload;
+            
+            const savedIndex = state.savedProduct.findIndex(item => item.id === card.id)
+            const isSaved = status === SaveStatus.Saved
+            const mainIndex = isSaved ? savedIndex : 1
+
+            mainIndex === -1 ?
+                state.savedProduct.push(card)
+                :
+                state.savedProduct.splice(mainIndex, 1)
         },
 
 
@@ -61,7 +74,9 @@ export const {
     getSingleProduct,
     setSingleProduct,
     addNewProduct,
-    addNewProductFailure
+    addNewProductFailure,
+    setSavedStatus,
+
 
 
 } = productSlice.actions
@@ -71,6 +86,7 @@ export const ProductSelectors = {
     getProductLister: (state: Rootstate) => state.productReducer.selectedProduct,
     getSinglePost: (state: Rootstate) => state.productReducer.singleProduct,
     getError: (state: Rootstate) => state.productReducer.error,
+    getSavedProduct: (state: Rootstate) => state.productReducer.savedProduct,
 
 
 }

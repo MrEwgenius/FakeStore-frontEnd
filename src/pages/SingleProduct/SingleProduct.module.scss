@@ -1,7 +1,183 @@
+@import "../../styles/solors.scss";
 .containerSingleProduct {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 40px;
+}
+.mainImageWrap {
+    position: relative;
+}
+.mainImg {
+    width: 200px;
+    // height: 400px;
+}
+.saveImg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 10px;
+    right: 8px;
+    cursor: pointer;
+    img {
+    }
+}
+.containerWrapper {
+    display: flex;
+    gap: 36px;
+    .containerDescription {
+        .productName {
+            color: $primary-dark;
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            text-transform: uppercase;
+        }
+        .price {
+            color: $primary-dark;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.81px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .sizes {
+            color: $primary-dark;
+            font-size: 12px;
+            line-height: 170%;
+            text-decoration-line: underline;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .size {
+            span {
+                color: $primary-dark;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 170%;
+                display: block;
+            }
+            .sizeTable {
+                display: flex;
+                gap: 10px;
+                label {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    width: 35px;
+                    height: 35px;
+                    color: $primary-dark;
+                    font-size: 12px;
+                    line-height: 170%;
+                    border: 1px solid $extra-light;
+                    background: #fff;
+                    cursor: pointer;
+                }
+                input[type="radio"] {
+                    display: none;
+
+                    &:checked + label {
+                        background-color: $extra-light;
+                    }
+                }
+            }
+        }
+        .containerColors {
+            margin-bottom: 20px;
+            span {
+                color: $primary-dark;
+                font-size: 12px;
+                line-height: 170%;
+            }
+            .colorTable {
+                display: flex;
+                gap: 15px;
+                button {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    border: 1px solid $extra-light;
+                    background-color: #fff;
+                }
+                label {
+                    width: 20px;
+                    height: 20px;
+                    border: 1px solid $extra-light;
+
+                    border-radius: 50%;
+                    cursor: pointer;
+
+                    &:nth-child(2) {
+                        background-color: rgb(90, 201, 47);
+                    }
+
+                    &:nth-child(4) {
+                        background-color: $red;
+                    }
+
+                    &:nth-child(6) {
+                        background-color: $primary;
+                    }
+
+                    &:nth-child(8) {
+                        background-color: black;
+                    }
+                }
+                input[type="radio"] {
+                    display: none;
+
+                    &:checked + label {
+                        border: 3px solid rgb(138, 133, 133);
+                    }
+                }
+            }
+        }
+        .buttonAddToBucket {
+            border-radius: 0;
+            width: 280px;
+            height: 50px;
+            color: $primary-dark;
+            font-size: 16px;
+            line-height: normal;
+            text-transform: uppercase;
+            border: 1px solid $primary-dark;
+            background-color: #fff;
+            transition: all 0.2s;
+            &:hover {
+                font-size: 17px;
+            }
+        }
+        .buttonBuy {
+            background-color: $primary-dark;
+            border-radius: 0;
+            color: $extra-light;
+            font-size: 16px;
+            line-height: normal;
+            text-transform: uppercase;
+            border: 1px solid $primary-dark;
+            width: 280px;
+            height: 50px;
+            transition: all 0.2s;
+
+            &:hover {
+                font-size: 17px;
+                // transform: scale(1.01);
+            }
+        }
+    }
+}
+
+#color1 + label {
+    background-color: #fff;
 }

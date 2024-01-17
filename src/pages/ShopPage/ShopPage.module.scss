@@ -1,0 +1,80 @@
+@import "../../styles/solors.scss";
+.containerShopPage {
+    width: 1440px;
+    padding: 0 15px;
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    gap: 55px;
+    margin-bottom: 40px;
+    .containerFilter {
+        width: 420px;
+        .NameFilter {
+            button {
+                // background-color: #757;
+            }
+        }
+        .bodyFilter {
+            // background-color: #b95050;
+            cursor: pointer;
+            transition: all 0.3s;
+            &:hover {
+                background-color: #e2e1e1;
+            }
+        }
+    }
+    .containerProducts {
+        // background-color: #53a9d1;
+        // width: 1000px;
+        background-color: #584e4e;
+        .products {
+        }
+        .title {
+            color: $primary-dark;
+            font-size: 25px;
+            font-weight: 500;
+            line-height: 100%; /* 25px */
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .sortProducts {
+            margin-bottom: 50px;
+            width: 700px;
+
+            .dropDownToogle {
+                width: 185px;
+                height: 40px;
+                border-radius: 0;
+                border: 1px solid $extra-light;
+                background-color: #fff;
+                color: $primary-dark;
+                font-size: 14px;
+                // line-height: 170%;
+                // position: relative;
+                ::after {
+                    // position: absolute;
+                    // display: inline-block;
+                    // content: "" !important;
+                    // margin-left: 40px !important;
+                    // top: 0;
+                    // left: 0;
+                    // width: 15px;
+                    // height: 15px;
+
+                    // background-color: #f50505;
+                    // margin-left: 40px;
+                }
+            }
+            .superColor {
+                background-color: #f1eded;
+                width: 100%;
+                a {
+                    transition: all 0.1s;
+                    &:hover {
+                        background-color: #d38b8b;
+                    }
+                }
+            }
+        }
+    }
+}

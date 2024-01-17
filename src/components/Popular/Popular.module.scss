@@ -1,4 +1,9 @@
 @import "../../styles/solors.scss";
+
+.containerPopular {
+    margin-top: 90px;
+}
+
 .containerWrapper {
     // background-color: #f77979;
     display: flex;
@@ -7,19 +12,17 @@
 }
 .carousel {
     padding: 40px 0;
-    background-color: $primary;
-    color: $primary;
-    .carousel-indicators {
-        button {
-            background-color: #ff0000 !important; /* Красный цвет */
-            color: $primary !important;
-        }
-    }
 }
 .prevIcon {
-    width: 20px;
-    height: 20px;
-    background: #000;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     // color: #000;
 }
 .img {
@@ -37,6 +40,7 @@
     font-weight: 400;
     line-height: normal;
     text-transform: uppercase;
+    margin-bottom: 50px;
 }
 .containerImg {
     display: flex;

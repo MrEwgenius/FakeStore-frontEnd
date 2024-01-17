@@ -5,7 +5,7 @@ import classNames from "classnames"
 
 const Footer = () => {
     return (
-        <div className={style.containerHeader}>
+        <div className={style.containerFooter}>
             <div className={style.containerMain}>
                 Copyright © 2023 Yauheni Balynski
             </div>

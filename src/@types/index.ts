@@ -46,3 +46,10 @@ export type ProductTypes = {
 
 
 export type ProductListTypes = ProductTypes[];
+
+export enum SaveStatus {
+
+    Saved = 'saved',
+    NotSaved = 'notSaved',
+
+}

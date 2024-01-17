@@ -1,11 +1,13 @@
-.containerHeader {
-    background-color: #181f5e;
+@import url("../../styles/solors.scss");
+.containerFooter {
+    // background-color: #dedfe4;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top: 1px solid #EAE9E8;
     .containerMain {
-        color: white;
+        color: #0f303f;
         font-size: 20px;
     }
 }

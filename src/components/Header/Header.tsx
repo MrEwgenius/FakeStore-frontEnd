@@ -28,6 +28,10 @@ const Header = () => {
         navigate(RoutesList.AddProduct)
 
     }
+    const clickOnSavedProduct = () => {
+        navigate(RoutesList.FavoriteProducts)
+
+    }
     const clickOnUser = () => {
         navigate(RoutesList.Login)
 
@@ -39,10 +43,10 @@ const Header = () => {
     return (
         <div className={style.containerHeader}>
             <div className={style.containerMain}>
-                <div className={style.logo}>FAKESTORE</div>
+                <div onClick={clickOnHome} className={style.logo}>FAKESTORE</div>
                 <div className={style.sexsave}>
-                    <div>Женщины</div>
-                    <div>Мужчины</div>
+                    {/* <div>Женщины</div> */}
+                    <div onClick={clickOnProducts}>Каталог</div>
                     <div>
                         <label className={style.label}>
                             Поиск
@@ -69,7 +73,7 @@ const Header = () => {
                         <img src={user} alt="#!" />
                     </div>
                     <div className={classNames(style.nav, style.image)}>
-                        <img src={save} alt="#!" />
+                        <img onClick={clickOnSavedProduct} src={save} alt="#!" />
                     </div>
 
                 </div>

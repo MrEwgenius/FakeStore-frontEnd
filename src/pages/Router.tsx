@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./Home/Home";
 import Footer from "../components/Footer/Footer";
-import CardList from "./CardList/CardList";
+
 import SignIn from "./SignIn/SignIn";
 import SignUp from "./SignUp/SignUp";
 import SingleProduct from "./SingleProduct/SingleProduct";
@@ -12,6 +12,8 @@ import AddProduct from "./AddProduct/AddProduct";
 import Banner from "src/components/Banner/Banner";
 import Abaut from "src/components/Abaut/Abaut";
 import Popular from "src/components/Popular/Popular";
+import ShopPage from "./ShopPage/ShopPage";
+import FavoriteProducts from "./FavoriteProducts/FavoriteProducts";
 
 export enum RoutesList {
 
@@ -21,6 +23,7 @@ export enum RoutesList {
     Registration = '/user/registration',
     SingleProduct = '/product/:id',
     AddProduct = '/addproduct',
+    FavoriteProducts = '/savedproduct',
 
     Cards = '/cards',
     Post = '/titles/:id',
@@ -38,12 +41,13 @@ const Router = () => {
             <Routes>
                 <Route path={RoutesList.Home} element={<Home />} >
 
-                    <Route path={RoutesList.Trend} element={<CardList />} />
+                    <Route path={RoutesList.Trend} element={<ShopPage />} />
                     <Route path={RoutesList.Home} element={<>
                         <Banner />
                         <Popular/>
                         <Abaut />
                     </>} />
+                    <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts/>} />
                     <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
                     <Route path={RoutesList.AddProduct} element={<AddProduct />} />
                     <Route path={RoutesList.SingleProduct} element={<SingleProduct />} />
