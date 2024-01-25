@@ -2,9 +2,9 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addNewProduct, addNewProductFailure, getProductList, getSingleProduct, setProductList, setSingleProduct } from "../reducers/productSlice";
+import { addNewProduct, addNewProductFailure, getFilterProduct, getProductList, getSingleProduct, setFilterProduct, setProductList, setSingleProduct } from "../reducers/productSlice";
 import API from "../../api";
-import { ProductListTypes, ProductTypes } from "../../@types";
+import { GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes } from "../../@types";
 import { AddPostDataPayload, ProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 
@@ -17,7 +17,7 @@ function* getProductWorkers() {
 
         // if (accessToken) {
         const response: ApiResponse<ProductsData | null> = yield call(
-            API.getProduct,
+            API.getProducts,
             // accessToken
 
         );
@@ -86,6 +86,36 @@ function* addProductWorker(action: PayloadAction<AddPostDataPayload>) {
 }
 
 
+function* FilterProductsWorker(action: PayloadAction<string>) {
+
+    // const { filter } = action.payload
+
+
+    const response: ApiResponse<undefined> = yield call(
+        API.getFilterProducts,
+        action.payload,
+    )
+    console.log(response.data);
+    if (response.data && response.ok) {
+        const { results, } = response.data
+        console.log(results);
+
+        yield put(setFilterProduct(response.data))
+
+
+
+    } else {
+        console.log('чёт не вышло');
+
+
+
+    }
+}
+
+
+
+
+
 
 export default function* productSagaWatcher() {
     yield all([
@@ -93,5 +123,6 @@ export default function* productSagaWatcher() {
         takeLatest(getProductList, getProductWorkers),
         takeLatest(getSingleProduct, getSingleProductWorker),
         takeLatest(addNewProduct, addProductWorker),
+        takeLatest(getFilterProduct, FilterProductsWorker),
     ])
 }

@@ -8,7 +8,7 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProduct = () => {
+const getProducts = () => {
     // return API.get('/api/v1/products/?categoryId=1');
     // return API.get(`/products/category/women's clothing`);
     // return API.get(
@@ -20,7 +20,10 @@ const getProduct = () => {
     //         }
     //     },
     // );
-    return API.get(`/product`);
+    return API.get(`/product/`);
+};
+const getFilterProducts = (filter?: string) => {
+    return API.get(`/product/filter/${filter}/`);
 };
 
 
@@ -52,7 +55,7 @@ const signInUser = (data: SignInData) => {
 
 // const API_BASE_URL = 'https://api.escuelajs.co/';
 
-// const getProduct = async () => {
+// const getProducts = async () => {
 //   try {
 //     const response = await axios.get(`${API_BASE_URL}api/v1/products`);
 //     return response.data;
@@ -64,10 +67,11 @@ const signInUser = (data: SignInData) => {
 
 
 export default {
-    getProduct,
+    getProducts,
     getSingleProduct,
     signUpUser,
     signInUser,
-    addProduct
+    addProduct,
+    getFilterProducts,
 
 }

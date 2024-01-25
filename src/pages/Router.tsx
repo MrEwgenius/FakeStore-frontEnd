@@ -19,6 +19,7 @@ export enum RoutesList {
 
     Home = '/',
     Trend = '/product',
+    Filter = '/product/filter/:filter',
     Login = '/user/login',
     Registration = '/user/registration',
     SingleProduct = '/product/:id',
@@ -42,13 +43,15 @@ const Router = () => {
                 <Route path={RoutesList.Home} element={<Home />} >
 
                     <Route path={RoutesList.Trend} element={<ShopPage />} />
+                    <Route path={RoutesList.Filter} element={<ShopPage />} />
                     <Route path={RoutesList.Home} element={<>
                         <Banner />
-                        <Popular/>
+                        <Popular />
                         <Abaut />
                     </>} />
-                    <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts/>} />
+                    <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts />} />
                     <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
+                    <Route path={RoutesList.Registration} element={<SignUp />} />
                     <Route path={RoutesList.AddProduct} element={<AddProduct />} />
                     <Route path={RoutesList.SingleProduct} element={<SingleProduct />} />
 

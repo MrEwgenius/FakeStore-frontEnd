@@ -16,11 +16,17 @@
         }
         .bodyFilter {
             // background-color: #b95050;
+
+            padding: 0;
             cursor: pointer;
             transition: all 0.3s;
             &:hover {
                 background-color: #e2e1e1;
             }
+        }
+        .castomToogle {
+            padding: 17px;
+            
         }
     }
     .containerProducts {

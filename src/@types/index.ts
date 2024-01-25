@@ -41,11 +41,28 @@ export type ProductTypes = {
 
 }
 
+export type GetFilterProductsPayload = {
+    filter: string,
+}
+
 
 
 
 
 export type ProductListTypes = ProductTypes[];
+
+
+export type SetProductListPayload = {
+    product: ProductListTypes,
+
+}
+
+export type SetSearchedPostsPayload = SetProductListPayload
+
+export type GetProductResponsData = {
+    results: ProductListTypes,
+
+}
 
 export enum SaveStatus {
 

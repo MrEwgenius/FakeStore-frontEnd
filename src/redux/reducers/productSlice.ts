@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { ProductListTypes, ProductTypes, SaveStatus } from '../../@types';
+import { GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus, SetSearchedPostsPayload } from '../../@types';
 import { AddPostDataPayload } from '../@types';
 
 
@@ -12,6 +12,7 @@ type initialState = {
     singleProduct: ProductTypes | null,
     error: any | null;
     savedProduct: ProductListTypes,
+    filterProduct: ProductListTypes,
 
 
 }
@@ -21,6 +22,7 @@ const initialState: initialState = {
     singleProduct: null,
     error: null,
     savedProduct: [],
+    filterProduct: []
 
 
 };
@@ -51,7 +53,7 @@ const productSlice = createSlice({
         },
         setSavedStatus: (state, action: PayloadAction<{ card: ProductTypes, status: SaveStatus }>) => {
             const { card, status } = action.payload;
-            
+
             const savedIndex = state.savedProduct.findIndex(item => item.id === card.id)
             const isSaved = status === SaveStatus.Saved
             const mainIndex = isSaved ? savedIndex : 1
@@ -61,6 +63,18 @@ const productSlice = createSlice({
                 :
                 state.savedProduct.splice(mainIndex, 1)
         },
+
+        getFilterProduct: (_, __: PayloadAction<string>) => { },
+        setFilterProduct: (state, action: PayloadAction<ProductListTypes>) => {
+            // const { product } = action.payload
+
+            // state.filterProduct = product
+
+            state.filterProduct = action.payload;
+            console.log(state.filterProduct);
+
+
+        }
 
 
     },
@@ -76,6 +90,8 @@ export const {
     addNewProduct,
     addNewProductFailure,
     setSavedStatus,
+    getFilterProduct,
+    setFilterProduct
 
 
 
@@ -87,6 +103,8 @@ export const ProductSelectors = {
     getSinglePost: (state: Rootstate) => state.productReducer.singleProduct,
     getError: (state: Rootstate) => state.productReducer.error,
     getSavedProduct: (state: Rootstate) => state.productReducer.savedProduct,
+    getfilterProducts: (state: Rootstate) => state.productReducer.filterProduct,
+
 
 
 }

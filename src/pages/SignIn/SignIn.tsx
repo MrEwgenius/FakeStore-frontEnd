@@ -38,8 +38,9 @@ const SignIn = () => {
 
 
     return (
-        <div>
+        <div className={styles.containerSignIn}>
             <FormPagesContainer
+
                 btnTitle={"Sign In"}
                 onSubmit={onSubmit}
                 additionalInfo={
