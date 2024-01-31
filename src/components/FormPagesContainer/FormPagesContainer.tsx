@@ -34,7 +34,6 @@ const FormPagesContainer: FC<FormPagesContainerProps> = ({
                         onClick={onSubmit}
                     >
                         {btnTitle}
-
                     </button>
                     <div >{additionalInfo}</div>
                 </div>

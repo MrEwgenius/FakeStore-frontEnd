@@ -2,3 +2,19 @@
     font-size: 24px;
     text-align: center;
 }
+
+.additionalInfo {
+    font-size: 16px;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    background-color: #1f1e1e;
+    color: white;
+    border-radius: 5px;
+    transition: all 0.2s;
+    cursor: pointer;
+    &:hover {
+        background-color: #7c7b7b;
+        border: 1px solid #1f1e1e;
+    }
+}

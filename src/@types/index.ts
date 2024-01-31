@@ -26,10 +26,12 @@ export type ProductTypes = {
     price: number,
     img: string,
     ratting: number,
-    brandId: number,
-    typeId: number,
+    // brandId: string,
+    // typeId: string,
     gender: string,
     clothingType: string,
+    brandName: string,
+    typeName: string,
 
 
     // category: {
@@ -46,10 +48,15 @@ export type GetFilterProductsPayload = {
 }
 
 
+export type TypeTypes = {
+    id: number,
+    name: string,
 
+}
 
 
 export type ProductListTypes = ProductTypes[];
+export type TypeListTypes = TypeTypes[];
 
 
 export type SetProductListPayload = {
@@ -68,5 +75,11 @@ export enum SaveStatus {
 
     Saved = 'saved',
     NotSaved = 'notSaved',
+
+}
+
+export type DataBrand = {
+
+    brandName: string
 
 }

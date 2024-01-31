@@ -29,6 +29,8 @@ const authSlice = createSlice({
         },
         setUserRole: (state, action: PayloadAction<string>) => {
             state.userRole = action.payload;
+            console.log(state.userRole);
+            
         },
         // activateUser: (_, __: PayloadAction<ActivateUserPayload>) => { },
 

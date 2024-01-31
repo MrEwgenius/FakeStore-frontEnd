@@ -38,8 +38,8 @@ export enum RoutesList {
 const Router = () => {
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
     return (
-        <BrowserRouter>
-            <Routes>
+        <BrowserRouter >
+            <Routes >
                 <Route path={RoutesList.Home} element={<Home />} >
 
                     <Route path={RoutesList.Trend} element={<ShopPage />} />

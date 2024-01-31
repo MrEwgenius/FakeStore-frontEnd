@@ -1,4 +1,5 @@
 import { create } from "apisauce";
+import { DataBrand } from "src/@types";
 import { SignInData, SignUpUserData } from "src/redux/@types";
 
 
@@ -8,7 +9,7 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProducts = () => {
+const getProducts = (brandName?: string,) => {
     // return API.get('/api/v1/products/?categoryId=1');
     // return API.get(`/products/category/women's clothing`);
     // return API.get(
@@ -20,7 +21,7 @@ const getProducts = () => {
     //         }
     //     },
     // );
-    return API.get(`/product/`);
+    return API.get(`/product/`, { brandName });
 };
 const getFilterProducts = (filter?: string) => {
     return API.get(`/product/filter/${filter}/`);
@@ -33,10 +34,20 @@ const addProduct = (data: any, token: string,) => {
         `/product`, data, {
         headers: {
             Authorization: `Bearer ${token}`,
-        }
+        },
     },
     )
 };
+const getType = () => {
+
+    return API.get(`/type`)
+
+}
+const getBrand = () => {
+
+    return API.get(`/brand`)
+
+}
 
 
 
@@ -73,5 +84,6 @@ export default {
     signInUser,
     addProduct,
     getFilterProducts,
+    getType,
 
 }

@@ -5,6 +5,12 @@ export type ProductsData = {
     count: number,
     rows: ProductListTypes,
 }
+export type BrandProductsData = {
+
+    count: number,
+    rows: ProductListTypes,
+    brandName:string
+}
 
 
 export type PayloadWithDataAndCallback<Data> = {

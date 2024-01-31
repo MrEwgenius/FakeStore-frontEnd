@@ -13,8 +13,8 @@ import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 //     name: string;
 //     price: number;
 //     rating: number;
-//     brandId: number;
-//     typeId: number;
+//     brandName: number;
+//     typeName: number;
 //     gender: string;
 //     img: File | null;
 // }
@@ -24,8 +24,8 @@ const AddProduct: React.FC = () => {
     //     name: '',
     //     price: 0,
     //     rating: 0,
-    //     brandId: 0,
-    //     typeId: 0,
+    //     brandName: 0,
+    //     typeName: 0,
     //     gender: '',
     //     img: null,
     // });
@@ -34,8 +34,8 @@ const AddProduct: React.FC = () => {
     const [gender, setGender] = useState('man')
     const [clothingType, setClothingType] = useState('bike')
     const [price, setPrice] = useState(1000)
-    const [brandId, setBrandId] = useState(1)
-    const [typeId, setTypeId] = useState(1)
+    const [brandName, setBrandName] = useState('')
+    const [typeName, setTypeName] = useState('')
     const [file, setFile] = useState<File | null>(null);
 
     const dispatch = useDispatch();
@@ -81,8 +81,8 @@ const AddProduct: React.FC = () => {
         formData.append('gender', gender);
         formData.append('clothingType', clothingType);
         formData.append('price', `${price}`);
-        formData.append('brandId', `${brandId}`)
-        formData.append('typeId', `${typeId}`)
+        formData.append('brandName', brandName)
+        formData.append('typeName', typeName)
         if (file) {
             formData.append('img', file);
         }
@@ -114,13 +114,13 @@ const AddProduct: React.FC = () => {
             </label>
             <br />
             <label>
-                Brand ID:
-                <input type="number" name="brandId" value={brandId} onChange={(e) => setBrandId(Number(e.target.value))} />
+                Brand Name:
+                <input type="text" name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)} />
             </label>
             <br />
             <label>
-                Type ID:
-                <input type="number" name="typeId" value={typeId} onChange={(e) => setTypeId(Number(e.target.value))} />
+                Type Name:
+                <input type="text" name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)} />
             </label>
             <br />
             <label>

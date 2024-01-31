@@ -2,10 +2,10 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addNewProduct, addNewProductFailure, getFilterProduct, getProductList, getSingleProduct, setFilterProduct, setProductList, setSingleProduct } from "../reducers/productSlice";
+import { addNewProduct, addNewProductFailure, getBrandProduct, getFilterProduct, getProductList, getSingleProduct, getTypeProduct, setBrandProduct, setFilterProduct, setProductList, setSingleProduct, setTypeProduct } from "../reducers/productSlice";
 import API from "../../api";
-import { GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes } from "../../@types";
-import { AddPostDataPayload, ProductsData } from "../@types";
+import { DataBrand, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
+import { AddPostDataPayload, BrandProductsData, ProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 
 
@@ -24,7 +24,6 @@ function* getProductWorkers() {
 
         if (response.data) {
 
-            console.log(response.data.rows);
 
             yield put(setProductList(response.data.rows));
 
@@ -95,14 +94,52 @@ function* FilterProductsWorker(action: PayloadAction<string>) {
         API.getFilterProducts,
         action.payload,
     )
-    console.log(response.data);
     if (response.data && response.ok) {
-        const { results, } = response.data
-        console.log(results);
 
         yield put(setFilterProduct(response.data))
 
 
+
+    } else {
+        console.log('чёт не вышло');
+
+
+
+    }
+}
+function* TypeProductsWorker() {
+
+    // const { filter } = action.payload
+
+
+    const response: ApiResponse<TypeListTypes> = yield call(
+        API.getType,
+    )
+    if (response.data && response.ok) {
+
+        yield put(setTypeProduct(response.data))
+
+    } else {
+        console.log('чёт не вышло');
+
+
+
+    }
+}
+function* BrandProductsWorker(action: PayloadAction<DataBrand>) {
+
+    // const { filter } = action.payload
+    const { brandName } = action.payload
+    console.log(brandName);
+
+
+    const response: ApiResponse<BrandProductsData | null> = yield call(
+        API.getProducts,
+        brandName,
+    )
+    if (response.data && response.ok) {
+
+        yield put(setBrandProduct(response.data.rows))
 
     } else {
         console.log('чёт не вышло');
@@ -124,5 +161,7 @@ export default function* productSagaWatcher() {
         takeLatest(getSingleProduct, getSingleProductWorker),
         takeLatest(addNewProduct, addProductWorker),
         takeLatest(getFilterProduct, FilterProductsWorker),
+        takeLatest(getTypeProduct, TypeProductsWorker),
+        takeLatest(getBrandProduct, BrandProductsWorker),
     ])
 }

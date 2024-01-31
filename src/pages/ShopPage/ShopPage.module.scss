@@ -8,7 +8,7 @@
     gap: 55px;
     margin-bottom: 40px;
     .containerFilter {
-        width: 420px;
+        min-width: 220px;
         .NameFilter {
             button {
                 // background-color: #757;
@@ -32,9 +32,14 @@
     .containerProducts {
         // background-color: #53a9d1;
         // width: 1000px;
+        width: 100%;
         background-color: #584e4e;
         .products {
-        }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        } 
         .title {
             color: $primary-dark;
             font-size: 25px;

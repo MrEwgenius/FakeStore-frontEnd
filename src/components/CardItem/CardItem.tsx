@@ -31,7 +31,7 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) =
 
     useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
-        dispatch(getProductList())
+        // dispatch(getProductList())
 
     }, [dispatch]);
 

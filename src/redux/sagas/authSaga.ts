@@ -5,12 +5,12 @@ import { ApiResponse } from 'apisauce'
 import API from "src/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "src/utils/constans";
 import { SignInResponseData, SignInUserPayload, SignUpUserPayload, signUpResponseData } from "../@types";
-import { logoutUser, setAccessToken, signInUser, signUpUser } from "../reducers/authSlice";
+import { logoutUser, setAccessToken, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
+
 
 
 function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
 
-    console.log(1);
     const { data, callback } = action.payload
 
     const response: ApiResponse<signUpResponseData> = yield call(
@@ -18,6 +18,8 @@ function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
         data
     )
     if (response.data && response.ok) {
+
+
 
         // localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
         callback();
@@ -35,10 +37,9 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
     const response: ApiResponse<SignInResponseData> = yield call(API.signInUser, data)
     if (response.data && response.ok) {
 
+        
         yield put(setAccessToken(response.data.token))
-        console.log(response);
-
-
+        yield put(setUserRole(response.data.token))
         localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
         localStorage.setItem(REFRESH_TOKEN_KEY, response.data.token)
 

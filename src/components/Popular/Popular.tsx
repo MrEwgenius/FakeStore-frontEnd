@@ -17,7 +17,7 @@ const Popular = () => {
     </div>
 
     const dispatch = useDispatch();
-    const productList = useSelector(ProductSelectors.getProductLister);
+    const productList = useSelector(ProductSelectors.getAllProductList);
 
     const onSavedStatus = (card: ProductTypes) => (status: SaveStatus) => {
         dispatch(setSavedStatus({ card, status }))
@@ -25,6 +25,8 @@ const Popular = () => {
     useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
         dispatch(getProductList())
+       
+        
 
     }, [dispatch]);
 
