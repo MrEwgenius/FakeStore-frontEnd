@@ -3,7 +3,7 @@ import style from './ShopPage.module.scss'
 import { Accordion, Button, ButtonGroup, Dropdown, DropdownButton, useAccordionButton } from "react-bootstrap";
 import CardItem from "src/components/CardItem/CardItem";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, getBrandProduct, getFilterProduct, getProductList, getTypeProduct } from "src/redux/reducers/productSlice";
+import { ProductSelectors, getBrandProduct, getBrandProductList, getFilterProduct, getProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { RoutesList } from "../Router";
@@ -12,44 +12,66 @@ const ShopPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const location = useLocation()
+    const params = useParams()
     const productList = useSelector(ProductSelectors.getProductLister);
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const filterPost = useSelector(ProductSelectors.getfilterProducts)
+    const brandProducts = useSelector(ProductSelectors.getBrandProducts)
+    const allProducts = useSelector(ProductSelectors.getAllProductList)
+    const faaw = useSelector(ProductSelectors.getProductListers)
     const { filter } = useParams()
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+
+
 
     const handleCategoryClick = (category: string,) => {
         setSelectedCategory(category);
     };
 
-    const onCategoryClick = (category: string) => {
-        // navigate(`filter/${category.toLowerCase()}`, { replace: true });
-        navigate(`/product/filter/${category}`, { replace: true });
-        console.log(category);
+    const { typeName, brandName } = useParams();
+    console.log(selectedCategory);
+    console.log(selectedBrand);
 
+
+
+
+    // const onCategoryClick = (category: string) => {
+    //     // navigate(`filter/${category.toLowerCase()}`, { replace: true });
+    //     navigate(`/product/${category}`, { replace: true });
+    //     // (dispatch(getTypeProductList({ typeName: category })))
+    //     console.log(params);
+
+    //     (dispatch(getProductLister({ typeName: category, },)))
+
+    // };
+
+    const onCategoryClick = (category: string) => {
+        setSelectedCategory(category);
+        const newPath = `${RoutesList.Filter}typeName=${category}brandName=${selectedBrand || null}`;
+        navigate(newPath, { replace: true });
+        dispatch(getProductLister({ typeName: category, brandName: selectedBrand || '' }));
     };
 
     useEffect(() => {
-        (dispatch(getTypeProduct()))
-        if (filter) {
-            dispatch(getFilterProduct(filter));
+        { (dispatch(getTypeProduct())) }
+        { (dispatch(getBrandProduct())) }
+        // if (filter) {
+        //     dispatch(getFilterProduct(filter));
 
-        } else {
-            (dispatch(getProductList()))
+        // } else {
+        //     (dispatch(getProductList()))
 
-        }
-    }, [dispatch, filter]);
-    // console.log(productList);
+        // }
+    }, [dispatch]);
 
-    const brandProducts = useSelector(ProductSelectors.getBrandProducts)
-    const allProducts = useSelector(ProductSelectors.getAllProductList)
-    console.log(brandProducts);
+    useEffect(() => {
+        // (dispatch(getBrandProduct({ brandName: 'adidas' })))
 
 
-    // useEffect(() => {
-    //     // (dispatch(getBrandProduct({ brandName: 'adidas' })))
-    // }, [dispatch]);
+    }, [dispatch]);
+
+
 
 
     const CustomToggle = ({ category, children, eventKey }: { category: string, children: ReactNode, eventKey: string }) => {
@@ -59,7 +81,7 @@ const ShopPage = () => {
             <div className={style.castomToogle}
                 onClick={(event) => {
                     decoratedOnClick(event);
-                    handleCategoryClick(category);
+                    // handleCategoryClick(category);
                 }}>
                 {children}
             </div>
@@ -68,9 +90,18 @@ const ShopPage = () => {
 
 
 
-    const clickOnBrand = (brand: string) => {
-        (dispatch(getBrandProduct({ brandName: brand })))
+    // const clickOnBrand = (brand: string) => {
+    //     // (dispatch(getBrandProductList({ brandName: brand })))
+    //     navigate(`/product/${params.typeName || ''}/${brand}`, { replace: true });
+    //     dispatch(getProductLister({ brandName: brand, typeName: params.typeName || '' }));
 
+
+    // }
+    const clickOnBrand = (brand: string) => {
+        setSelectedBrand(brand)
+        const newPath = `${RoutesList.Filter}typeName=${selectedCategory || null}brandName=${brand}`;
+        navigate(newPath, { replace: true });
+        dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || null }));
     }
 
     // if (typeProduct) {
@@ -83,12 +114,12 @@ const ShopPage = () => {
     // }
 
     // useEffect(() => {
-        // Вызываем ваш action для получения списка продуктов
-        // dispatch(getProductList())
+    // Вызываем ваш action для получения списка продуктов
+    // dispatch(getProductList())
 
     // }, [dispatch, filter]);
-    // console.log(filterPost);
-    
+    console.log(allProducts);
+
 
     const clickOnTabs = () => {
         return filter ? filterPost : productList;
@@ -173,16 +204,14 @@ const ShopPage = () => {
                         <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">Бренд</Dropdown.Toggle>
                         <Dropdown.Menu className={style.superColor}>
                             {
-                                allProducts.map((brand) =>
-                                    brand.brandName !== null && (
-                                        <Dropdown.Item
-                                            onClick={() => clickOnBrand(brand.brandName)}
-                                            key={brand.id}
-                                            eventKey={brand.id}
-                                        >
-                                            {!!brand.brandName && brand.brandName}
-                                        </Dropdown.Item>
-                                    )
+                                brandProducts.map((brand) =>
+                                    <Dropdown.Item
+                                        onClick={() => clickOnBrand(brand.name)}
+                                        key={brand.id}
+                                        eventKey={brand.id}
+                                    >
+                                        {brand.name}
+                                    </Dropdown.Item>
 
                                 )
                                 // <Dropdown.Item eventKey="2">Adibos</Dropdown.Item>
@@ -205,15 +234,19 @@ const ShopPage = () => {
 
                 </div>
                 <div className={style.products}>
-                    <CardList cardsList={allProducts} />
+                    {allProducts.length > 0 ?
+
+                        <CardList cardsList={allProducts} />
+                        : 'По вашим фильтрам ничего не найдено'
+                    }
                     {/* <CardList cardsList={filterPost.length > 0 ? filterPost : productList} /> */}
                     {/* {productList ?
                         productList.map((product) => (
                             <CardItem key={product.id} id={product.id} name={product.name} price={product.price} img={product.img} />
-
-                        ))
-                        : <div>daw</div>
-                    } */}
+                            
+                            ))
+                            : <div>daw</div>
+                        } */}
                 </div>
             </div>
         </div >

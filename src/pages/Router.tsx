@@ -19,7 +19,7 @@ export enum RoutesList {
 
     Home = '/',
     Trend = '/product',
-    Filter = '/product/filter/:filter',
+    Filter = '/product/:typeName?/:brandName?',
     Login = '/user/login',
     Registration = '/user/registration',
     SingleProduct = '/product/:id',

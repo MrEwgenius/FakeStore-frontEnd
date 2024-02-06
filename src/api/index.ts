@@ -9,19 +9,10 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProducts = (brandName?: string,) => {
-    // return API.get('/api/v1/products/?categoryId=1');
-    // return API.get(`/products/category/women's clothing`);
-    // return API.get(
-    //     `/product`,
-    //     {},
-    //     {
-    //         headers: {
-    //             Authorization: `Bearer ${token}`,
-    //         }
-    //     },
-    // );
-    return API.get(`/product/`, { brandName });
+const getProducts = ({ typeName, brandName }: { typeName?: string; brandName?: string }) => {
+    // return API.get(`/product/`, { typeName, brandName  });
+    return API.get(`/product/`, { params: { brandName, typeName } });
+
 };
 const getFilterProducts = (filter?: string) => {
     return API.get(`/product/filter/${filter}/`);
@@ -85,5 +76,7 @@ export default {
     addProduct,
     getFilterProducts,
     getType,
+    getBrand,
+
 
 }

@@ -2,10 +2,10 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addNewProduct, addNewProductFailure, getBrandProduct, getFilterProduct, getProductList, getSingleProduct, getTypeProduct, setBrandProduct, setFilterProduct, setProductList, setSingleProduct, setTypeProduct } from "../reducers/productSlice";
+import { addNewProduct, addNewProductFailure, getBrandProduct, getBrandProductList, getFilterProduct, getProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, setBrandProduct, setBrandProductList, setFilterProduct, setProductList, setProductLister, setSingleProduct, setTypeProduct, setTypeProductList } from "../reducers/productSlice";
 import API from "../../api";
-import { DataBrand, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
-import { AddPostDataPayload, BrandProductsData, ProductsData } from "../@types";
+import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
+import { AddPostDataPayload, BrandProductsData, ProductsData, TypeProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 
 
@@ -13,29 +13,24 @@ import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 
 function* getProductWorkers() {
     // const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-    try {
+    // if (accessToken) {
+    const response: ApiResponse<ProductsData | null> = yield call(
+        API.getProducts,
+        {}
+        // accessToken
 
-        // if (accessToken) {
-        const response: ApiResponse<ProductsData | null> = yield call(
-            API.getProducts,
-            // accessToken
-
-        );
-
-        if (response.data) {
+    );
+    if (response.data) {
 
 
-            yield put(setProductList(response.data.rows));
+        yield put(setProductList(response.data.rows));
 
-        }
-        // }
-
-
-
-        // Возможно, здесь вам нужно вызвать setProductList(response.data)
-    } catch (error) {
-        console.error("Error fetching product list:", error);
     }
+    // }
+
+
+
+    // Возможно, здесь вам нужно вызвать setProductList(response.data)
 }
 
 
@@ -126,7 +121,26 @@ function* TypeProductsWorker() {
 
     }
 }
-function* BrandProductsWorker(action: PayloadAction<DataBrand>) {
+function* BrandProductsWorker() {
+
+    // const { filter } = action.payload
+
+
+    const response: ApiResponse<BrandListTypes> = yield call(
+        API.getBrand,
+    )
+    if (response.data && response.ok) {
+
+        yield put(setBrandProduct(response.data))
+
+    } else {
+        console.log('чёт не вышло');
+
+
+
+    }
+}
+function* BrandProductsListWorker(action: PayloadAction<DataBrand>) {
 
     // const { filter } = action.payload
     const { brandName } = action.payload
@@ -135,17 +149,72 @@ function* BrandProductsWorker(action: PayloadAction<DataBrand>) {
 
     const response: ApiResponse<BrandProductsData | null> = yield call(
         API.getProducts,
-        brandName,
+        {
+            brandName
+        }
     )
     if (response.data && response.ok) {
+        console.log(response.data.rows);
 
-        yield put(setBrandProduct(response.data.rows))
+        yield put(setBrandProductList({ data: response.data.rows, filterBrand: brandName }))
 
     } else {
         console.log('чёт не вышло');
 
 
 
+    }
+}
+function* TypeProductsListWorker(action: PayloadAction<DataType>) {
+
+    // const { filter } = action.payload
+    const { typeName } = action.payload
+
+
+    const response: ApiResponse<TypeProductsData | null> = yield call(
+        API.getProducts,
+        {
+            typeName,
+        }
+    )
+    if (response.data && response.ok) {
+        console.log(response.data.rows);
+
+        yield put(setTypeProductList({ data: response.data.rows, filterType: typeName }))
+
+    } else {
+        console.log('чёт не вышло');
+
+
+
+    }
+}
+
+function* getProductWorker(action: PayloadAction<any>) {
+    try {
+        const { brandName, typeName } = action.payload;
+
+        const response: ApiResponse<ProductsData | null> = yield call(
+            API.getProducts,
+            {
+                typeName,
+                brandName,
+            }
+
+        );
+        if (response.data) {
+            const { rows } = response.data;
+
+            // Если есть выбранный бренд или тип, фильтруем данные
+            const filteredRows = (brandName || typeName) ?
+                rows.filter(product => (!brandName || product.brandName === brandName) && (!typeName || product.typeName === typeName)) :
+                rows;
+
+            yield put(setProductLister(filteredRows));
+            // yield put(setProductLister(response.data.rows));
+        }
+    } catch (error) {
+        console.error("Error fetching product list:", error);
     }
 }
 
@@ -163,5 +232,10 @@ export default function* productSagaWatcher() {
         takeLatest(getFilterProduct, FilterProductsWorker),
         takeLatest(getTypeProduct, TypeProductsWorker),
         takeLatest(getBrandProduct, BrandProductsWorker),
+        takeLatest(getBrandProductList, BrandProductsListWorker),
+        takeLatest(getTypeProductList, TypeProductsListWorker),
+        takeLatest(getProductLister, getProductWorker),
+
+
     ])
 }

@@ -53,10 +53,16 @@ export type TypeTypes = {
     name: string,
 
 }
+export type BrandTypes = {
+    id: number,
+    name: string,
+
+}
 
 
 export type ProductListTypes = ProductTypes[];
 export type TypeListTypes = TypeTypes[];
+export type BrandListTypes = BrandTypes[];
 
 
 export type SetProductListPayload = {
@@ -81,5 +87,11 @@ export enum SaveStatus {
 export type DataBrand = {
 
     brandName: string
+
+}
+
+export type DataType = {
+
+    typeName: string
 
 }

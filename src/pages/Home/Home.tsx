@@ -19,7 +19,6 @@ const Home = () => {
     useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
         dispatch(getProductList())
-        console.log('cardList');
 
 
     }, [dispatch]);
