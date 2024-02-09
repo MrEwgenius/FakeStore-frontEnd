@@ -21,7 +21,6 @@ const SingleProduct = () => {
         dispatch(setSavedStatus({ card, status }))
     }
 
-    console.log(SingleProduct);
 
 
 

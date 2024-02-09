@@ -29,11 +29,11 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) =
 
     const saveIndex = savedProduct.findIndex(item => item.id === id)
 
-    useEffect(() => {
+    // useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
         // dispatch(getProductList())
 
-    }, [dispatch]);
+    // }, [dispatch]);
 
 
 

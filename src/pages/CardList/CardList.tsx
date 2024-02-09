@@ -17,11 +17,11 @@ const CardList: FC<CardsListProps> = ({ cardsList }) => {
         dispatch(setSavedStatus({ card, status }))
     }
 
-    useEffect(() => {
+    // useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
-        dispatch(getProductList())
+        // dispatch(getProductList())
 
-    }, [dispatch]);
+    // }, [dispatch]);
 
     return (
         <div className={style.containerCardList}>

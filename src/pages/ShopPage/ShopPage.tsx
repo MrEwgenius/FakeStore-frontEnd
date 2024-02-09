@@ -5,7 +5,7 @@ import CardItem from "src/components/CardItem/CardItem";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductSelectors, getBrandProduct, getBrandProductList, getFilterProduct, getProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { RoutesList } from "../Router";
 
 const ShopPage = () => {
@@ -13,6 +13,7 @@ const ShopPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const params = useParams()
+    const location = useLocation()
     const productList = useSelector(ProductSelectors.getProductLister);
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const filterPost = useSelector(ProductSelectors.getfilterProducts)
@@ -20,68 +21,81 @@ const ShopPage = () => {
     const allProducts = useSelector(ProductSelectors.getAllProductList)
     const faaw = useSelector(ProductSelectors.getProductListers)
     const { filter } = useParams()
+
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+    const { typeName, brandName } = params;
 
 
-
-    const handleCategoryClick = (category: string,) => {
-        setSelectedCategory(category);
-    };
-
-    const { typeName, brandName } = useParams();
-    console.log(selectedCategory);
-    console.log(selectedBrand);
+    console.log(params);
 
 
-
-
-    // const onCategoryClick = (category: string) => {
-    //     // navigate(`filter/${category.toLowerCase()}`, { replace: true });
-    //     navigate(`/product/${category}`, { replace: true });
-    //     // (dispatch(getTypeProductList({ typeName: category })))
-    //     console.log(params);
-
-    //     (dispatch(getProductLister({ typeName: category, },)))
-
-    // };
 
     const onCategoryClick = (category: string) => {
         setSelectedCategory(category);
-        const newPath = `${RoutesList.Filter}typeName=${category}brandName=${selectedBrand || null}`;
-        navigate(newPath, { replace: true });
-        dispatch(getProductLister({ typeName: category, brandName: selectedBrand || '' }));
+        let newPath = `/products/filter/${category}`;
+        if (selectedBrand) {
+            newPath += `/${selectedBrand}`;
+        }
+        navigate(newPath);
+        dispatch(getProductLister({ typeName: category, brandName: selectedBrand || null }));
     };
 
-    useEffect(() => {
-        { (dispatch(getTypeProduct())) }
-        { (dispatch(getBrandProduct())) }
-        // if (filter) {
-        //     dispatch(getFilterProduct(filter));
+    const clickOnBrand = (brand: string) => {
+        setSelectedBrand(brand)
+        let newPath = '/products/filter';
+        if (selectedCategory) {
+            newPath += `/${selectedCategory}`;
+        }
+        newPath += `/${brand}`;
+        navigate(newPath);
+        dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || null }));
+    }
+    // const onCategoryClick = (category: string) => {
+    //     setSelectedCategory(category);
+    //     const newPath = `/product/filter/${category}/${selectedBrand || ''}`;
+    //     navigate(newPath);
+    //     dispatch(getProductLister({ typeName: category, brandName: selectedBrand || '' }));
+    // };
 
-        // } else {
-        //     (dispatch(getProductList()))
+    // const clickOnBrand = (brand: string) => {
+    //     setSelectedBrand(brand)
+    //     const newPath = `/product/filter/${selectedCategory || ''}/${brand}`;
+    //     navigate(newPath);
+    //     dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || '' }));
+    // }
 
-        // }
-    }, [dispatch]);
+    const clickOnHome = () => {
+        navigate(`/`)
+    }
+    const navigateToClothingCategory = () => {
+        dispatch(getProductList())
+        navigate(RoutesList.Filter)
+    }
 
-    useEffect(() => {
-        // (dispatch(getBrandProduct({ brandName: 'adidas' })))
-
-
-    }, [dispatch]);
-
-
-
-
-    const CustomToggle = ({ category, children, eventKey }: { category: string, children: ReactNode, eventKey: string }) => {
+    const addAllBrand = () => {
+        let newPath = '/products/filter';
+        if (selectedCategory) {
+            newPath += `/${selectedCategory}`;
+        }
+        setSelectedBrand(null)
+        dispatch(getProductLister({ brandName: null, typeName: selectedCategory || null }));
+        navigate(newPath);
+    }
+    const CustomToggle = ({
+        children,
+        eventKey
+    }: {
+        children: ReactNode,
+        eventKey: string
+    }) => {
         const decoratedOnClick = useAccordionButton(eventKey);
 
         return (
             <div className={style.castomToogle}
                 onClick={(event) => {
                     decoratedOnClick(event);
-                    // handleCategoryClick(category);
+
                 }}>
                 {children}
             </div>
@@ -90,57 +104,47 @@ const ShopPage = () => {
 
 
 
-    // const clickOnBrand = (brand: string) => {
-    //     // (dispatch(getBrandProductList({ brandName: brand })))
-    //     navigate(`/product/${params.typeName || ''}/${brand}`, { replace: true });
-    //     dispatch(getProductLister({ brandName: brand, typeName: params.typeName || '' }));
 
 
-    // }
-    const clickOnBrand = (brand: string) => {
-        setSelectedBrand(brand)
-        const newPath = `${RoutesList.Filter}typeName=${selectedCategory || null}brandName=${brand}`;
-        navigate(newPath, { replace: true });
-        dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || null }));
-    }
 
-    // if (typeProduct) {
-    //     typeProduct.map((el) => {
-    //         // console.log(el.name);
-
-
-    //     })
-
-    // }
-
-    // useEffect(() => {
-    // Вызываем ваш action для получения списка продуктов
-    // dispatch(getProductList())
-
-    // }, [dispatch, filter]);
-    console.log(allProducts);
+    console.log(typeName);
+    console.log(brandName);
 
 
     const clickOnTabs = () => {
         return filter ? filterPost : productList;
     }
 
+    useEffect(() => {
+        { (dispatch(getTypeProduct())) }
+        { (dispatch(getBrandProduct())) }
 
+
+    }, [dispatch]);
     return (
-        <div className={style.containerShopPage}>
-            <div className={style.containerFilter}>
-                <Accordion  >
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header className={style.NameFilter}>Одежда</Accordion.Header>
-                        {typeProduct.map((type) =>
-                            <Accordion.Body key={type.id} onClick={() => onCategoryClick(type.name)} className={style.bodyFilter}>
-                                <CustomToggle category={type.name} eventKey="0" >
-                                    {/* <Link to={'filter/bike'}  >Толстовки</Link> */}
-                                    <div  >{type.name}</div>
-                                </CustomToggle>
-                            </Accordion.Body>
-                        )}
-                        {/* <Accordion.Body onClick={() => onCategoryClick('mikes')} className={style.bodyFilter}>
+        <div>
+
+
+            <ul className={style.navigationHistory}>
+                <span onClick={clickOnHome}>Главная</span>
+                <li className={'sd'} onClick={navigateToClothingCategory}>Одежда</li>
+                {typeName && <li>{typeName}</li>
+                }
+            </ul>
+            <div className={style.containerShopPage}>
+                <div className={style.containerFilter}>
+                    <Accordion  >
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header className={style.NameFilter}>Одежда</Accordion.Header>
+                            {typeProduct.map((type) =>
+                                <Accordion.Body key={type.id} onClick={() => onCategoryClick(type.name)} className={style.bodyFilter}>
+                                    <CustomToggle eventKey="0" >
+                                        {/* <Link to={'filter/bike'}  >Толстовки</Link> */}
+                                        <div  >{type.name}</div>
+                                    </CustomToggle>
+                                </Accordion.Body>
+                            )}
+                            {/* <Accordion.Body onClick={() => onCategoryClick('mikes')} className={style.bodyFilter}>
                             <CustomToggle category="Майки" eventKey="0" >
                                 <div >Майки</div>
                             </CustomToggle>
@@ -151,105 +155,106 @@ const ShopPage = () => {
                                 <div >Кофты</div>
                             </CustomToggle>
                         </Accordion.Body> */}
-                    </Accordion.Item>
+                        </Accordion.Item>
 
-                    {/* </Accordion.Item> */}
-                    <Accordion.Item eventKey="1">
-                        <Accordion.Header>Обувь</Accordion.Header>
-                        <Accordion.Body className={style.bodyFilter}>
-                            <CustomToggle category="Кросовки" eventKey="1" >
-                                <div>Кросовки</div>
-                            </CustomToggle>
-                        </Accordion.Body>
-                        <Accordion.Body className={style.bodyFilter}>
-                            <CustomToggle category="Кеды" eventKey="1" >
-                                <div>Кеды</div>
-                            </CustomToggle>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                        <Accordion.Header>Аксесуары</Accordion.Header>
+                        <Accordion.Item eventKey="1">
+                            <Accordion.Header>Обувь</Accordion.Header>
+                            <Accordion.Body className={style.bodyFilter}>
+                                <CustomToggle eventKey="1" >
+                                    <div>Кросовки</div>
+                                </CustomToggle>
+                            </Accordion.Body>
+                            <Accordion.Body className={style.bodyFilter}>
+                                <CustomToggle eventKey="1" >
+                                    <div>Кеды</div>
+                                </CustomToggle>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="2">
+                            <Accordion.Header>Аксесуары</Accordion.Header>
 
-                        <Accordion.Body className={style.bodyFilter}>
-                            <CustomToggle category="Цепочки" eventKey="2" >
-                                <div>Цепочки</div>
-                            </CustomToggle>
-                        </Accordion.Body>
+                            <Accordion.Body className={style.bodyFilter}>
+                                <CustomToggle eventKey="2" >
+                                    <div>Цепочки</div>
+                                </CustomToggle>
+                            </Accordion.Body>
 
-                        <Accordion.Body className={style.bodyFilter}>
+                            <Accordion.Body className={style.bodyFilter}>
 
-                            <CustomToggle category="Кольца" eventKey="2" >
-                                <div>Кольца</div>
-                            </CustomToggle>
+                                <CustomToggle eventKey="2" >
+                                    <div>Кольца</div>
+                                </CustomToggle>
 
-                        </Accordion.Body>
+                            </Accordion.Body>
 
-                    </Accordion.Item>
-                </Accordion>
-            </div>
-            <div className={style.containerProducts}>
-                <div className={style.title}>Title</div>
-                <div className={style.sortProducts}>
-                    <Dropdown as={ButtonGroup}>
-                        <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">Размер</Dropdown.Toggle>
-                        <Dropdown.Menu className={style.superColor}>
-                            <Dropdown.Item eventKey="1">XS</Dropdown.Item>
-                            <Dropdown.Item eventKey="2">S</Dropdown.Item>
-                            <Dropdown.Item eventKey="3">M</Dropdown.Item>
-                            <Dropdown.Item eventKey="4">L</Dropdown.Item>
-                            <Dropdown.Item eventKey="5">XL</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>{'   '}
-                    <Dropdown as={ButtonGroup}>
-                        <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">Бренд</Dropdown.Toggle>
-                        <Dropdown.Menu className={style.superColor}>
-                            {
-                                brandProducts.map((brand) =>
-                                    <Dropdown.Item
-                                        onClick={() => clickOnBrand(brand.name)}
-                                        key={brand.id}
-                                        eventKey={brand.id}
-                                    >
-                                        {brand.name}
-                                    </Dropdown.Item>
-
-                                )
-                                // <Dropdown.Item eventKey="2">Adibos</Dropdown.Item>
-                                // <Dropdown.Item eventKey="3">Puma</Dropdown.Item>
-                                // <Dropdown.Item eventKey="4">Carchart</Dropdown.Item>
-                                // <Dropdown.Item eventKey="5">CAT</Dropdown.Item>
-                            }
-                        </Dropdown.Menu>
-                    </Dropdown>{'   '}
-                    <Dropdown as={ButtonGroup}>
-                        <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">Цена</Dropdown.Toggle>
-                        <Dropdown.Menu className={style.superColor}>
-                            <Dropdown.Item eventKey="100">до 100$</Dropdown.Item>
-                            <Dropdown.Item eventKey="200">100 - 200$</Dropdown.Item>
-                            <Dropdown.Item eventKey="400">200 - 400$</Dropdown.Item>
-                            <Dropdown.Item eventKey="500">от 500$</Dropdown.Item>
-                            <Dropdown.Item eventKey="5">All</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>{'   '}
-
+                        </Accordion.Item>
+                    </Accordion>
                 </div>
-                <div className={style.products}>
-                    {allProducts.length > 0 ?
+                <div className={style.containerProducts}>
+                    <div className={style.title}>Title</div>
+                    <div className={style.sortProducts}>
+                        <Dropdown as={ButtonGroup}>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">Размер</Dropdown.Toggle>
+                            <Dropdown.Menu className={style.superColor}>
+                                <Dropdown.Item eventKey="1">XS</Dropdown.Item>
+                                <Dropdown.Item eventKey="2">S</Dropdown.Item>
+                                <Dropdown.Item eventKey="3">M</Dropdown.Item>
+                                <Dropdown.Item eventKey="4">L</Dropdown.Item>
+                                <Dropdown.Item eventKey="5">XL</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>{'   '}
+                        <Dropdown as={ButtonGroup}>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : "Бренды"}</Dropdown.Toggle>
+                            <Dropdown.Menu className={style.superColor}>
+                                <Dropdown.Item
+                                    onClick={addAllBrand}
+                                >
+                                    {'Все Бренды'}
+                                </Dropdown.Item>
+                                {
+                                    brandProducts.map((brand) =>
+                                        <Dropdown.Item
+                                            onClick={() => clickOnBrand(brand.name)}
+                                            key={brand.id}
+                                            eventKey={brand.id}
+                                        >
+                                            {brand.name}
+                                        </Dropdown.Item>
 
-                        <CardList cardsList={allProducts} />
-                        : 'По вашим фильтрам ничего не найдено'
-                    }
-                    {/* <CardList cardsList={filterPost.length > 0 ? filterPost : productList} /> */}
-                    {/* {productList ?
+                                    )
+                                }
+                            </Dropdown.Menu>
+                        </Dropdown>{'   '}
+                        <Dropdown as={ButtonGroup}>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">Цена</Dropdown.Toggle>
+                            <Dropdown.Menu className={style.superColor}>
+                                <Dropdown.Item eventKey="100">до 100$</Dropdown.Item>
+                                <Dropdown.Item eventKey="200">100 - 200$</Dropdown.Item>
+                                <Dropdown.Item eventKey="400">200 - 400$</Dropdown.Item>
+                                <Dropdown.Item eventKey="500">от 500$</Dropdown.Item>
+                                <Dropdown.Item eventKey="5">All</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>{'   '}
+
+                    </div>
+                    <div className={style.products}>
+                        {allProducts.length > 0 ?
+
+                            <CardList cardsList={allProducts} />
+                            : 'По вашим фильтрам ничего не найдено'
+                        }
+                        {/* <CardList cardsList={filterPost.length > 0 ? filterPost : productList} /> */}
+                        {/* {productList ?
                         productList.map((product) => (
                             <CardItem key={product.id} id={product.id} name={product.name} price={product.price} img={product.img} />
                             
                             ))
                             : <div>daw</div>
                         } */}
+                    </div>
                 </div>
-            </div>
-        </div >
+            </div >
+        </div>
     )
 }
 

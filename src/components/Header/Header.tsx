@@ -18,14 +18,14 @@ const Header = () => {
 
     
     const clickOnProducts = () => {
-        navigate(RoutesList.Trend)
+        navigate(RoutesList.Filter)
         
     }
     useEffect(()=>{
     
-    
         (dispatch(getProductList()))
     },[dispatch])
+    
     const clickOnHome = () => {
         navigate(`/`)
 

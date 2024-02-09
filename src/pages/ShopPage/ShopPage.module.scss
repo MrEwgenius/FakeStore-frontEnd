@@ -26,7 +26,6 @@
         }
         .castomToogle {
             padding: 17px;
-            
         }
     }
     .containerProducts {
@@ -38,8 +37,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
-        } 
+        }
         .title {
             color: $primary-dark;
             font-size: 25px;
@@ -88,4 +86,19 @@
             }
         }
     }
+}
+
+.navigationHistory {
+    span {
+        cursor: pointer;
+    }
+    li:last-child {
+        color: $gray;
+    }
+    li:nth-child(2) {
+        // color: red;
+        cursor: pointer;
+    }
+    display: flex;
+    gap: 30px;
 }
