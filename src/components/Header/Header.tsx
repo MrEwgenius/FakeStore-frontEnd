@@ -21,10 +21,10 @@ const Header = () => {
         navigate(RoutesList.Filter)
         
     }
-    useEffect(()=>{
+    // useEffect(()=>{
     
-        (dispatch(getProductList()))
-    },[dispatch])
+    //     (dispatch(getProductList({page:2})))
+    // },[dispatch])
     
     const clickOnHome = () => {
         navigate(`/`)

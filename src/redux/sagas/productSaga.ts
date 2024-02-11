@@ -2,36 +2,38 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addNewProduct, addNewProductFailure, getBrandProduct, getBrandProductList, getFilterProduct, getProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, setBrandProduct, setBrandProductList, setFilterProduct, setProductList, setProductLister, setSingleProduct, setTypeProduct, setTypeProductList } from "../reducers/productSlice";
+import { addNewProduct, addNewProductFailure, getBrandProduct, getBrandProductList, getProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, setBrandProduct, setProductList, setProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
 import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
-import { AddPostDataPayload, BrandProductsData, ProductsData, TypeProductsData } from "../@types";
+import { AddPostDataPayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 
 
 
 
-function* getProductWorkers() {
-    // const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-    // if (accessToken) {
-    const response: ApiResponse<ProductsData | null> = yield call(
-        API.getProducts,
-        {}
-        // accessToken
+// function* getProductWorkers(action: PayloadAction<GetProductPayload>) {
+//     // const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+//     // if (accessToken) {
+//     const { page } = action.payload
+//     const response: ApiResponse<ProductsData | null> = yield call(
+//         API.getProducts,
+//         {},
+//         page,
+//         // accessToken
 
-    );
-    if (response.data) {
-
-
-        yield put(setProductList(response.data.rows));
-
-    }
-    // }
+//     );
+//     if (response.data) {
 
 
+//         yield put(setProductList(response.data.rows));
 
-    // Возможно, здесь вам нужно вызвать setProductList(response.data)
-}
+//     }
+//     // }
+
+
+
+//     // Возможно, здесь вам нужно вызвать setProductList(response.data)
+// }
 
 
 function* getSingleProductWorker(action: PayloadAction<string>) {
@@ -80,32 +82,29 @@ function* addProductWorker(action: PayloadAction<AddPostDataPayload>) {
 }
 
 
-function* FilterProductsWorker(action: PayloadAction<string>) {
+// function* FilterProductsWorker(action: PayloadAction<string>) {
 
-    // const { filter } = action.payload
-
-
-    const response: ApiResponse<undefined> = yield call(
-        API.getFilterProducts,
-        action.payload,
-    )
-    if (response.data && response.ok) {
-
-        yield put(setFilterProduct(response.data))
+//     // const { filter } = action.payload
 
 
+//     const response: ApiResponse<undefined> = yield call(
+//         API.getFilterProducts,
+//         action.payload,
+//     )
+//     if (response.data && response.ok) {
 
-    } else {
-        console.log('чёт не вышло');
+//         yield put(setFilterProduct(response.data))
 
 
 
-    }
-}
+//     } else {
+//         console.log('чёт не вышло');
+
+
+
+//     }
+// }
 function* TypeProductsWorker() {
-
-    // const { filter } = action.payload
-
 
     const response: ApiResponse<TypeListTypes> = yield call(
         API.getType,
@@ -113,104 +112,101 @@ function* TypeProductsWorker() {
     if (response.data && response.ok) {
 
         yield put(setTypeProduct(response.data))
-
     } else {
-        console.log('чёт не вышло');
-
-
-
+        console.log('чёт не вышло с типом');
     }
 }
 function* BrandProductsWorker() {
-
-    // const { filter } = action.payload
-
-
     const response: ApiResponse<BrandListTypes> = yield call(
         API.getBrand,
     )
     if (response.data && response.ok) {
-
         yield put(setBrandProduct(response.data))
-
     } else {
-        console.log('чёт не вышло');
-
-
-
+        console.log('чёт не вышло С брендом');
     }
 }
-function* BrandProductsListWorker(action: PayloadAction<DataBrand>) {
+// function* BrandProductsListWorker(action: PayloadAction<DataBrand>) {
 
-    // const { filter } = action.payload
-    const { brandName } = action.payload
-    console.log(brandName);
-
-
-    const response: ApiResponse<BrandProductsData | null> = yield call(
-        API.getProducts,
-        {
-            brandName
-        }
-    )
-    if (response.data && response.ok) {
-        console.log(response.data.rows);
-
-        yield put(setBrandProductList({ data: response.data.rows, filterBrand: brandName }))
-
-    } else {
-        console.log('чёт не вышло');
+//     // const { filter } = action.payload
+//     const { brandName } = action.payload
+//     console.log(brandName);
 
 
+//     const response: ApiResponse<BrandProductsData | null> = yield call(
+//         API.getProducts,
+//         {
+//             brandName
+//         }
+//     )
+//     if (response.data && response.ok) {
+//         console.log(response.data.rows);
 
-    }
-}
-function* TypeProductsListWorker(action: PayloadAction<DataType>) {
+//         yield put(setBrandProductList({ data: response.data.rows, filterBrand: brandName }))
 
-    // const { filter } = action.payload
-    const { typeName } = action.payload
-
-
-    const response: ApiResponse<TypeProductsData | null> = yield call(
-        API.getProducts,
-        {
-            typeName,
-        }
-    )
-    if (response.data && response.ok) {
-        console.log(response.data.rows);
-
-        yield put(setTypeProductList({ data: response.data.rows, filterType: typeName }))
-
-    } else {
-        console.log('чёт не вышло');
+//     } else {
+//         console.log('чёт не вышло');
 
 
 
-    }
-}
+//     }
+// }
+// function* TypeProductsListWorker(action: PayloadAction<DataType>) {
 
-function* getProductWorker(action: PayloadAction<any>) {
+//     // const { filter } = action.payload
+//     const { typeName } = action.payload
+
+
+//     const response: ApiResponse<TypeProductsData | null> = yield call(
+//         API.getProducts,
+//         {
+//             typeName,
+//         }
+//     )
+//     if (response.data && response.ok) {
+//         console.log(response.data.rows);
+
+//         yield put(setTypeProductList({ data: response.data.rows, filterType: typeName }))
+
+//     } else {
+//         console.log('чёт не вышло');
+
+
+
+//     }
+// }
+
+function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
     try {
-        const { brandName, typeName } = action.payload;
+        const { brandName, typeName, page, isOverwrite } = action.payload;
 
         const response: ApiResponse<ProductsData | null> = yield call(
             API.getProducts,
-            {
-                typeName,
-                brandName,
-            }
+            typeName, 
+            brandName,
+            page,
 
         );
+
         if (response.data) {
-            const { rows } = response.data;
+            const { rows, count } = response.data;
 
             // Если есть выбранный бренд или тип, фильтруем данные
-            const filteredRows = (brandName || typeName) ?
-                rows.filter(product => (!brandName || product.brandName === brandName) && (!typeName || product.typeName === typeName)) :
+            const filteredRows = (brandName || typeName)
+                ?
+                rows.filter(product =>
+                    (!brandName || product.brandName === brandName)
+                    &&
+                    (!typeName || product.typeName === typeName)
+                )
+                :
                 rows;
 
-            yield put(setProductLister(filteredRows));
+            yield put(setProductLister({
+                total: count,
+                product: rows,
+                isOverwrite
+            }));
             // yield put(setProductLister(response.data.rows));
         }
     } catch (error) {
@@ -226,14 +222,14 @@ function* getProductWorker(action: PayloadAction<any>) {
 export default function* productSagaWatcher() {
     yield all([
 
-        takeLatest(getProductList, getProductWorkers),
+        // takeLatest(getProductList, getProductWorkers),
         takeLatest(getSingleProduct, getSingleProductWorker),
         takeLatest(addNewProduct, addProductWorker),
-        takeLatest(getFilterProduct, FilterProductsWorker),
+        // takeLatest(getFilterProduct, FilterProductsWorker),
         takeLatest(getTypeProduct, TypeProductsWorker),
         takeLatest(getBrandProduct, BrandProductsWorker),
-        takeLatest(getBrandProductList, BrandProductsListWorker),
-        takeLatest(getTypeProductList, TypeProductsListWorker),
+        // takeLatest(getBrandProductList, BrandProductsListWorker),
+        // takeLatest(getTypeProductList, TypeProductsListWorker),
         takeLatest(getProductLister, getProductWorker),
 
 

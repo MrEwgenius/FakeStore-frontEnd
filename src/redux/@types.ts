@@ -9,13 +9,13 @@ export type BrandProductsData = {
 
     count: number,
     rows: ProductListTypes,
-    brandName:string
+    brandName: string
 }
 export type TypeProductsData = {
 
     count: number,
     rows: ProductListTypes,
-    typeName:string
+    typeName: string
 }
 
 
@@ -61,6 +61,21 @@ export type SignInResponseData = {
     refresh: string,
     token: string
 }
+
+export type GetProductPayload = {
+    page?: number
+    isOverwrite?: boolean,
+}
+
+
+export type GetProductListPayload = {
+    isOverwrite: boolean,
+    page?: number
+    typeName?: string 
+    brandName?: string
+
+}
+
 
 export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>
 export type AddPostDataPayload = PayloadWithDataAndCallback<any>

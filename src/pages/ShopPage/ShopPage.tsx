@@ -1,12 +1,13 @@
-import React, { ReactNode, useEffect, useState } from "react"
+import React, { ReactNode, useEffect, useMemo, useState } from "react"
 import style from './ShopPage.module.scss'
-import { Accordion, Button, ButtonGroup, Dropdown, DropdownButton, useAccordionButton } from "react-bootstrap";
+import { Accordion, Button, ButtonGroup, Dropdown, DropdownButton, Pagination, useAccordionButton } from "react-bootstrap";
 import CardItem from "src/components/CardItem/CardItem";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, getBrandProduct, getBrandProductList, getFilterProduct, getProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
+import { ProductSelectors, getBrandProduct, getBrandProductList, getProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { RoutesList } from "../Router";
+import { PER_PAGE } from "src/utils/constans";
 
 const ShopPage = () => {
 
@@ -16,20 +17,24 @@ const ShopPage = () => {
     const location = useLocation()
     const productList = useSelector(ProductSelectors.getProductLister);
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
-    const filterPost = useSelector(ProductSelectors.getfilterProducts)
+    // const filterPost = useSelector(ProductSelectors.getfilterProducts)
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
     const allProducts = useSelector(ProductSelectors.getAllProductList)
-    const faaw = useSelector(ProductSelectors.getProductListers)
+    const totalCount = useSelector(ProductSelectors.getTotalProductCount)
     const { filter } = useParams()
 
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+    const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
     const { typeName, brandName } = params;
 
 
-    console.log(params);
 
+    useEffect(() => {
+        // (dispatch(getProductList({ page: 1 })))
+        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined }))
+    }, [dispatch])
 
+    console.log(allProducts);
 
     const onCategoryClick = (category: string) => {
         setSelectedCategory(category);
@@ -37,8 +42,8 @@ const ShopPage = () => {
         if (selectedBrand) {
             newPath += `/${selectedBrand}`;
         }
+        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined }));
         navigate(newPath);
-        dispatch(getProductLister({ typeName: category, brandName: selectedBrand || null }));
     };
 
     const clickOnBrand = (brand: string) => {
@@ -49,7 +54,7 @@ const ShopPage = () => {
         }
         newPath += `/${brand}`;
         navigate(newPath);
-        dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || null }));
+        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined }));
     }
     // const onCategoryClick = (category: string) => {
     //     setSelectedCategory(category);
@@ -65,23 +70,31 @@ const ShopPage = () => {
     //     dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || '' }));
     // }
 
+
+
     const clickOnHome = () => {
         navigate(`/`)
     }
     const navigateToClothingCategory = () => {
-        dispatch(getProductList())
+        setSelectedBrand(undefined)
+        setSelectedCategory(undefined)
+        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: undefined }));
         navigate(RoutesList.Filter)
     }
+
+
 
     const addAllBrand = () => {
         let newPath = '/products/filter';
         if (selectedCategory) {
             newPath += `/${selectedCategory}`;
         }
-        setSelectedBrand(null)
-        dispatch(getProductLister({ brandName: null, typeName: selectedCategory || null }));
+        setSelectedBrand(undefined)
+        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: selectedCategory || undefined }));
         navigate(newPath);
     }
+
+
     const CustomToggle = ({
         children,
         eventKey
@@ -102,17 +115,15 @@ const ShopPage = () => {
         );
     };
 
+    
 
 
 
 
-
-    console.log(typeName);
-    console.log(brandName);
 
 
     const clickOnTabs = () => {
-        return filter ? filterPost : productList;
+        // return filter ? filterPost : productList;
     }
 
     useEffect(() => {
@@ -121,6 +132,32 @@ const ShopPage = () => {
 
 
     }, [dispatch]);
+
+
+    const [page, setPage] = useState(1)
+    const pagesCount = useMemo(
+        () => Math.ceil(totalCount / PER_PAGE),
+        [totalCount]
+    );
+    
+    const handlePageChange = (pageNumber: number) => {
+        setPage(pageNumber);
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: selectedBrand || undefined,
+            typeName: selectedCategory || undefined,
+            page: pageNumber
+        }))
+    };
+
+    let items = [];
+    for (let number = 1; number <= pagesCount; number++) {
+        items.push(
+            <Pagination.Item onClick={() => handlePageChange(number)} key={number} active={number === page}>
+                {number}
+            </Pagination.Item>,
+        );
+    }
     return (
         <div>
 
@@ -252,6 +289,7 @@ const ShopPage = () => {
                             : <div>daw</div>
                         } */}
                     </div>
+                    <Pagination>{items}</Pagination>
                 </div>
             </div >
         </div>

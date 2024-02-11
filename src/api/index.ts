@@ -1,6 +1,7 @@
 import { create } from "apisauce";
 import { DataBrand } from "src/@types";
 import { SignInData, SignUpUserData } from "src/redux/@types";
+import { PER_PAGE } from "src/utils/constans";
 
 
 const API = create({
@@ -9,14 +10,15 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProducts = ({ typeName, brandName }: { typeName?: string; brandName?: string }) => {
+const getProducts = (typeName?: string, brandName?: string, page?: number,) => {
     // return API.get(`/product/`, { typeName, brandName  });
-    return API.get(`/product/`, { params: { brandName, typeName } });
+    return API.get(`/product/`,
+        { limit: PER_PAGE, typeName, brandName, page, });
 
 };
-const getFilterProducts = (filter?: string) => {
-    return API.get(`/product/filter/${filter}/`);
-};
+// const getFilterProducts = (filter?: string) => {
+//     return API.get(`/product/filter/${filter}/`);
+// };
 
 
 
@@ -74,7 +76,7 @@ export default {
     signUpUser,
     signInUser,
     addProduct,
-    getFilterProducts,
+    // getFilterProducts,
     getType,
     getBrand,
 

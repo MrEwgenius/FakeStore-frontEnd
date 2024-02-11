@@ -24,7 +24,8 @@ const Popular = () => {
     }
     useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
-        dispatch(getProductList())
+        // dispatch(getProductList())
+        (dispatch(getProductList({page:2})))
        
         
 

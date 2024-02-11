@@ -15,13 +15,15 @@ const Home = () => {
 
     const dispatch = useDispatch();
     const productList = useSelector(ProductSelectors.getProductLister);
+    const [page, setPage] = useState(1)
 
-    useEffect(() => {
-        // Вызываем ваш action для получения списка продуктов
-        dispatch(getProductList())
+    // useEffect(() => {
+    //     // Вызываем ваш action для получения списка продуктов
+    //     // dispatch(getProductList())
+    //     (dispatch(getProductList({ page: page })))
 
 
-    }, [dispatch]);
+    // }, [dispatch]);
 
 
 

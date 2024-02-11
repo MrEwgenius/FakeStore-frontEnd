@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus, SetSearchedPostsPayload, TypeListTypes } from '../../@types';
-import { AddPostDataPayload } from '../@types';
+import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus,  SetProductListPayload,  TypeListTypes } from '../../@types';
+import { AddPostDataPayload, GetProductListPayload, GetProductPayload } from '../@types';
 
 
 type initialState = {
@@ -12,10 +12,11 @@ type initialState = {
     singleProduct: ProductTypes | null,
     error: any | null;
     savedProduct: ProductListTypes,
-    filterProduct: ProductListTypes,
+    // filterProduct: ProductListTypes,
     typeProduct: TypeListTypes,
-    brandProduct: TypeListTypes,
+    brandProduct: BrandListTypes,
     producrList: ProductListTypes,
+    totalCount: number,
 
 
 }
@@ -25,11 +26,11 @@ const initialState: initialState = {
     singleProduct: null,
     error: null,
     savedProduct: [],
-    filterProduct: [],
+    // filterProduct: [],
     typeProduct: [],
     brandProduct: [],
     producrList: [],
-
+    totalCount: 0,
 
 };
 const productSlice = createSlice({
@@ -39,7 +40,7 @@ const productSlice = createSlice({
     initialState,
     reducers: {
 
-        getProductList: (_, __: PayloadAction<undefined>) => { },
+        getProductList: (_, __: PayloadAction<GetProductPayload>) => { },
         setProductList: (state, action: PayloadAction<ProductListTypes>) => {
             // state.selectedProduct = action.payload;
 
@@ -72,11 +73,11 @@ const productSlice = createSlice({
                 state.savedProduct.splice(mainIndex, 1)
         },
 
-        getFilterProduct: (_, __: PayloadAction<string>) => { },
-        setFilterProduct: (state, action: PayloadAction<ProductListTypes>) => {
+        // getFilterProduct: (_, __: PayloadAction<string>) => { },
+        // setFilterProduct: (state, action: PayloadAction<ProductListTypes>) => {
             // state.filterProduct = action.payload;
-            state.producrList = action.payload
-        },
+            // state.producrList = action.payload
+        // },
         getTypeProduct: (_, __: PayloadAction<undefined>) => { },
         setTypeProduct: (state, action: PayloadAction<TypeListTypes>) => {
             state.typeProduct = action.payload
@@ -94,25 +95,31 @@ const productSlice = createSlice({
         //     console.log(action.payload);
 
         // },
-        setBrandProductList: (state, action: PayloadAction<{ data: ProductListTypes, filterBrand: string }>) => {
-            const { data, filterBrand } = action.payload;
-            state.producrList = data.filter(product => product.brandName === filterBrand);
-        },
+        // setBrandProductList: (state, action: PayloadAction<{ data: ProductListTypes, filterBrand: string }>) => {
+        //     const { data, filterBrand } = action.payload;
+        //     state.producrList = data.filter(product => product.brandName === filterBrand);
+        // },
         getTypeProductList: (_, __: PayloadAction<DataType>) => { },
         // setTypeProductList: (state, action: PayloadAction<ProductListTypes>) => {
         //     state.producrList = action.payload
         //     console.log(action.payload);
 
         // },
-        setTypeProductList: (state, action: PayloadAction<{ data: ProductListTypes, filterType: string }>) => {
-            const { data, filterType } = action.payload;
-            state.producrList = data.filter(product => product.typeName === filterType);
-        },
-        getProductLister: (_, __: PayloadAction<any>) => { },
-        setProductLister: (state, action: PayloadAction<ProductListTypes>) => {
+        // setTypeProductList: (state, action: PayloadAction<{ data: ProductListTypes, filterType: string }>) => {
+        //     const { data, filterType } = action.payload;
+        //     state.producrList = data.filter(product => product.typeName === filterType);
+        // },
+        getProductLister: (_, __: PayloadAction<GetProductListPayload>) => { },
+        setProductLister: (state, action: PayloadAction<SetProductListPayload>) => {
             // state.selectedProduct = action.payload;
-
-            state.producrList = action.payload
+            const { total, isOverwrite, product } = action.payload
+            state.totalCount = total
+            // state.producrList = action.payload
+            if (isOverwrite) {
+                state.producrList = product
+            } else {
+                state.producrList.push(...product)
+            }
 
         },
 
@@ -129,16 +136,16 @@ export const {
     addNewProduct,
     addNewProductFailure,
     setSavedStatus,
-    getFilterProduct,
-    setFilterProduct,
+    // getFilterProduct,
+    // setFilterProduct,
     getTypeProduct,
     setTypeProduct,
     getBrandProduct,
     setBrandProduct,
     getBrandProductList,
-    setBrandProductList,
+    // setBrandProductList,
     getTypeProductList,
-    setTypeProductList,
+    // setTypeProductList,
     getProductLister,
     setProductLister
 
@@ -152,11 +159,11 @@ export const ProductSelectors = {
     getSinglePost: (state: Rootstate) => state.productReducer.singleProduct,
     getError: (state: Rootstate) => state.productReducer.error,
     getSavedProduct: (state: Rootstate) => state.productReducer.savedProduct,
-    getfilterProducts: (state: Rootstate) => state.productReducer.filterProduct,
+    // getfilterProducts: (state: Rootstate) => state.productReducer.filterProduct,
     getTypeProducts: (state: Rootstate) => state.productReducer.typeProduct,
     getBrandProducts: (state: Rootstate) => state.productReducer.brandProduct,
     getAllProductList: (state: Rootstate) => state.productReducer.producrList,
-    getProductListers: (state: Rootstate) => state.productReducer.producrList,
+    getTotalProductCount: (state: Rootstate) => state.productReducer.totalCount,
 
 
 
