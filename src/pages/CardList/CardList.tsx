@@ -10,16 +10,27 @@ type CardsListProps = {
 
 }
 const CardList: FC<CardsListProps> = ({ cardsList }) => {
+
+
     const dispatch = useDispatch();
+    const savedProduct = useSelector(ProductSelectors.getSavedProduct)
     const productList = useSelector(ProductSelectors.getProductLister);
 
+    // console.log(savedProduct.length);
+    
     const onSavedStatus = (card: ProductTypes) => (status: SaveStatus) => {
-        dispatch(setSavedStatus({ card, status }))
+        // if (savedProduct.length > 5) {
+        //     alert('нельзя больше 5')
+        //     dispatch(setSavedStatus({ card, status:SaveStatus.NotSaved }))
+        // }else{
+        
+            dispatch(setSavedStatus({ card, status }))
+        // }
     }
 
     // useEffect(() => {
-        // Вызываем ваш action для получения списка продуктов
-        // dispatch(getProductList())
+    // Вызываем ваш action для получения списка продуктов
+    // dispatch(getProductList())
 
     // }, [dispatch]);
 

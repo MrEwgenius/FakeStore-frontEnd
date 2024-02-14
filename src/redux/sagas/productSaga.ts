@@ -192,15 +192,15 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
             const { rows, count } = response.data;
 
             // Если есть выбранный бренд или тип, фильтруем данные
-            const filteredRows = (brandName || typeName)
-                ?
-                rows.filter(product =>
-                    (!brandName || product.brandName === brandName)
-                    &&
-                    (!typeName || product.typeName === typeName)
-                )
-                :
-                rows;
+            // const filteredRows = (brandName || typeName)
+            //     ?
+            //     rows.filter(product =>
+            //         (!brandName || product.brandName === brandName)
+            //         &&
+            //         (!typeName || product.typeName === typeName)
+            //     )
+            //     :
+            //     rows;
 
             yield put(setProductLister({
                 total: count,

@@ -31,8 +31,14 @@
     .containerProducts {
         // background-color: #53a9d1;
         // width: 1000px;
+        // height: calc(100vh - 80px);
         width: 100%;
-        background-color: #584e4e;
+        // background-color: #584e4e;
+        .paginate{
+            margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        }
         .products {
             display: flex;
             justify-content: center;

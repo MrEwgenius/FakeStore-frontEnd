@@ -30,11 +30,9 @@ const ShopPage = () => {
 
 
     useEffect(() => {
-        // (dispatch(getProductList({ page: 1 })))
         dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined }))
     }, [dispatch])
 
-    console.log(allProducts);
 
     const onCategoryClick = (category: string) => {
         setSelectedCategory(category);
@@ -56,21 +54,6 @@ const ShopPage = () => {
         navigate(newPath);
         dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined }));
     }
-    // const onCategoryClick = (category: string) => {
-    //     setSelectedCategory(category);
-    //     const newPath = `/product/filter/${category}/${selectedBrand || ''}`;
-    //     navigate(newPath);
-    //     dispatch(getProductLister({ typeName: category, brandName: selectedBrand || '' }));
-    // };
-
-    // const clickOnBrand = (brand: string) => {
-    //     setSelectedBrand(brand)
-    //     const newPath = `/product/filter/${selectedCategory || ''}/${brand}`;
-    //     navigate(newPath);
-    //     dispatch(getProductLister({ brandName: brand, typeName: selectedCategory || '' }));
-    // }
-
-
 
     const clickOnHome = () => {
         navigate(`/`)
@@ -115,16 +98,6 @@ const ShopPage = () => {
         );
     };
 
-    
-
-
-
-
-
-
-    const clickOnTabs = () => {
-        // return filter ? filterPost : productList;
-    }
 
     useEffect(() => {
         { (dispatch(getTypeProduct())) }
@@ -139,7 +112,7 @@ const ShopPage = () => {
         () => Math.ceil(totalCount / PER_PAGE),
         [totalCount]
     );
-    
+
     const handlePageChange = (pageNumber: number) => {
         setPage(pageNumber);
         dispatch(getProductLister({
@@ -151,6 +124,7 @@ const ShopPage = () => {
     };
 
     let items = [];
+
     for (let number = 1; number <= pagesCount; number++) {
         items.push(
             <Pagination.Item onClick={() => handlePageChange(number)} key={number} active={number === page}>
@@ -228,7 +202,7 @@ const ShopPage = () => {
                     </Accordion>
                 </div>
                 <div className={style.containerProducts}>
-                    <div className={style.title}>Title</div>
+                    <div className={style.title}>{typeName ?  typeName : 'Одежда' }</div>
                     <div className={style.sortProducts}>
                         <Dropdown as={ButtonGroup}>
                             <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">Размер</Dropdown.Toggle>
@@ -289,7 +263,7 @@ const ShopPage = () => {
                             : <div>daw</div>
                         } */}
                     </div>
-                    <Pagination>{items}</Pagination>
+                    <Pagination className={style.paginate}>{items.length < 2 ? null : items}</Pagination>
                 </div>
             </div >
         </div>

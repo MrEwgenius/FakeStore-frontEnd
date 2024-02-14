@@ -14,6 +14,7 @@ import Abaut from "src/components/Abaut/Abaut";
 import Popular from "src/components/Popular/Popular";
 import ShopPage from "./ShopPage/ShopPage";
 import FavoriteProducts from "./FavoriteProducts/FavoriteProducts";
+import Basket from "./Basket/Basket";
 
 export enum RoutesList {
 
@@ -25,6 +26,7 @@ export enum RoutesList {
     SingleProduct = '/product/:id',
     AddProduct = '/addproduct',
     FavoriteProducts = '/savedproduct',
+    Basket = '/basket',
 
     Cards = '/cards',
     Post = '/titles/:id',
@@ -50,6 +52,7 @@ const Router = () => {
                         <Abaut />
                     </>} />
                     <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts />} />
+                    <Route path={RoutesList.Basket} element={<Basket />} />
                     <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
                     <Route path={RoutesList.Registration} element={<SignUp />} />
                     <Route path={RoutesList.AddProduct} element={<AddProduct />} />

@@ -3,9 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus,  SetProductListPayload,  TypeListTypes } from '../../@types';
+import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
 import { AddPostDataPayload, GetProductListPayload, GetProductPayload } from '../@types';
 
+
+let lokStorGet = localStorage.getItem('SavedProduct')
 
 type initialState = {
     selectedProduct: ProductListTypes,
@@ -17,7 +19,7 @@ type initialState = {
     brandProduct: BrandListTypes,
     producrList: ProductListTypes,
     totalCount: number,
-
+    producrListBasket: ProductListTypes,
 
 }
 
@@ -25,12 +27,13 @@ const initialState: initialState = {
     selectedProduct: [],
     singleProduct: null,
     error: null,
-    savedProduct: [],
+    savedProduct: lokStorGet ? JSON.parse(lokStorGet) : [],
     // filterProduct: [],
     typeProduct: [],
     brandProduct: [],
     producrList: [],
     totalCount: 0,
+    producrListBasket: [],
 
 };
 const productSlice = createSlice({
@@ -67,17 +70,28 @@ const productSlice = createSlice({
             const isSaved = status === SaveStatus.Saved
             const mainIndex = isSaved ? savedIndex : 1
 
+
             mainIndex === -1 ?
+
                 state.savedProduct.push(card)
                 :
                 state.savedProduct.splice(mainIndex, 1)
-        },
+            localStorage.setItem('SavedProduct', JSON.stringify(state.savedProduct))
 
-        // getFilterProduct: (_, __: PayloadAction<string>) => { },
-        // setFilterProduct: (state, action: PayloadAction<ProductListTypes>) => {
-            // state.filterProduct = action.payload;
-            // state.producrList = action.payload
-        // },
+
+        },
+        setBasketProduct: (state, action: PayloadAction<{ card: ProductTypes }>) => {
+
+            const { card } = action.payload;
+            state.producrListBasket.push(card)
+        },
+        delBasketProduct: (state, action: PayloadAction<{ card: ProductTypes }>) => {
+            const { card } = action.payload;
+            const delIndex = state.producrListBasket.findIndex(item => item.id === card.id);
+            if (delIndex !== -1) {
+                state.producrListBasket.splice(delIndex, 1);
+            }
+        },
         getTypeProduct: (_, __: PayloadAction<undefined>) => { },
         setTypeProduct: (state, action: PayloadAction<TypeListTypes>) => {
             state.typeProduct = action.payload
@@ -147,7 +161,9 @@ export const {
     getTypeProductList,
     // setTypeProductList,
     getProductLister,
-    setProductLister
+    setProductLister,
+    setBasketProduct,
+    delBasketProduct,
 
 
 
@@ -164,6 +180,7 @@ export const ProductSelectors = {
     getBrandProducts: (state: Rootstate) => state.productReducer.brandProduct,
     getAllProductList: (state: Rootstate) => state.productReducer.producrList,
     getTotalProductCount: (state: Rootstate) => state.productReducer.totalCount,
+    getBasketProduct: (state: Rootstate) => state.productReducer.producrListBasket
 
 
 

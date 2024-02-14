@@ -30,8 +30,8 @@ const Header = () => {
         navigate(`/`)
 
     }
-    const clickOnAddProduct = () => {
-        navigate(RoutesList.AddProduct)
+    const clickOnBasket = () => {
+        navigate(RoutesList.Basket)
 
     }
     const clickOnSavedProduct = () => {
@@ -70,7 +70,7 @@ const Header = () => {
                     {/* <div onClick={clickOnHome} className={style.nav}>Home</div> */}
                     {/* <div onClick={clickOnProducts} className={style.nav}>Products</div> */}
                     {/* <div onClick={clickOnAddProduct} className={style.nav}>Add Product</div> */}
-                    <div className={classNames(style.nav, style.image)}>
+                    <div onClick={clickOnBasket} className={classNames(style.nav, style.image)}>
                         <img src={backet} alt="#!" />
                     </div>
                     <div onClick={clickOnUser} className={classNames(style.nav, style.image,
