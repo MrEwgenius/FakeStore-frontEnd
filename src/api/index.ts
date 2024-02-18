@@ -45,6 +45,34 @@ const getBrand = () => {
 
 
 
+const getBasketProduct = (token: string) => {
+    return API.get(`/basket/getbasketproduct`,
+        {},
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        },);
+}
+const addBasketProduct = (token: string, id: number) => {
+    return API.post(`/basket/addbasketproduct`,
+        { productId: id },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        },);
+}
+const removeBasketProduct = (token: string, id: number) => {
+    return API.delete(`/basket/delbasketproduct/${id}`, {},
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        },);
+}
+
+
 const getSingleProduct = (id: string) => {
     return API.get(`/product/${id}/`);
 }
@@ -79,6 +107,8 @@ export default {
     // getFilterProducts,
     getType,
     getBrand,
-
+    getBasketProduct,
+    removeBasketProduct,
+    addBasketProduct,
 
 }

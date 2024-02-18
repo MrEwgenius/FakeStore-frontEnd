@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { BrandListTypes, DataBrand, DataType, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
+import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
 import { AddPostDataPayload, GetProductListPayload, GetProductPayload } from '../@types';
 
 
@@ -20,6 +20,7 @@ type initialState = {
     producrList: ProductListTypes,
     totalCount: number,
     producrListBasket: ProductListTypes,
+    basketProducts: ProductListTypes,
 
 }
 
@@ -34,6 +35,7 @@ const initialState: initialState = {
     producrList: [],
     totalCount: 0,
     producrListBasket: [],
+    basketProducts: [],
 
 };
 const productSlice = createSlice({
@@ -45,20 +47,14 @@ const productSlice = createSlice({
 
         getProductList: (_, __: PayloadAction<GetProductPayload>) => { },
         setProductList: (state, action: PayloadAction<ProductListTypes>) => {
-            // state.selectedProduct = action.payload;
-
             state.producrList = action.payload
-
         },
         getSingleProduct: (_, __: PayloadAction<string>) => { },
         setSingleProduct: (state, action: PayloadAction<ProductTypes | null>) => {
             state.singleProduct = action.payload;
         },
         addNewProduct: (_, __: PayloadAction<AddPostDataPayload>) => { },
-        // addNewProduct: (state, action: PayloadAction<ProductTypes | null>) => {
-        //     // Обновляем свойство addedProduct
-        //     state.addedProduct = action.payload;
-        // },
+
         addNewProductFailure: (state, action: PayloadAction<any | null>) => {
             state.error = action.payload;
 
@@ -104,37 +100,28 @@ const productSlice = createSlice({
 
         },
         getBrandProductList: (_, __: PayloadAction<DataBrand>) => { },
-        // setBrandProductList: (state, action: PayloadAction<ProductListTypes>) => {
-        //     state.producrList = action.payload
-        //     console.log(action.payload);
 
-        // },
-        // setBrandProductList: (state, action: PayloadAction<{ data: ProductListTypes, filterBrand: string }>) => {
-        //     const { data, filterBrand } = action.payload;
-        //     state.producrList = data.filter(product => product.brandName === filterBrand);
-        // },
         getTypeProductList: (_, __: PayloadAction<DataType>) => { },
-        // setTypeProductList: (state, action: PayloadAction<ProductListTypes>) => {
-        //     state.producrList = action.payload
-        //     console.log(action.payload);
 
-        // },
-        // setTypeProductList: (state, action: PayloadAction<{ data: ProductListTypes, filterType: string }>) => {
-        //     const { data, filterType } = action.payload;
-        //     state.producrList = data.filter(product => product.typeName === filterType);
-        // },
         getProductLister: (_, __: PayloadAction<GetProductListPayload>) => { },
         setProductLister: (state, action: PayloadAction<SetProductListPayload>) => {
-            // state.selectedProduct = action.payload;
             const { total, isOverwrite, product } = action.payload
             state.totalCount = total
-            // state.producrList = action.payload
             if (isOverwrite) {
                 state.producrList = product
             } else {
                 state.producrList.push(...product)
             }
 
+        },
+        getBasketProducts: (_, __: PayloadAction<undefined>) => { },
+        setBasketProducts: (state, action: PayloadAction<ProductListTypes>) => {
+            state.basketProducts = action.payload
+        },
+        deleteBasketProduct: (_, __: PayloadAction<number>) => { },
+        addBasketProductFavorite: (_, __: PayloadAction<number>) => { },
+        setBasketProductFavorite: (state, action: PayloadAction<ProductListTypes>) => {
+            state.basketProducts = action.payload
         },
 
     },
@@ -164,6 +151,11 @@ export const {
     setProductLister,
     setBasketProduct,
     delBasketProduct,
+    getBasketProducts,
+    setBasketProducts,
+    deleteBasketProduct,
+    addBasketProductFavorite,
+    setBasketProductFavorite,
 
 
 
@@ -180,7 +172,8 @@ export const ProductSelectors = {
     getBrandProducts: (state: Rootstate) => state.productReducer.brandProduct,
     getAllProductList: (state: Rootstate) => state.productReducer.producrList,
     getTotalProductCount: (state: Rootstate) => state.productReducer.totalCount,
-    getBasketProduct: (state: Rootstate) => state.productReducer.producrListBasket
+    getBasketProduct: (state: Rootstate) => state.productReducer.producrListBasket,
+    getBasketProducts: (state: Rootstate) => state.productReducer.basketProducts,
 
 
 

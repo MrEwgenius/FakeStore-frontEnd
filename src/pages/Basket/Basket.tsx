@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import style from './Basket.module.scss'
 import basketEmpty from '../../assets/basketEmpty.png'
 import { useNavigate } from "react-router-dom"
 import { RoutesList } from "../Router"
 import { useDispatch, useSelector } from "react-redux"
-import { ProductSelectors, delBasketProduct } from "src/redux/reducers/productSlice"
+import { ProductSelectors, delBasketProduct, deleteBasketProduct, getBasketProducts } from "src/redux/reducers/productSlice"
 import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
@@ -21,9 +21,10 @@ const Basket = () => {
     const dispatch = useDispatch()
 
     const basketProduct = useSelector(ProductSelectors.getBasketProduct)
+    const basketProducts = useSelector(ProductSelectors.getBasketProducts)
 
     const removeBasketProduct = (card: ProductTypes) => {
-        dispatch(delBasketProduct({card}))
+        dispatch(delBasketProduct({ card }))
     }
     const clickOnProduct = () => {
         navigate(RoutesList.Filter)
@@ -32,11 +33,28 @@ const Basket = () => {
 
     const calculateTotalPrice = () => {
         let totalPrice = 0;
-        basketProduct.forEach((product) => {
+        basketProducts.forEach((product) => {
             totalPrice += product.price;
         });
         return totalPrice;
     };
+    useEffect(() => {
+        dispatch(getBasketProducts())
+    }, [dispatch])
+    console.log(basketProducts);
+
+    const onDeletePost = (id: number) => {
+        if (basketProducts
+        ) {
+            basketProducts.map((product) => {
+                if (id === product.id) {
+
+                    dispatch(deleteBasketProduct(product.id));
+                    dispatch(getBasketProducts())
+                }
+            })
+        }
+    }
 
 
 
@@ -50,7 +68,7 @@ const Basket = () => {
     return (
         <div className={style.containerBasket}>
 
-            {!!basketProduct.length
+            {!!basketProducts.length
                 ?
                 <>
                     <div className={style.basketTitle}>КОРЗИНА</div><div className={style.basketList}>
@@ -86,7 +104,7 @@ const Basket = () => {
 
                         <div className={style.basketProductList}>
 
-                            {basketProduct && basketProduct.map((card) => (
+                            {basketProducts && basketProducts.map((card) => (
                                 <div key={card.id} className={style.containerProduct}>
 
                                     <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.img} alt="" />
@@ -94,7 +112,7 @@ const Basket = () => {
                                         <div onClick={() => { }} className={style.name}>{card.name}</div>
                                         <div className={style.typeProduct}>{card.typeName}</div>
                                         <div className={style.price}>{card.price}$</div>
-                                        <img onClick={() => removeBasketProduct(card)} className={style.close} src={close} alt="#!" />
+                                        <img onClick={() => onDeletePost(card.id)} className={style.close} src={close} alt="#!" />
 
                                     </div>
                                 </div>

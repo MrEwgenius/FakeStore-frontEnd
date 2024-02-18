@@ -1,25 +1,5 @@
 import React from 'react';
 
-
-// export type ProductTypes = {
-//     id: number,
-//     title: string,
-//     price: number,
-//     category: string,
-//     description: string,
-//     image: string,
-//     ratting: {
-//         rate: number,
-//         count: number,
-//     }
-//     // category: {
-//     //     id: number,
-//     //     name: string,
-//     //     image: string
-//     // },
-//     // images: string[]
-
-// }
 export type ProductTypes = {
     id: number,
     name: string,
@@ -33,13 +13,6 @@ export type ProductTypes = {
     brandName: string,
     typeName: string,
 
-
-    // category: {
-    //     id: number,
-    //     name: string,
-    //     image: string
-    // },
-    // images: string[]
 
 }
 
@@ -97,3 +70,7 @@ export type DataType = {
     typeName: string
 
 }
+export type PayloadWithDataAndCallback<Data> = {
+    data: Data,
+}
+export type DeleteProductPayload = PayloadWithDataAndCallback<number>

@@ -5,6 +5,11 @@ export type ProductsData = {
     count: number,
     rows: ProductListTypes,
 }
+export type BasketProductsData = {
+
+    count: number,
+    rows: ProductListTypes,
+}
 export type BrandProductsData = {
 
     count: number,
