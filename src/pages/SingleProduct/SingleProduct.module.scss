@@ -8,10 +8,14 @@
 }
 .mainImageWrap {
     position: relative;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    // height: 678px;
 }
 .mainImg {
-    width: 200px;
-    // height: 400px;
+    width: 452px;
+    object-fit: contain;
 }
 .saveImg {
     display: flex;
@@ -180,4 +184,39 @@
 
 #color1 + label {
     background-color: #fff;
+}
+.parent {
+    // width: 700px;
+    height: 100%;
+    background-color: #ecd0d0;
+    display: grid;
+    flex-wrap: wrap;
+    gap: 10px;
+    grid-template-columns: repeat(2, 200px);
+    grid-template-rows: repeat(3, 1fr);
+    &:nth-child(1) {
+        width: 300px;
+        background-color: #72d416;
+    }
+    &:nth-child(2) {
+        width: 300px;
+        background-color: #b45a30;
+    }
+}
+.allImages {
+    width: 85px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 680px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 0; /* Ширина полосы прокрутки */
+        height: 0; /* Высота полосы прокрутки */
+    }
+    img {
+        width: 85px;
+        object-fit: contain;
+        cursor: pointer;
+    }
 }

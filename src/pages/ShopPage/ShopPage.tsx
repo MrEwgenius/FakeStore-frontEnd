@@ -54,6 +54,7 @@ const ShopPage = () => {
         navigate(newPath);
         dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined }));
     }
+    console.log(allProducts);
 
     const clickOnHome = () => {
         navigate(`/`)
@@ -111,6 +112,7 @@ const ShopPage = () => {
     const pagesCount = useMemo(
         () => Math.ceil(totalCount / PER_PAGE),
         [totalCount]
+
     );
 
     const handlePageChange = (pageNumber: number) => {
@@ -124,6 +126,7 @@ const ShopPage = () => {
     };
 
     let items = [];
+
 
     for (let number = 1; number <= pagesCount; number++) {
         items.push(
@@ -202,7 +205,7 @@ const ShopPage = () => {
                     </Accordion>
                 </div>
                 <div className={style.containerProducts}>
-                    <div className={style.title}>{typeName ?  typeName : 'Одежда' }</div>
+                    <div className={style.title}>{typeName ? typeName : 'Одежда'}</div>
                     <div className={style.sortProducts}>
                         <Dropdown as={ButtonGroup}>
                             <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">Размер</Dropdown.Toggle>

@@ -114,6 +114,8 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
             const { rows, count } = response.data;
 
 
+            console.log(count);
+
             yield put(setProductLister({
                 total: count,
                 product: rows,

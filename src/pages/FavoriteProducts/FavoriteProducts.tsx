@@ -14,14 +14,12 @@ const FavoriteProducts = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const productList = useSelector(ProductSelectors.getProductLister);
 
 
 
     useEffect(() => {
         dispatch(getBasketProducts())
     }, [dispatch])
-    console.log(productList);
  
     const onSavedStatus = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
@@ -62,7 +60,7 @@ const FavoriteProducts = () => {
 
                     <div key={card.id} className={style.containerProduct}>
 
-                        <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.img} alt="" />
+                        <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
                         <div className={style.cardInfo}>
                             <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
                             <div className={style.typeProduct}>{card.typeName}</div>

@@ -78,8 +78,8 @@ const Header = () => {
                     )}>
                         <img src={user} alt="#!" />
                     </div>
-                    <div className={classNames(style.nav, style.image)}>
-                        <img onClick={clickOnSavedProduct} src={save} alt="#!" />
+                    <div onClick={clickOnSavedProduct} className={classNames(style.nav, style.image)}>
+                        <img  src={save} alt="#!" />
                     </div>
 
                 </div>

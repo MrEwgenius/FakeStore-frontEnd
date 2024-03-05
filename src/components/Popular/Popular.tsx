@@ -25,7 +25,7 @@ const Popular = () => {
     useEffect(() => {
         // Вызываем ваш action для получения списка продуктов
         // dispatch(getProductList())
-        (dispatch(getProductList({page:2})))
+        // (dispatch(getProductList({page:2})))
        
         
 
@@ -51,9 +51,9 @@ const Popular = () => {
                 {slides.map((slide, index) => (
                     <Carousel.Item key={index}>
                         <div className={style.containerWrapper}>
-                            {slide.map((product) => (
+                            {/* {slide.map((product) => (
                                 <CardItem onSavedClick={onSavedStatus(product)} key={product.id} id={product.id} name={product.name} price={product.price} img={product.img} />
-                            ))}
+                            ))} */}
                         </div>
                     </Carousel.Item>
                 ))}

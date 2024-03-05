@@ -1,5 +1,13 @@
 import React from 'react';
 
+export type ProductImage = {
+    id: number;
+    productId: number;
+    imageUrl: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export type ProductTypes = {
     id: number,
     name: string,
@@ -12,6 +20,9 @@ export type ProductTypes = {
     clothingType: string,
     brandName: string,
     typeName: string,
+    size: [],
+    product_images: ProductImage[]
+    image: string[]
 
 
 }
@@ -39,7 +50,7 @@ export type BrandListTypes = BrandTypes[];
 
 
 export type SetProductListPayload = {
-    total:number
+    total: number
     product: ProductListTypes,
     isOverwrite: boolean;
 

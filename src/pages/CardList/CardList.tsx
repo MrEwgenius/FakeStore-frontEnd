@@ -17,14 +17,14 @@ const CardList: FC<CardsListProps> = ({ cardsList }) => {
     const productList = useSelector(ProductSelectors.getProductLister);
 
     // console.log(savedProduct.length);
-    
+
     const onSavedStatus = (card: ProductTypes) => (status: SaveStatus) => {
         // if (savedProduct.length > 5) {
         //     alert('нельзя больше 5')
         //     dispatch(setSavedStatus({ card, status:SaveStatus.NotSaved }))
         // }else{
-        
-            dispatch(setSavedStatus({ card, status }))
+
+        dispatch(setSavedStatus({ card, status }))
         // }
     }
 
@@ -38,7 +38,7 @@ const CardList: FC<CardsListProps> = ({ cardsList }) => {
         <div className={style.containerCardList}>
             {cardsList ?
                 cardsList.map((product) => (
-                    <CardItem onSavedClick={onSavedStatus(product)} key={product.id} id={product.id} name={product.name} price={product.price} img={product.img} />
+                    <CardItem onSavedClick={onSavedStatus(product)} key={product.id} id={product.id} name={product.name} price={product.price} img={product.image} />
 
                 ))
                 : <div>daw</div>
