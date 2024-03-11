@@ -20,7 +20,7 @@ export type ProductTypes = {
     clothingType: string,
     brandName: string,
     typeName: string,
-    size: [],
+    size: string[],
     product_images: ProductImage[]
     image: string[]
 

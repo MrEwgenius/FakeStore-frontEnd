@@ -74,6 +74,7 @@ export type GetProductPayload = {
 
 
 export type GetProductListPayload = {
+    size?:string,
     isOverwrite: boolean,
     page?: number
     typeName?: string 

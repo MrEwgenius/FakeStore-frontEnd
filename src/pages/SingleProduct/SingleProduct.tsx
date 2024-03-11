@@ -23,14 +23,14 @@ const SingleProduct = () => {
     }
 
 
-const arrs = [
-    "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-    "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-    "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-    "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-    "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-    "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-]
+    const arrs = [
+        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
+        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
+        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
+        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
+        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
+        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
+    ]
 
     const { id } = useParams()
     useEffect(() => {
@@ -62,11 +62,11 @@ const arrs = [
             }
         }
     };
-    const handleThumbnailClick = (index:number) => {
+    const handleThumbnailClick = (index: number) => {
         setMainImage(index);
     };
 
-    const firstImage = SingleProduct?.image 
+    const firstImage = SingleProduct
 
     console.log("firstImage:", firstImage);
 
@@ -93,10 +93,10 @@ const arrs = [
 
                             </div>
                             <div className={style.allImages}>
-                            {SingleProduct.image && SingleProduct.image.map((image, idx) => (
-                                <img key={idx} className={style.sideImg} src={process.env.REACT_APP_API_URL + image} alt="#" onClick={() => handleThumbnailClick(idx)} />
-                            ))}
-                        </div>
+                                {SingleProduct.image && SingleProduct.image.map((image, idx) => (
+                                    <img key={idx} className={style.sideImg} src={process.env.REACT_APP_API_URL + image} alt="#" onClick={() => handleThumbnailClick(idx)} />
+                                ))}
+                            </div>
                             {SingleProduct.image &&
                                 <img className={style.mainImg} src={process.env.REACT_APP_API_URL + SingleProduct.image[mainImage]} alt="#" />
                             }
@@ -109,10 +109,14 @@ const arrs = [
                         <div className={style.size}>
                             <span>Размер</span>
                             <div className={style.sizeTable}>
-                                <input name="size" id="XS" type="radio" />
-                                <label htmlFor="XS">XS</label>
+                                {SingleProduct.size && SingleProduct.size.map((sizes, idx) =>
+                                    <div key={idx}>
+                                        <label htmlFor={sizes}>{sizes}</label>
+                                        <input name="size" id={sizes} type="radio" />
+                                    </div>
+                                )}
 
-                                <input name="size" id="S" type="radio" />
+                                {/* <input name="size" id="S" type="radio" />
                                 <label htmlFor="S">S</label>
 
                                 <input name="size" id="M" type="radio" />
@@ -122,7 +126,7 @@ const arrs = [
                                 <label htmlFor="L">L</label>
 
                                 <input name="size" id="XL" type="radio" />
-                                <label htmlFor="XL">XL</label>
+                                <label htmlFor="XL">XL</label> */}
                                 {/*                                 
                                 <button className={style.sizeButton}> XS  </button>
                                 <button className={style.sizeButton}> S  </button>

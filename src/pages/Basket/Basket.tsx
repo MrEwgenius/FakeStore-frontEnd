@@ -26,7 +26,7 @@ const Basket = () => {
     const removeBasketProduct = (card: ProductTypes) => {
         dispatch(delBasketProduct({ card }))
     }
-    const clickOnProduct = () => {
+    const navigateToCatalog = () => {
         navigate(RoutesList.Filter)
 
     }
@@ -54,6 +54,10 @@ const Basket = () => {
                 }
             })
         }
+    }
+    const clickOnProduct = (id: number) => {
+        navigate(`/product/${id}`)
+
     }
 
 
@@ -109,7 +113,7 @@ const Basket = () => {
 
                                     <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
                                     <div className={style.cardInfo}>
-                                        <div onClick={() => { }} className={style.name}>{card.name}</div>
+                                        <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
                                         <div className={style.typeProduct}>{card.typeName}</div>
                                         <div className={style.price}>{card.price}$</div>
                                         <img onClick={() => onDeletePost(card.id)} className={style.close} src={close} alt="#!" />
@@ -135,7 +139,7 @@ const Basket = () => {
                     </div>
                     <button
                         className={style.buttonBasketEmpty}
-                        onClick={clickOnProduct}
+                        onClick={navigateToCatalog}
                     >
                         перейти в каталог
                     </button>

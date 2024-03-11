@@ -106,7 +106,6 @@ const productSlice = createSlice({
         getProductLister: (_, __: PayloadAction<GetProductListPayload>) => { },
         setProductLister: (state, action: PayloadAction<SetProductListPayload>) => {
             const { total, isOverwrite, product } = action.payload
-            console.log(total);
             
             state.totalCount = total
             if (isOverwrite) {

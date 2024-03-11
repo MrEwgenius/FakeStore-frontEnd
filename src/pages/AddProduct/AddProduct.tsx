@@ -3,32 +3,10 @@ import style from './AddProduct.module.scss'
 import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { ProductSelectors, addNewProduct, getProductList } from "src/redux/reducers/productSlice"
-import { ImageListType } from "react-images-uploading"
+import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 
-
-
-
-// interface FormData {
-//     name: string;
-//     price: number;
-//     rating: number;
-//     brandName: number;
-//     typeName: number;
-//     gender: string;
-//     img: File | null;
-// }
 const AddProduct: React.FC = () => {
-
-    // const [formData, setFormData] = useState<FormData>({
-    //     name: '',
-    //     price: 0,
-    //     rating: 0,
-    //     brandName: 0,
-    //     typeName: 0,
-    //     gender: '',
-    //     img: null,
-    // });
 
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
@@ -36,20 +14,11 @@ const AddProduct: React.FC = () => {
     const [price, setPrice] = useState(1000)
     const [brandName, setBrandName] = useState('')
     const [typeName, setTypeName] = useState('')
-    const [file, setFile] = useState<File | null>(null);
+    const [images, setImages] = useState<ImageListType>([]);
+    const maxNumber = 6;
+
 
     const dispatch = useDispatch();
-    const productList = useSelector(ProductSelectors.getProductLister);
-
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData((prevData) => ({ ...prevData, [name]: value }));
-    // };
-
-    // const handleFileChange = (e: any) => {
-    //     const file = e.target.files?.[0] || null;
-    //     setFormData((prevData) => ({ ...prevData, img: file }));
-    // };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -57,14 +26,9 @@ const AddProduct: React.FC = () => {
         onSubmit()
         // console.log("Form submitted:", formData);
     };
-    const selectFile = (e: any) => {
-        console.log(e.target.files[0]);
-
-        setFile(e.target.files[0]);
-    }
 
     const error = useSelector(ProductSelectors.getError);
-    console.log(error);
+    // console.log(error);
 
     useEffect(() => {
         if (error) {
@@ -72,6 +36,36 @@ const AddProduct: React.FC = () => {
             console.log('Error:', error.message);
         }
     }, [error]);
+
+
+    const [checked, setChecked] = useState<any>([])
+    const handleCheck = (event: any) => {
+        let updatedList = [...checked];
+        if (event.target.checked) {
+            updatedList = [...checked, event.target.value];
+            console.log(event.target.value);
+
+        } else {
+            updatedList.splice(checked.indexOf(event.target.value), 1);
+        }
+        setChecked(updatedList);
+    };
+
+
+
+
+
+
+    const onChange = (
+        imageList: ImageListType,
+    ) => {
+        console.log(1);
+
+        if (images.length !== imageList.length) {
+            // Вызываем обновление состояния только если изменился список изображений
+            setImages(imageList as never[]);
+        }
+    };
 
 
     const onSubmit = () => {
@@ -83,9 +77,21 @@ const AddProduct: React.FC = () => {
         formData.append('price', `${price}`);
         formData.append('brandName', brandName)
         formData.append('typeName', typeName)
-        if (file) {
-            formData.append('img', file);
+        images.forEach((image) => {
+            if (image.file) {
+                formData.append(`image`, image.file as Blob);
+            }
+        });
+        if (Array.isArray(checked)) {
+            checked.forEach(size => {
+                formData.append('size', size);
+            });
+        } else {
+            formData.append('size', checked);
         }
+        // if (file) {
+        //     formData.append('image', file);
+        // }
 
 
 
@@ -93,7 +99,7 @@ const AddProduct: React.FC = () => {
             data: formData, callback: () => { },
         }
         ))
-        console.log(formData);
+        // console.log(formData);
 
 
 
@@ -137,9 +143,98 @@ const AddProduct: React.FC = () => {
             </label>
             <br />
             <label>
-                Image:
-                <input type="file" accept="image/*" onChange={selectFile} />
+                Size:
+
             </label>
+            <br />
+            <div>
+                <label htmlFor="xs"> XS</label>
+                <input value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
+            </div>
+            <div>
+                <label htmlFor="s"> S</label>
+                <input onChange={(e) => handleCheck(e)} value={'s'} name="checkbox" id="s" type="checkbox" />
+            </div>
+            <div>
+                <label htmlFor="m"> M</label>
+                <input onChange={(e) => handleCheck(e)} value={'m'} name="checkbox" id="m" type="checkbox" />
+            </div>
+            <div>
+                <label htmlFor="l"> L</label>
+                <input onChange={(e) => handleCheck(e)} value={'l'} name="checkbox" id="l" type="checkbox" />
+            </div>
+            <div>
+                <label htmlFor="xl"> XL</label>
+                <input onChange={(e) => handleCheck(e)} value={'xl'} name="checkbox" id="xl" type="checkbox" />
+            </div>
+            <br />
+
+            <label>
+                {/* <input type="file" accept="image/*" onChange={selectFile} /> */}
+
+                Image:
+                <ReactImageUploading
+                    multiple
+                    value={images}
+                    onChange={onChange}
+                    maxNumber={maxNumber}
+
+
+
+                >
+                    {({
+                        imageList,
+                        onImageUpload,
+                        onImageRemoveAll,
+                        onImageUpdate,
+                        onImageRemove,
+                        isDragging,
+                        dragProps
+                    }) => (
+                        <div className={style.uploadImageWrapper}>
+                            <button type="button"
+                                style={isDragging ? { color: "red" } : undefined}
+                                onClick={onImageUpload}
+                                {...dragProps}
+                                disabled={maxNumber === images.length}
+                                className={style.buttonser}
+                            >
+                                Добавить изображение
+                            </button>
+                            &nbsp;
+                            <button type="button" onClick={onImageRemoveAll}>Удалить все изображения</button>
+                            {imageList.map((image, index) => (
+                                <div key={index} className={style.imageItem}>
+
+                                    <img
+                                        src={image.dataURL}
+                                        alt="#!"
+                                        width="100"
+                                    />
+                                    <div className={style.imageItemBtnWrapper}>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => onImageUpdate(index)}
+                                        >
+                                            Заменить
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => onImageRemove(index)}
+                                        >
+                                            Удалить
+                                        </button>
+
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </ReactImageUploading>
+            </label>
+            <br />
             <br />
             {error && <div className={style.error}>{`${error.message}`}</div>}
             <button type="submit">Submit</button>

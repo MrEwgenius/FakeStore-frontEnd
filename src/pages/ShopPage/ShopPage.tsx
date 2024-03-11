@@ -25,12 +25,15 @@ const ShopPage = () => {
 
     const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
     const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
+    const [selectedSize, setSelectedSize] = useState<string | undefined>(undefined);
     const { typeName, brandName } = params;
 
 
+console.log(selectedSize);
+
 
     useEffect(() => {
-        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined }))
+        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: selectedSize || undefined }))
     }, [dispatch])
 
 
@@ -40,9 +43,43 @@ const ShopPage = () => {
         if (selectedBrand) {
             newPath += `/${selectedBrand}`;
         }
-        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined }));
+        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: selectedSize || undefined }));
         navigate(newPath);
     };
+    // const clickOnSize = (size: string) => {
+    //     setSelectedSize(size)
+    //     console.log(size);
+
+    //     let newPath = '/products/filter';
+    //     if (selectedCategory) {
+    //         newPath += `/${selectedCategory}`;
+    //     }
+    //     if (selectedBrand) {
+    //         newPath += `/${selectedBrand}`;
+    //     }
+    //     newPath += `/${size}`
+    //     navigate(newPath);
+    //     dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: size, }));
+    // }
+    const clickOnSize = (size: string) => {
+        setSelectedSize(size);
+        let newPath = '/products/filter';
+        if (selectedCategory) {
+            newPath += `/${selectedCategory}`;
+        }
+        if (selectedBrand) {
+            newPath += `/${selectedBrand}`;
+        }
+        newPath += `/${size}`;
+        navigate(newPath);
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: selectedBrand || undefined,
+            typeName: selectedCategory || undefined,
+            size: size,
+        }));
+    }
+
 
     const clickOnBrand = (brand: string) => {
         setSelectedBrand(brand)
@@ -52,9 +89,9 @@ const ShopPage = () => {
         }
         newPath += `/${brand}`;
         navigate(newPath);
-        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined }));
+        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined, size: selectedSize || undefined }));
     }
-    console.log(allProducts);
+    // console.log(allProducts);
 
     const clickOnHome = () => {
         navigate(`/`)
@@ -210,11 +247,11 @@ const ShopPage = () => {
                         <Dropdown as={ButtonGroup}>
                             <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">Размер</Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
-                                <Dropdown.Item eventKey="1">XS</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">S</Dropdown.Item>
-                                <Dropdown.Item eventKey="3">M</Dropdown.Item>
-                                <Dropdown.Item eventKey="4">L</Dropdown.Item>
-                                <Dropdown.Item eventKey="5">XL</Dropdown.Item>
+                                <Dropdown.Item onClick={() => clickOnSize('xs')} eventKey="1">XS</Dropdown.Item>
+                                <Dropdown.Item onClick={() => clickOnSize('s')} eventKey="2">S</Dropdown.Item>
+                                <Dropdown.Item onClick={() => clickOnSize('m')} eventKey="3">M</Dropdown.Item>
+                                <Dropdown.Item onClick={() => clickOnSize('l')} eventKey="4">L</Dropdown.Item>
+                                <Dropdown.Item onClick={() => clickOnSize('xl')} eventKey="5">XL</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
                         <Dropdown as={ButtonGroup}>
