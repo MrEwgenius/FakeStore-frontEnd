@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { ProductSelectors, addNewProduct, getProductList } from "src/redux/reducers/productSlice"
 import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
+import classNames from "classnames"
 
 const AddProduct: React.FC = () => {
 
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
     const [clothingType, setClothingType] = useState('bike')
-    const [price, setPrice] = useState(1000)
+    const [price, setPrice] = useState(100)
     const [brandName, setBrandName] = useState('')
     const [typeName, setTypeName] = useState('')
     const [images, setImages] = useState<ImageListType>([]);
@@ -108,79 +109,77 @@ const AddProduct: React.FC = () => {
 
     return (
 
-        <form onSubmit={handleSubmit} >
-            <label>
-                Name:
+        <form className={style.formContainer} onSubmit={handleSubmit} >
+            <label form="name" className={style.group}>
+                <span className={style.groupName}>Название продукта:</span>
                 <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
-            <br />
-            <label>
-                Price:
+
+            <label form="price" className={style.group}>
+                <span className={style.groupName}>Цена:</span>
                 <input type="number" name="price" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
             </label>
-            <br />
-            <label>
-                Brand Name:
+
+            <label form="brandName" className={style.group}>
+                <span className={style.groupName}>Название бренда:</span>
                 <input type="text" name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)} />
             </label>
-            <br />
-            <label>
-                Type Name:
+
+            <label form="typedName" className={style.group}>
+                <span className={style.groupName}>Тип продукта:</span>
                 <input type="text" name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)} />
             </label>
-            <br />
-            <label>
-                clothingType:
+
+            <label form="clothingType" className={style.group}>
+                <span className={style.groupName}>clothingType:</span>
                 <input type="text" name="clothingType" value={clothingType} onChange={(e) => setClothingType(e.target.value)} />
             </label>
-            <br />
-            <label>
-                Gender:
+
+            <div className={style.group}>
+                <span className={style.groupName}>Мужское/Женское:</span>
                 <select name="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
                     <option value="male">man</option>
                     <option value="female">women</option>
                 </select>
-            </label>
-            <br />
-            <label>
-                Size:
+            </div>
 
-            </label>
-            <br />
-            <div>
-                <label htmlFor="xs"> XS</label>
-                <input value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
-            </div>
-            <div>
-                <label htmlFor="s"> S</label>
-                <input onChange={(e) => handleCheck(e)} value={'s'} name="checkbox" id="s" type="checkbox" />
-            </div>
-            <div>
-                <label htmlFor="m"> M</label>
-                <input onChange={(e) => handleCheck(e)} value={'m'} name="checkbox" id="m" type="checkbox" />
-            </div>
-            <div>
-                <label htmlFor="l"> L</label>
-                <input onChange={(e) => handleCheck(e)} value={'l'} name="checkbox" id="l" type="checkbox" />
-            </div>
-            <div>
-                <label htmlFor="xl"> XL</label>
-                <input onChange={(e) => handleCheck(e)} value={'xl'} name="checkbox" id="xl" type="checkbox" />
-            </div>
-            <br />
+            <div className={style.group}>
+                <span className={style.groupName}>Размер:</span>
+                <div className={style.groupSizes}>
+                    <div>
+                        <label htmlFor="xs"> XS</label>
+                        <input className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
+                    </div>
 
-            <label>
-                {/* <input type="file" accept="image/*" onChange={selectFile} /> */}
+                    <div>
+                        <label htmlFor="s">S </label>
+                        <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'s'} name="checkbox" id="s" type="checkbox" />
+                    </div>
 
-                Image:
+                    <div>
+                        <label htmlFor="m"> M</label>
+                        <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'m'} name="checkbox" id="m" type="checkbox" />
+                    </div>
+
+                    <div>
+                        <label htmlFor="l"> L</label>
+                        <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'l'} name="checkbox" id="l" type="checkbox" />
+                    </div>
+
+                    <div>
+                        <label htmlFor="xl"> XL</label>
+                        <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'xl'} name="checkbox" id="xl" type="checkbox" />
+                    </div>
+                </div  >
+            </div>
+
+            <div className={style.group}>
+                <span className={style.groupName}>Изображения продукта:</span>
                 <ReactImageUploading
                     multiple
                     value={images}
                     onChange={onChange}
                     maxNumber={maxNumber}
-
-
-
                 >
                     {({
                         imageList,
@@ -192,17 +191,28 @@ const AddProduct: React.FC = () => {
                         dragProps
                     }) => (
                         <div className={style.uploadImageWrapper}>
-                            <button type="button"
-                                style={isDragging ? { color: "red" } : undefined}
-                                onClick={onImageUpload}
-                                {...dragProps}
-                                disabled={maxNumber === images.length}
-                                className={style.buttonser}
-                            >
-                                Добавить изображение
-                            </button>
-                            &nbsp;
-                            <button type="button" onClick={onImageRemoveAll}>Удалить все изображения</button>
+                            <div className={style.buttonGroup}>
+                                <button
+                                    type="button"
+                                    style={isDragging ? { color: "red" } : undefined}
+                                    onClick={onImageUpload}
+                                    {...dragProps}
+                                    disabled={maxNumber === images.length}
+                                    className={style.addImageButton}
+                                >
+                                    Добавить
+                                </button>
+                                <button
+                                    className={classNames(style.removeAllImageButton,
+                                        { [style.none]: images.length < 1 })
+                                    }
+                                    type="button"
+                                    onClick={onImageRemoveAll}
+                                >
+                                    Удалить все 
+                                </button>
+                            </div>
+
                             {imageList.map((image, index) => (
                                 <div key={index} className={style.imageItem}>
 
@@ -233,12 +243,11 @@ const AddProduct: React.FC = () => {
                         </div>
                     )}
                 </ReactImageUploading>
-            </label>
-            <br />
-            <br />
+            </div >
+
             {error && <div className={style.error}>{`${error.message}`}</div>}
-            <button type="submit">Submit</button>
-        </form>
+            <button className={style.button} type="submit">Добавить продукт</button>
+        </form >
 
     )
 }
