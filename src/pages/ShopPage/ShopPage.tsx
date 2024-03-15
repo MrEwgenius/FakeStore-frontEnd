@@ -17,7 +17,6 @@ const ShopPage = () => {
     const location = useLocation()
     const productList = useSelector(ProductSelectors.getProductLister);
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
-    // const filterPost = useSelector(ProductSelectors.getfilterProducts)
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
     const allProducts = useSelector(ProductSelectors.getAllProductList)
     const totalCount = useSelector(ProductSelectors.getTotalProductCount)
@@ -29,7 +28,6 @@ const ShopPage = () => {
     const { typeName, brandName } = params;
 
 
-console.log(selectedSize);
 
 
     useEffect(() => {

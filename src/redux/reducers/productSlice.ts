@@ -106,7 +106,7 @@ const productSlice = createSlice({
         getProductLister: (_, __: PayloadAction<GetProductListPayload>) => { },
         setProductLister: (state, action: PayloadAction<SetProductListPayload>) => {
             const { total, isOverwrite, product } = action.payload
-            
+
             state.totalCount = total
             if (isOverwrite) {
                 state.producrList = product
@@ -124,6 +124,7 @@ const productSlice = createSlice({
         setBasketProductFavorite: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
         },
+        removeProduct: (_, __: PayloadAction<number | undefined>) => { },
 
     },
 
@@ -157,6 +158,7 @@ export const {
     deleteBasketProduct,
     addBasketProductFavorite,
     setBasketProductFavorite,
+    removeProduct,
 
 
 

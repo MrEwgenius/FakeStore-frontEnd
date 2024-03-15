@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_KEY } from 'src/utils/constans';
 import { SignInUserPayload, SignUpUserPayload, UserInfoData } from '../@types';
 
 type initialState = {
-    userRole: any;
+    userRole: string;
     accessToken: string,
     userInfo: UserInfoData | null,
 }

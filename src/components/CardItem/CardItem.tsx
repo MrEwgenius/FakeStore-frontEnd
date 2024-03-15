@@ -1,12 +1,16 @@
-import React, { FC, useEffect } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, getProductList, setSavedStatus } from "src/redux/reducers/productSlice";
+import { ProductSelectors, getProductList, getProductLister, removeProduct, setSavedStatus } from "src/redux/reducers/productSlice";
 import style from './CardItem.module.scss'
 import { useNavigate } from "react-router-dom";
 import save from '../../assets/Save.svg'
 import activeSave from '../../assets/Save-active.svg'
+import deleteProduct from '../../assets/close.svg'
 import { ProductImage, ProductTypes, SaveStatus } from "src/@types";
 import { Carousel } from "react-bootstrap";
+import { JwtPayload, jwtDecode } from "jwt-decode";
+
+import { AuthSelectors, signInUser } from "src/redux/reducers/authSlice";
 
 
 type CardsListProps = {
@@ -29,14 +33,22 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) =
     const savedProduct = useSelector(ProductSelectors.getSavedProduct)
 
     const saveIndex = savedProduct.findIndex(item => item.id === id)
-
-    // useEffect(() => {
-    // Вызываем ваш action для получения списка продуктов
-    // dispatch(getProductList())
-
-    // }, [dispatch]);
+    const [userRole, setUserRole] = useState<any>(null);
 
 
+    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
+
+    useEffect(() => {
+
+    }, [dispatch])
+
+
+    useEffect(() => {
+        if (accessToken) {
+            const decodedToken = jwtDecode(accessToken);
+            setUserRole(decodedToken);
+        }
+    }, [accessToken]);
 
 
     const clickOnProduct = () => {
@@ -56,9 +68,18 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) =
     for (let i = 0; i < img.length; i += itemsPerSlide) {
         slides.push(img.slice(i, i + itemsPerSlide));
     }
+    const removeCard = () => {
+        dispatch(removeProduct(Number(id)))
+        dispatch(getProductLister({ isOverwrite: true, }))
+
+    }
+
+
     return (
         <div className={style.containerCardItem}>
-
+            {userRole && userRole.role === 'ADMIN' && (
+                <img onClick={removeCard} className={style.removeProduct} src={deleteProduct} alt="#!" />
+            )}
             <div className={style.image}>
                 {/* {img && img.map((image: ProductImage) => (
                     <img className={style.mainImg} key={image.id} src={process.env.REACT_APP_API_URL + image.imageUrl} alt="#" />

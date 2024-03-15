@@ -2,7 +2,7 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductList, setProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
+import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, removeProduct, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductList, setProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
 import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
 import { AddPostDataPayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
@@ -38,6 +38,21 @@ function* getSingleProductWorker(action: PayloadAction<string>) {
     )
     if (response.ok && response.data) {
         yield put(setSingleProduct(response.data))
+    } else {
+        console.error('Activate User Error', response.problem);
+    }
+
+}
+
+function* deleteProductWorker(action: PayloadAction<number | undefined>) {
+
+
+    const response: ApiResponse<undefined> = yield call(
+        API.deleteProduct,
+        action.payload
+    )
+    if (response.ok && response.data) {
+        // yield put(removeProduct(response.data))
     } else {
         console.error('Activate User Error', response.problem);
     }
@@ -100,7 +115,7 @@ function* BrandProductsWorker() {
 
 function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
     try {
-        const { brandName, typeName, page, isOverwrite,size } = action.payload;
+        const { brandName, typeName, page, isOverwrite, size } = action.payload;
 
         const response: ApiResponse<ProductsData | null> = yield call(
             API.getProducts,
@@ -115,7 +130,6 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
             const { rows, count } = response.data;
 
 
-            console.log(count);
 
             yield put(setProductLister({
                 total: count,
@@ -219,6 +233,7 @@ export default function* productSagaWatcher() {
         takeLatest(getBasketProducts, getBasketProduct),
         takeLatest(deleteBasketProduct, removeBasketProduct),
         takeLatest(addBasketProductFavorite, addBasketProduct),
+        takeLatest(removeProduct, deleteProductWorker),
 
 
     ])

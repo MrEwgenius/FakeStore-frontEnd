@@ -76,6 +76,9 @@ const removeBasketProduct = (token: string, id: number) => {
 const getSingleProduct = (id: string) => {
     return API.get(`/product/${id}/`);
 }
+const deleteProduct  = (id?: number) => {
+    return API.delete(`/product/${id}/`);
+}
 const signUpUser = (data: SignUpUserData) => {
     return API.post(`/user/registration`, data);
 }
@@ -110,5 +113,6 @@ export default {
     getBasketProduct,
     removeBasketProduct,
     addBasketProduct,
+    deleteProduct
 
 }

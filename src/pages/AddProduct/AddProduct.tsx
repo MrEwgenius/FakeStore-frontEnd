@@ -2,24 +2,39 @@ import React, { FormEvent, useEffect, useState } from "react"
 import style from './AddProduct.module.scss'
 import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { ProductSelectors, addNewProduct, getProductList } from "src/redux/reducers/productSlice"
+import { ProductSelectors, addNewProduct, getBrandProduct, getProductList, getTypeProduct } from "src/redux/reducers/productSlice"
 import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 import classNames from "classnames"
+import { AuthSelectors } from "src/redux/reducers/authSlice"
 
 const AddProduct: React.FC = () => {
+    const typeProduct = useSelector(ProductSelectors.getTypeProducts);
+    const brandProducts = useSelector(ProductSelectors.getBrandProducts)
 
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
     const [clothingType, setClothingType] = useState('bike')
     const [price, setPrice] = useState(100)
-    const [brandName, setBrandName] = useState('')
-    const [typeName, setTypeName] = useState('')
+    const [brandName, setBrandName] = useState(brandProducts.length > 0 ? brandProducts[0].name : '');
+    const [typeName, setTypeName] = useState(typeProduct.length > 0 ? typeProduct[0].name : '')
     const [images, setImages] = useState<ImageListType>([]);
     const maxNumber = 6;
 
-
+    const userRole = useSelector(AuthSelectors.getUserRole);
+    
     const dispatch = useDispatch();
+    console.log('user role' , userRole);
+
+    useEffect(() => {
+        { (dispatch(getTypeProduct())) }
+        { (dispatch(getBrandProduct())) }
+
+
+    }, [dispatch]);
+    console.log(typeProduct);
+    console.log(brandProducts);
+
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -122,13 +137,23 @@ const AddProduct: React.FC = () => {
 
             <label form="brandName" className={style.group}>
                 <span className={style.groupName}>Название бренда:</span>
-                <input type="text" name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)} />
+                {/* <input type="text" name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)} /> */}
+                <select name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)}>
+                    {brandProducts.map((brand) => {
+                        return <option key={brand.id} value="brandName">{brand.name}</option>
+                    })}
+                </select>
             </label>
 
-            <label form="typedName" className={style.group}>
+            <div className={style.group}>
                 <span className={style.groupName}>Тип продукта:</span>
-                <input type="text" name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)} />
-            </label>
+                {/* <input type="text" name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)} /> */}
+                <select name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)}>
+                    {typeProduct.map((type) => {
+                        return <option key={type.id} value="typeName">{type.name}</option>
+                    })}
+                </select>
+            </div>
 
             <label form="clothingType" className={style.group}>
                 <span className={style.groupName}>clothingType:</span>
@@ -148,7 +173,7 @@ const AddProduct: React.FC = () => {
                 <div className={style.groupSizes}>
                     <div>
                         <label htmlFor="xs"> XS</label>
-                        <input className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
+                        <input required className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
                     </div>
 
                     <div>
@@ -209,7 +234,7 @@ const AddProduct: React.FC = () => {
                                     type="button"
                                     onClick={onImageRemoveAll}
                                 >
-                                    Удалить все 
+                                    Удалить все
                                 </button>
                             </div>
 

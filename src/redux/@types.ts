@@ -63,7 +63,7 @@ export type SignInData = {
 
 export type SignInResponseData = {
     access: string,
-    refresh: string,
+    role: string,
     token: string
 }
 

@@ -39,9 +39,9 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
 
         
         yield put(setAccessToken(response.data.token))
-        yield put(setUserRole(response.data.token))
+        yield put(setUserRole(response.data.role))
         localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
-        localStorage.setItem(REFRESH_TOKEN_KEY, response.data.token)
+        // localStorage.setItem(REFRESH_TOKEN_KEY, response.data.token)
 
         callback();
 

@@ -14,8 +14,8 @@ const User = () => {
     const navigate = useNavigate()
 
     const userRole = useSelector(AuthSelectors.getUserRole);
-    console.log(userRole);
-    
+    console.log('user role' , userRole);
+
 
     const clickOnAddProduct = () => {
         navigate(RoutesList.AddProduct)
@@ -28,12 +28,14 @@ const User = () => {
     return (
         <div>
             <FormPagesContainer
-                additionalInfo={
+                additionalInfo={ 
+                    // userRole === 'ADMIN' ?
                     <button onClick={clickOnAddProduct}
                         className={classNames(style.additionalInfo,
                         )}>
                         Добавить Продукт
                     </button>
+                    // : <div></div>
                 }
                 btnTitle={"Exit"}
                 onSubmit={logOut}
