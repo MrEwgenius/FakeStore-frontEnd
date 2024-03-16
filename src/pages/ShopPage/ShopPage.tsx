@@ -3,7 +3,7 @@ import style from './ShopPage.module.scss'
 import { Accordion, Button, ButtonGroup, Dropdown, DropdownButton, Pagination, useAccordionButton } from "react-bootstrap";
 import CardItem from "src/components/CardItem/CardItem";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, getBrandProduct, getBrandProductList, getProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
+import { ProductSelectors, getBrandProduct, getBrandProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { RoutesList } from "../Router";
@@ -14,13 +14,11 @@ const ShopPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const params = useParams()
-    const location = useLocation()
-    const productList = useSelector(ProductSelectors.getProductLister);
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
     const allProducts = useSelector(ProductSelectors.getAllProductList)
     const totalCount = useSelector(ProductSelectors.getTotalProductCount)
-    const { filter } = useParams()
+    console.log(totalCount);
 
     const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
     const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
@@ -32,7 +30,7 @@ const ShopPage = () => {
 
     useEffect(() => {
         dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: selectedSize || undefined }))
-    }, [dispatch])
+    }, [dispatch, selectedBrand, selectedCategory, selectedSize, totalCount]);
 
 
     const onCategoryClick = (category: string) => {
@@ -44,21 +42,7 @@ const ShopPage = () => {
         dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: selectedSize || undefined }));
         navigate(newPath);
     };
-    // const clickOnSize = (size: string) => {
-    //     setSelectedSize(size)
-    //     console.log(size);
 
-    //     let newPath = '/products/filter';
-    //     if (selectedCategory) {
-    //         newPath += `/${selectedCategory}`;
-    //     }
-    //     if (selectedBrand) {
-    //         newPath += `/${selectedBrand}`;
-    //     }
-    //     newPath += `/${size}`
-    //     navigate(newPath);
-    //     dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: size, }));
-    // }
     const clickOnSize = (size: string) => {
         setSelectedSize(size);
         let newPath = '/products/filter';
@@ -172,13 +156,10 @@ const ShopPage = () => {
     }
     return (
         <div>
-
-
             <ul className={style.navigationHistory}>
                 <span onClick={clickOnHome}>Главная</span>
                 <li className={'sd'} onClick={navigateToClothingCategory}>Одежда</li>
-                {typeName && <li>{typeName}</li>
-                }
+                {typeName && <li>{typeName}</li>}
             </ul>
             <div className={style.containerShopPage}>
                 <div className={style.containerFilter}>
@@ -188,22 +169,10 @@ const ShopPage = () => {
                             {typeProduct.map((type) =>
                                 <Accordion.Body key={type.id} onClick={() => onCategoryClick(type.name)} className={style.bodyFilter}>
                                     <CustomToggle eventKey="0" >
-                                        {/* <Link to={'filter/bike'}  >Толстовки</Link> */}
                                         <div  >{type.name}</div>
                                     </CustomToggle>
                                 </Accordion.Body>
                             )}
-                            {/* <Accordion.Body onClick={() => onCategoryClick('mikes')} className={style.bodyFilter}>
-                            <CustomToggle category="Майки" eventKey="0" >
-                                <div >Майки</div>
-                            </CustomToggle>
-                        </Accordion.Body>
-
-                        <Accordion.Body onClick={() => onCategoryClick('hudi')} className={style.bodyFilter}>
-                            <CustomToggle category="Кофты" eventKey="0" >
-                                <div >Кофты</div>
-                            </CustomToggle>
-                        </Accordion.Body> */}
                         </Accordion.Item>
 
                         <Accordion.Item eventKey="1">
@@ -219,25 +188,23 @@ const ShopPage = () => {
                                 </CustomToggle>
                             </Accordion.Body>
                         </Accordion.Item>
+
                         <Accordion.Item eventKey="2">
                             <Accordion.Header>Аксесуары</Accordion.Header>
-
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="2" >
                                     <div>Цепочки</div>
                                 </CustomToggle>
                             </Accordion.Body>
-
                             <Accordion.Body className={style.bodyFilter}>
-
                                 <CustomToggle eventKey="2" >
                                     <div>Кольца</div>
                                 </CustomToggle>
-
                             </Accordion.Body>
-
                         </Accordion.Item>
+
                     </Accordion>
+
                 </div>
                 <div className={style.containerProducts}>
                     <div className={style.title}>{typeName ? typeName : 'Одежда'}</div>
@@ -269,7 +236,6 @@ const ShopPage = () => {
                                         >
                                             {brand.name}
                                         </Dropdown.Item>
-
                                     )
                                 }
                             </Dropdown.Menu>
@@ -288,20 +254,14 @@ const ShopPage = () => {
                     </div>
                     <div className={style.products}>
                         {allProducts.length > 0 ?
-
                             <CardList cardsList={allProducts} />
                             : 'По вашим фильтрам ничего не найдено'
                         }
-                        {/* <CardList cardsList={filterPost.length > 0 ? filterPost : productList} /> */}
-                        {/* {productList ?
-                        productList.map((product) => (
-                            <CardItem key={product.id} id={product.id} name={product.name} price={product.price} img={product.img} />
-                            
-                            ))
-                            : <div>daw</div>
-                        } */}
                     </div>
-                    <Pagination className={style.paginate}>{items.length < 2 ? null : items}</Pagination>
+                    <Pagination
+                        className={style.paginate}>
+                        {items.length < 2 ? null : items}
+                    </Pagination>
                 </div>
             </div >
         </div>

@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from "react"
 import style from './AddProduct.module.scss'
 import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { ProductSelectors, addNewProduct, getBrandProduct, getProductList, getTypeProduct } from "src/redux/reducers/productSlice"
+import { ProductSelectors, addNewProduct, getBrandProduct, getTypeProduct } from "src/redux/reducers/productSlice"
 import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 import classNames from "classnames"
@@ -11,29 +11,27 @@ import { AuthSelectors } from "src/redux/reducers/authSlice"
 const AddProduct: React.FC = () => {
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
+    const dispatch = useDispatch();
 
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
-    const [clothingType, setClothingType] = useState('bike')
-    const [price, setPrice] = useState(100)
-    const [brandName, setBrandName] = useState(brandProducts.length > 0 ? brandProducts[0].name : '');
-    const [typeName, setTypeName] = useState(typeProduct.length > 0 ? typeProduct[0].name : '')
-    const [images, setImages] = useState<ImageListType>([]);
-    const maxNumber = 6;
-
-    const userRole = useSelector(AuthSelectors.getUserRole);
-    
-    const dispatch = useDispatch();
-    console.log('user role' , userRole);
-
     useEffect(() => {
         { (dispatch(getTypeProduct())) }
         { (dispatch(getBrandProduct())) }
 
 
     }, [dispatch]);
-    console.log(typeProduct);
-    console.log(brandProducts);
+
+
+    const [clothingType, setClothingType] = useState('bike')
+    const [price, setPrice] = useState(100)
+    const [brandName, setBrandName] = useState('');
+    const [typeName, setTypeName] = useState('')
+    const [images, setImages] = useState<ImageListType>([]);
+    const maxNumber = 6;
+
+
+
 
 
     const handleSubmit = (e: FormEvent) => {
@@ -42,16 +40,16 @@ const AddProduct: React.FC = () => {
         onSubmit()
         // console.log("Form submitted:", formData);
     };
-
+    const responseMessage = useSelector(ProductSelectors.getResponseMessage)
     const error = useSelector(ProductSelectors.getError);
-    // console.log(error);
+    console.log(responseMessage);
 
     useEffect(() => {
         if (error) {
             // Обработка ошибки, например, вывод сообщения пользователю
             console.log('Error:', error.message);
         }
-    }, [error]);
+    }, [error, dispatch]);
 
 
     const [checked, setChecked] = useState<any>([])
@@ -84,6 +82,7 @@ const AddProduct: React.FC = () => {
     };
 
 
+
     const onSubmit = () => {
 
         const formData = new FormData()
@@ -91,8 +90,8 @@ const AddProduct: React.FC = () => {
         formData.append('gender', gender);
         formData.append('clothingType', clothingType);
         formData.append('price', `${price}`);
-        formData.append('brandName', brandName)
-        formData.append('typeName', typeName)
+        formData.append('brandName', brandName || brandProducts[0]?.name)
+        formData.append('typeName', typeName || typeProduct[0]?.name)
         images.forEach((image) => {
             if (image.file) {
                 formData.append(`image`, image.file as Blob);
@@ -115,7 +114,7 @@ const AddProduct: React.FC = () => {
             data: formData, callback: () => { },
         }
         ))
-        // console.log(formData);
+        console.log(formData);
 
 
 
@@ -140,7 +139,7 @@ const AddProduct: React.FC = () => {
                 {/* <input type="text" name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)} /> */}
                 <select name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)}>
                     {brandProducts.map((brand) => {
-                        return <option key={brand.id} value="brandName">{brand.name}</option>
+                        return <option key={brand.id} value={brand.name}>{brand.name}</option>
                     })}
                 </select>
             </label>
@@ -149,9 +148,9 @@ const AddProduct: React.FC = () => {
                 <span className={style.groupName}>Тип продукта:</span>
                 {/* <input type="text" name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)} /> */}
                 <select name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)}>
-                    {typeProduct.map((type) => {
-                        return <option key={type.id} value="typeName">{type.name}</option>
-                    })}
+                    {typeProduct.map((type) =>
+                        <option key={type.id} value={type.name}>{type.name}</option>
+                    )}
                 </select>
             </div>
 
@@ -173,7 +172,7 @@ const AddProduct: React.FC = () => {
                 <div className={style.groupSizes}>
                     <div>
                         <label htmlFor="xs"> XS</label>
-                        <input required className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
+                        <input className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
                     </div>
 
                     <div>
@@ -271,6 +270,7 @@ const AddProduct: React.FC = () => {
             </div >
 
             {error && <div className={style.error}>{`${error.message}`}</div>}
+            {responseMessage && <div className={style.success}>{`${responseMessage}`}</div>}
             <button className={style.button} type="submit">Добавить продукт</button>
         </form >
 

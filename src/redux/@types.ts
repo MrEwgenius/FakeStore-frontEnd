@@ -74,10 +74,10 @@ export type GetProductPayload = {
 
 
 export type GetProductListPayload = {
-    size?:string,
-    isOverwrite: boolean,
+    size?: string,
+    isOverwrite?: boolean,
     page?: number
-    typeName?: string 
+    typeName?: string
     brandName?: string
 
 }

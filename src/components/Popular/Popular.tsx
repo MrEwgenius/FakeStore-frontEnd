@@ -5,7 +5,7 @@ import nextIcon from '../../assets/Right-Arrow.svg'
 import { Carousel, Image } from "react-bootstrap";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, getProductList, setSavedStatus } from "src/redux/reducers/productSlice";
+import { ProductSelectors,  setSavedStatus } from "src/redux/reducers/productSlice";
 import CardItem from "../CardItem/CardItem";
 import { ProductTypes, SaveStatus } from "src/@types";
 const Popular = () => {

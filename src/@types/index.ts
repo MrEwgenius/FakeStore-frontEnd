@@ -52,7 +52,8 @@ export type BrandListTypes = BrandTypes[];
 export type SetProductListPayload = {
     total: number
     product: ProductListTypes,
-    isOverwrite: boolean;
+    isOverwrite?: boolean;
+    message?:string
 
 }
 

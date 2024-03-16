@@ -21,6 +21,7 @@ type initialState = {
     totalCount: number,
     producrListBasket: ProductListTypes,
     basketProducts: ProductListTypes,
+    message: any | null,
 
 }
 
@@ -36,6 +37,7 @@ const initialState: initialState = {
     totalCount: 0,
     producrListBasket: [],
     basketProducts: [],
+    message: '',
 
 };
 const productSlice = createSlice({
@@ -45,15 +47,22 @@ const productSlice = createSlice({
     initialState,
     reducers: {
 
-        getProductList: (_, __: PayloadAction<GetProductPayload>) => { },
-        setProductList: (state, action: PayloadAction<ProductListTypes>) => {
-            state.producrList = action.payload
-        },
+        // getProductList: (_, __: PayloadAction<GetProductPayload>) => { },
+        // setProductList: (state, action: PayloadAction<ProductListTypes>) => {
+        //     state.producrList = action.payload
+        //     console.log('productList', state.producrList);
+
+        // },
         getSingleProduct: (_, __: PayloadAction<string>) => { },
         setSingleProduct: (state, action: PayloadAction<ProductTypes | null>) => {
             state.singleProduct = action.payload;
         },
         addNewProduct: (_, __: PayloadAction<AddPostDataPayload>) => { },
+        responseMessage: (state, action: PayloadAction<any | null>) => {
+            state.message = action.payload
+            console.log(state.message);
+
+        },
 
         addNewProductFailure: (state, action: PayloadAction<any | null>) => {
             state.error = action.payload;
@@ -72,6 +81,7 @@ const productSlice = createSlice({
                 state.savedProduct.push(card)
                 :
                 state.savedProduct.splice(mainIndex, 1)
+
             localStorage.setItem('SavedProduct', JSON.stringify(state.savedProduct))
 
 
@@ -105,14 +115,16 @@ const productSlice = createSlice({
 
         getProductLister: (_, __: PayloadAction<GetProductListPayload>) => { },
         setProductLister: (state, action: PayloadAction<SetProductListPayload>) => {
-            const { total, isOverwrite, product } = action.payload
+            const { total, isOverwrite, product, message } = action.payload
 
             state.totalCount = total
+
             if (isOverwrite) {
                 state.producrList = product
             } else {
                 state.producrList.push(...product)
             }
+
 
         },
         getBasketProducts: (_, __: PayloadAction<undefined>) => { },
@@ -124,7 +136,19 @@ const productSlice = createSlice({
         setBasketProductFavorite: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
         },
-        removeProduct: (_, __: PayloadAction<number | undefined>) => { },
+        removeProduct: (state, action: PayloadAction<number | undefined>) => {
+            const productId = action.payload
+            const delIndex = state.producrList.findIndex(item => item.id === productId);
+            if (delIndex !== -1) {
+                state.producrList.splice(delIndex, 1);
+                state.totalCount -= 1;
+                state.basketProducts.splice(delIndex, 1);
+                state.savedProduct.splice(-1, 1);
+                localStorage.setItem('SavedProduct', JSON.stringify(state.savedProduct))
+            }
+
+
+        },
 
     },
 
@@ -132,8 +156,8 @@ const productSlice = createSlice({
 
 
 export const {
-    getProductList,
-    setProductList,
+    // getProductList,
+    // setProductList,
     getSingleProduct,
     setSingleProduct,
     addNewProduct,
@@ -159,6 +183,7 @@ export const {
     addBasketProductFavorite,
     setBasketProductFavorite,
     removeProduct,
+    responseMessage,
 
 
 
@@ -177,6 +202,7 @@ export const ProductSelectors = {
     getTotalProductCount: (state: Rootstate) => state.productReducer.totalCount,
     getBasketProduct: (state: Rootstate) => state.productReducer.producrListBasket,
     getBasketProducts: (state: Rootstate) => state.productReducer.basketProducts,
+    getResponseMessage: (state: Rootstate) => state.productReducer.message
 
 
 

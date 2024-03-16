@@ -4,7 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import { Outlet } from 'react-router-dom';
 import styles from './Home.module.scss'
 import api from "../../api";
-import { ProductSelectors, getProductList } from "../../redux/reducers/productSlice";
+import { ProductSelectors, } from "../../redux/reducers/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FormPagesContainer from "src/components/FormPagesContainer/FormPagesContainer";
 import SignIn from "../SignIn/SignIn";

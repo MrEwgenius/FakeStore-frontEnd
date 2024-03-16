@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, getProductList, getProductLister, removeProduct, setSavedStatus } from "src/redux/reducers/productSlice";
+import { ProductSelectors, getProductLister, removeProduct, setSavedStatus } from "src/redux/reducers/productSlice";
 import style from './CardItem.module.scss'
 import { useNavigate } from "react-router-dom";
 import save from '../../assets/Save.svg'
@@ -19,12 +19,13 @@ type CardsListProps = {
     img: string[],
     id?: number,
     onSavedClick: (status: SaveStatus) => void,
+    clickRemoveProduct?: () => void
 
 
 
 }
 
-const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) => {
+const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,clickRemoveProduct }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -70,7 +71,7 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) =
     }
     const removeCard = () => {
         dispatch(removeProduct(Number(id)))
-        dispatch(getProductLister({ isOverwrite: true, }))
+        dispatch(getProductLister({ isOverwrite: true }))
 
     }
 
@@ -78,13 +79,9 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, }) =
     return (
         <div className={style.containerCardItem}>
             {userRole && userRole.role === 'ADMIN' && (
-                <img onClick={removeCard} className={style.removeProduct} src={deleteProduct} alt="#!" />
+                <img onClick={clickRemoveProduct} className={style.removeProduct} src={deleteProduct} alt="#!" />
             )}
             <div className={style.image}>
-                {/* {img && img.map((image: ProductImage) => (
-                    <img className={style.mainImg} key={image.id} src={process.env.REACT_APP_API_URL + image.imageUrl} alt="#" />
-                ))} */}
-                {/* <img src={process.env.REACT_APP_API_URL + img} alt="=(" /> */}
                 <Carousel
                     controls={false}
                     slide

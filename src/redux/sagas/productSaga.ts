@@ -2,7 +2,7 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, removeProduct, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductList, setProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
+import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
 import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
 import { AddPostDataPayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
@@ -52,7 +52,6 @@ function* deleteProductWorker(action: PayloadAction<number | undefined>) {
         action.payload
     )
     if (response.ok && response.data) {
-        // yield put(removeProduct(response.data))
     } else {
         console.error('Activate User Error', response.problem);
     }
@@ -67,12 +66,15 @@ function* addProductWorker(action: PayloadAction<AddPostDataPayload>) {
     if (accessToken) {
 
 
-        const response: ApiResponse<undefined> = yield call(
+        const response: ApiResponse<{ message: string }> = yield call(
             API.addProduct,
             data,
             accessToken,
         )
         if (response.data && response.ok) {
+            console.log(response.data);
+            yield put(responseMessage(response.data.message))
+
 
             callback();
 
@@ -130,11 +132,10 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
             const { rows, count } = response.data;
 
 
-
             yield put(setProductLister({
                 total: count,
                 product: rows,
-                isOverwrite
+                isOverwrite,
             }));
         }
     } catch (error) {

@@ -9,7 +9,6 @@ import { RoutesList } from "src/pages/Router"
 import { useDispatch, useSelector } from "react-redux"
 import { AuthSelectors, setAccessToken } from "src/redux/reducers/authSlice"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
-import { getProductList } from "src/redux/reducers/productSlice"
 const Header = () => {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
