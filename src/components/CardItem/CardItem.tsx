@@ -40,11 +40,6 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,click
     const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
 
     useEffect(() => {
-
-    }, [dispatch])
-
-
-    useEffect(() => {
         if (accessToken) {
             const decodedToken = jwtDecode(accessToken);
             setUserRole(decodedToken);
@@ -69,11 +64,7 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,click
     for (let i = 0; i < img.length; i += itemsPerSlide) {
         slides.push(img.slice(i, i + itemsPerSlide));
     }
-    const removeCard = () => {
-        dispatch(removeProduct(Number(id)))
-        dispatch(getProductLister({ isOverwrite: true }))
-
-    }
+    
 
 
     return (

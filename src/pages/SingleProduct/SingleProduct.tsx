@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CardItem from "src/components/CardItem/CardItem";
 import { ProductSelectors, addBasketProductFavorite, deleteBasketProduct, getBasketProducts, getSingleProduct, setSavedStatus } from "src/redux/reducers/productSlice";
 import style from './SingleProduct.module.scss'
@@ -9,28 +9,21 @@ import save from '../../assets/Save.svg'
 import activeSave from '../../assets/Save-active.svg'
 import { Button, ButtonGroup, Form } from "react-bootstrap";
 import { ProductImage, ProductTypes, SaveStatus } from "src/@types";
+import { jwtDecode } from "jwt-decode";
+import { RoutesList } from "../Router";
 
 const SingleProduct = () => {
     const [mainImage, setMainImage] = useState(0);
     const dispatch = useDispatch()
+    const [userRole, setUserRole] = useState<any>(null);
     const basketProduct = useSelector(ProductSelectors.getBasketProducts)
-
+    const navigate = useNavigate()
     const SingleProduct = useSelector(ProductSelectors.getSinglePost)
     const savedProduct = useSelector(ProductSelectors.getSavedProduct)
 
     const onSavedStatus = (card: ProductTypes, status: SaveStatus) => {
         dispatch(setSavedStatus({ card, status }))
     }
-
-
-    const arrs = [
-        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-        "0d8c70e0-189a-4945-a709-3fa6b01c15e1.jpg",
-    ]
 
     const { id } = useParams()
     useEffect(() => {
@@ -48,27 +41,48 @@ const SingleProduct = () => {
         return productInBasket ? 'удалить из корзины' : 'добавить в корзину';
     };
 
-    const toggleBasket = () => {
-        if (id) {
+    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
 
-            const productInBasket = basketProduct.find(product => product.id === Number(id));
-            if (productInBasket) {
-
-                dispatch(deleteBasketProduct(Number(id)));
-                dispatch(getBasketProducts())
-            } else {
-                dispatch(addBasketProductFavorite(Number(id)));
-                dispatch(getBasketProducts())
-            }
+    useEffect(() => {
+        if (accessToken) {
+            const decodedToken = jwtDecode(accessToken);
+            setUserRole(decodedToken);
         }
+    }, [accessToken]);
+
+
+
+    const toggleBasket = () => {
+
+
+        if (userRole && userRole.role === 'ADMIN') {
+
+            // userRole && userRole.role === 'ADMIN' && (
+            //     )
+            if (id) {
+                const productInBasket = basketProduct.find(product => product.id === Number(id));
+                if (productInBasket) {
+
+                    dispatch(deleteBasketProduct(Number(id)));
+                    dispatch(getBasketProducts())
+                } else {
+                    dispatch(addBasketProductFavorite(Number(id)));
+                    dispatch(getBasketProducts())
+                }
+            }
+        } else {
+            const confirmSignIn = window.confirm('Для начало нужно Войти!');
+            if (confirmSignIn) {
+                navigate(RoutesList.Login)
+            }
+
+        }
+
     };
     const handleThumbnailClick = (index: number) => {
         setMainImage(index);
     };
 
-    const firstImage = SingleProduct
-
-    console.log("firstImage:", firstImage);
 
 
     return (
@@ -86,7 +100,6 @@ const SingleProduct = () => {
                                 {saveIndex === -1
                                     ?
                                     <img src={save} alt="$" />
-
                                     :
                                     <img src={activeSave} alt="$" />
                                 }
@@ -127,12 +140,7 @@ const SingleProduct = () => {
 
                                 <input name="size" id="XL" type="radio" />
                                 <label htmlFor="XL">XL</label> */}
-                                {/*                                 
-                                <button className={style.sizeButton}> XS  </button>
-                                <button className={style.sizeButton}> S  </button>
-                                <button className={style.sizeButton}>  M </button>
-                                <button className={style.sizeButton}> L  </button>
-                                <button className={style.sizeButton}> XL  </button> */}
+
                             </div>
                         </div>
                         <div className={style.sizes} >Таблица размеров</div>

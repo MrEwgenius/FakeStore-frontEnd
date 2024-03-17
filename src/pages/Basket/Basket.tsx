@@ -8,6 +8,7 @@ import { ProductSelectors, delBasketProduct, deleteBasketProduct, getBasketProdu
 import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
+import { AuthSelectors } from "src/redux/reducers/authSlice"
 
 
 
@@ -28,6 +29,10 @@ const Basket = () => {
     }
     const navigateToCatalog = () => {
         navigate(RoutesList.Filter)
+
+    }
+    const navigateSignIn = () => {
+        navigate(RoutesList.Login)
 
     }
 
@@ -59,6 +64,9 @@ const Basket = () => {
         navigate(`/product/${id}`)
 
     }
+    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
+    console.log(isLoggedIn);
+
 
 
 
@@ -71,6 +79,21 @@ const Basket = () => {
     };
     return (
         <div className={style.containerBasket}>
+            {!isLoggedIn &&
+                <div className={style.containerBasketEmpty}>
+                    <div className={style.emptyTitle} >Для начала нужно Войти</div>
+                    <div className={style.emptyImage} >
+                        <img src={basketEmpty} alt="#!" />
+                    </div>
+                    <div className={style.subTitleBasketEmpty} >
+                    </div>
+                    <button
+                        className={style.buttonBasketEmpty}
+                        onClick={navigateSignIn}
+                    >
+                        Войти
+                    </button>
+                </div>}
 
             {!!basketProducts.length
                 ?

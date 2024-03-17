@@ -18,7 +18,6 @@ const ShopPage = () => {
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
     const allProducts = useSelector(ProductSelectors.getAllProductList)
     const totalCount = useSelector(ProductSelectors.getTotalProductCount)
-    console.log(totalCount);
 
     const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
     const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
@@ -29,8 +28,9 @@ const ShopPage = () => {
 
 
     useEffect(() => {
-        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: selectedSize || undefined }))
+        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: checked || undefined }))
     }, [dispatch, selectedBrand, selectedCategory, selectedSize, totalCount]);
+
 
 
     const onCategoryClick = (category: string) => {
@@ -39,27 +39,45 @@ const ShopPage = () => {
         if (selectedBrand) {
             newPath += `/${selectedBrand}`;
         }
-        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: selectedSize || undefined }));
+        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: checked || undefined }));
         navigate(newPath);
     };
 
-    const clickOnSize = (size: string) => {
-        setSelectedSize(size);
-        let newPath = '/products/filter';
-        if (selectedCategory) {
-            newPath += `/${selectedCategory}`;
+    const [checked, setChecked] = useState<any>([])
+    const handleCheck = (event: any) => {
+        let updatedList = [...checked];
+        if (event.target.checked) {
+            updatedList = [...checked, event.target.value];
+            console.log(event.target.value);
+
+        } else {
+            updatedList.splice(checked.indexOf(event.target.value), 1);
         }
-        if (selectedBrand) {
-            newPath += `/${selectedBrand}`;
+        setChecked(updatedList);
+    };
+
+
+    const clickOnSize = () => {
+        setShow(!show)
+        if (show) {
+            console.log(12);
+
+            let newPath = '/products/filter';
+            if (selectedCategory) {
+                newPath += `/${selectedCategory}`;
+            }
+            if (selectedBrand) {
+                newPath += `/${selectedBrand}`;
+            }
+            newPath += `/${checked}`;
+            navigate(newPath);
+            dispatch(getProductLister({
+                isOverwrite: true,
+                brandName: selectedBrand || undefined,
+                typeName: selectedCategory || undefined,
+                size: checked,
+            }));
         }
-        newPath += `/${size}`;
-        navigate(newPath);
-        dispatch(getProductLister({
-            isOverwrite: true,
-            brandName: selectedBrand || undefined,
-            typeName: selectedCategory || undefined,
-            size: size,
-        }));
     }
 
 
@@ -71,7 +89,7 @@ const ShopPage = () => {
         }
         newPath += `/${brand}`;
         navigate(newPath);
-        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined, size: selectedSize || undefined }));
+        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined, size: checked || undefined }));
     }
     // console.log(allProducts);
 
@@ -136,10 +154,12 @@ const ShopPage = () => {
 
     const handlePageChange = (pageNumber: number) => {
         setPage(pageNumber);
+
         dispatch(getProductLister({
             isOverwrite: true,
             brandName: selectedBrand || undefined,
             typeName: selectedCategory || undefined,
+            size: checked,
             page: pageNumber
         }))
     };
@@ -154,12 +174,22 @@ const ShopPage = () => {
             </Pagination.Item>,
         );
     }
+
+    const [show, setShow] = useState(false)
+    const onclickClose = () => {
+        console.log(11);
+        console.log(show);
+        setShow(!show)
+    }
+
+
+
     return (
         <div>
             <ul className={style.navigationHistory}>
                 <span onClick={clickOnHome}>Главная</span>
                 <li className={'sd'} onClick={navigateToClothingCategory}>Одежда</li>
-                {typeName && <li>{typeName}</li>}
+                {selectedCategory && <li>{selectedCategory}</li>}
             </ul>
             <div className={style.containerShopPage}>
                 <div className={style.containerFilter}>
@@ -179,12 +209,12 @@ const ShopPage = () => {
                             <Accordion.Header>Обувь</Accordion.Header>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="1" >
-                                    <div>Кросовки</div>
+                                    <div>Ещё в разработке =(</div>
                                 </CustomToggle>
                             </Accordion.Body>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="1" >
-                                    <div>Кеды</div>
+                                    <div>Ещё в разработке =(</div>
                                 </CustomToggle>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -193,12 +223,12 @@ const ShopPage = () => {
                             <Accordion.Header>Аксесуары</Accordion.Header>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="2" >
-                                    <div>Цепочки</div>
+                                    <div>Ещё в разработке =(</div>
                                 </CustomToggle>
                             </Accordion.Body>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="2" >
-                                    <div>Кольца</div>
+                                    <div>Ещё в разработке =(</div>
                                 </CustomToggle>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -207,16 +237,43 @@ const ShopPage = () => {
 
                 </div>
                 <div className={style.containerProducts}>
-                    <div className={style.title}>{typeName ? typeName : 'Одежда'}</div>
+                    <div className={style.title}>{selectedCategory ? selectedCategory : 'Одежда'}</div>
                     <div className={style.sortProducts}>
-                        <Dropdown as={ButtonGroup}>
-                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">Размер</Dropdown.Toggle>
+                        <Dropdown
+                            show={show}
+                            onToggle={clickOnSize}
+                            as={ButtonGroup}>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">{checked.length ? checked.join(', ').toUpperCase() : 'Размер'}</Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
-                                <Dropdown.Item onClick={() => clickOnSize('xs')} eventKey="1">XS</Dropdown.Item>
+                                <div className={style.groupSizes}>
+
+                                    <input className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
+                                    <label htmlFor="xs"> XS</label>
+
+                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'s'} name="checkbox" id="s" type="checkbox" />
+                                    <label htmlFor="s">S </label>
+
+                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'m'} name="checkbox" id="m" type="checkbox" />
+                                    <label htmlFor="m"> M</label>
+
+                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'l'} name="checkbox" id="l" type="checkbox" />
+                                    <label htmlFor="l"> L</label>
+
+                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'xl'} name="checkbox" id="xl" type="checkbox" />
+                                    <label htmlFor="xl"> XL</label>
+
+                                </div  >
+                                <button
+                                    className={style.buttonChengeSizes}
+                                    onClick={clickOnSize}
+                                >
+                                    применить
+                                </button>
+                                {/* <Dropdown.Item onClick={() => clickOnSize('xs')} eventKey="1">XS</Dropdown.Item>
                                 <Dropdown.Item onClick={() => clickOnSize('s')} eventKey="2">S</Dropdown.Item>
                                 <Dropdown.Item onClick={() => clickOnSize('m')} eventKey="3">M</Dropdown.Item>
                                 <Dropdown.Item onClick={() => clickOnSize('l')} eventKey="4">L</Dropdown.Item>
-                                <Dropdown.Item onClick={() => clickOnSize('xl')} eventKey="5">XL</Dropdown.Item>
+                                <Dropdown.Item onClick={() => clickOnSize('xl')} eventKey="5">XL</Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
                         <Dropdown as={ButtonGroup}>

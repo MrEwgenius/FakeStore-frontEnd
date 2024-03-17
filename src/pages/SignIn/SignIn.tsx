@@ -10,7 +10,7 @@ import { AuthSelectors, signInUser } from 'src/redux/reducers/authSlice';
 
 
 const SignIn = () => {
-    const [email, setEmail] = useState("ewgen@mail.ru");
+    const [email, setEmail] = useState("user@mail.ru");
     const [password, setPassword] = useState("12345");
 
     const dispatch = useDispatch()

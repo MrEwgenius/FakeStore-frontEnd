@@ -10,7 +10,7 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProducts = (typeName?: string, brandName?: string, page?: number, size?: string,) => {
+const getProducts = (typeName?: string, brandName?: string, page?: number, size?: string[],) => {
     // return API.get(`/product/`, { typeName, brandName  });
     return API.get(`/product/`,
         { limit: PER_PAGE, typeName, brandName, page, size });
