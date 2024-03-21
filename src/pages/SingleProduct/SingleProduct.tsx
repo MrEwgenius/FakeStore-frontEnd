@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import CardItem from "src/components/CardItem/CardItem";
 import { ProductSelectors, addBasketProductFavorite, deleteBasketProduct, getBasketProducts, getSingleProduct, setSavedStatus } from "src/redux/reducers/productSlice";
 import style from './SingleProduct.module.scss'
 
 import save from '../../assets/Save.svg'
 import activeSave from '../../assets/Save-active.svg'
 import { Button, ButtonGroup, Form } from "react-bootstrap";
-import { ProductImage, ProductTypes, SaveStatus } from "src/@types";
+import { ProductTypes, SaveStatus } from "src/@types";
 import { jwtDecode } from "jwt-decode";
 import { RoutesList } from "../Router";
 
@@ -53,12 +52,8 @@ const SingleProduct = () => {
 
 
     const toggleBasket = () => {
-
-
         if (userRole && userRole.role === 'ADMIN') {
 
-            // userRole && userRole.role === 'ADMIN' && (
-            //     )
             if (id) {
                 const productInBasket = basketProduct.find(product => product.id === Number(id));
                 if (productInBasket) {
@@ -124,8 +119,8 @@ const SingleProduct = () => {
                             <div className={style.sizeTable}>
                                 {SingleProduct.size && SingleProduct.size.map((sizes, idx) =>
                                     <div key={idx}>
-                                        <label htmlFor={sizes}>{sizes}</label>
                                         <input name="size" id={sizes} type="radio" />
+                                        <label key={idx} htmlFor={sizes}>{sizes}</label>
                                     </div>
                                 )}
 

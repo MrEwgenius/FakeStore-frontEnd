@@ -117,7 +117,7 @@ function* BrandProductsWorker() {
 
 function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
     try {
-        const { brandName, typeName, page, isOverwrite, size } = action.payload;
+        const { brandName, typeName, page, isOverwrite, size ,price} = action.payload;
 
         const response: ApiResponse<ProductsData | null> = yield call(
             API.getProducts,
@@ -125,6 +125,7 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
             brandName,
             page,
             size,
+            price
 
         );
 

@@ -10,10 +10,10 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProducts = (typeName?: string, brandName?: string, page?: number, size?: string[],) => {
+const getProducts = (typeName?: string, brandName?: string, page?: number, size?: string[], price?: string[],) => {
     // return API.get(`/product/`, { typeName, brandName  });
     return API.get(`/product/`,
-        { limit: PER_PAGE, typeName, brandName, page, size });
+        { limit: PER_PAGE, typeName, brandName, page, size, price });
 
 };
 // const getFilterProducts = (filter?: string) => {
@@ -76,7 +76,7 @@ const removeBasketProduct = (token: string, id: number) => {
 const getSingleProduct = (id: string) => {
     return API.get(`/product/${id}/`);
 }
-const deleteProduct  = (id?: number) => {
+const deleteProduct = (id?: number) => {
     return API.delete(`/product/${id}/`);
 }
 const signUpUser = (data: SignUpUserData) => {

@@ -1,66 +1,177 @@
 import React, { ReactNode, useEffect, useMemo, useState } from "react"
 import style from './ShopPage.module.scss'
-import { Accordion, Button, ButtonGroup, Dropdown, DropdownButton, Pagination, useAccordionButton } from "react-bootstrap";
-import CardItem from "src/components/CardItem/CardItem";
+import { Accordion, ButtonGroup, Dropdown, DropdownButton, Pagination, useAccordionButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ProductSelectors, getBrandProduct, getBrandProductList, getProductLister, getTypeProduct, getTypeProductList } from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
-import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams, } from "react-router-dom";
 import { RoutesList } from "../Router";
 import { PER_PAGE } from "src/utils/constans";
+import classNames from "classnames";
 
 const ShopPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const params = useParams()
+    const location = useLocation()
+
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
-    const allProducts = useSelector(ProductSelectors.getAllProductList)
     const totalCount = useSelector(ProductSelectors.getTotalProductCount)
-
-    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
-    const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
-    const [selectedSize, setSelectedSize] = useState<string | undefined>(undefined);
-    const { typeName, brandName } = params;
+    const allProducts = useSelector(ProductSelectors.getAllProductList)
 
 
+    const [show, setShow] = useState(false)
+
+    // const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+    // const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
+    // const [checked, setChecked] = useState<any>('')
+    // const [price, setPrice] = useState<any>('')
+    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(location.state?.typeName);
+    const [selectedBrand, setSelectedBrand] = useState<string | undefined>(location.state?.brandName);
+    const [checked, setChecked] = useState<any>(location.state?.size || '')
+    const [price, setPrice] = useState<any>(location.state?.price || '')
+
+    // ----------------
+    // const paramsURLSearch = new URLSearchParams(location.search);
+    // const typeNameURL = paramsURLSearch.get('typeName') || undefined;
+    // const brandNameURL = paramsURLSearch.get('brandName') || undefined;
+    // const sizeURL = paramsURLSearch.get('size') || undefined;
+    // const priceURL = paramsURLSearch.get('price') || undefined;
 
 
+    // const [selectedCategory, setSelectedCategory] = useState<string | undefined>(typeNameURL);
+    // const [selectedBrand, setSelectedBrand] = useState<string | undefined>(brandNameURL);
+    // const [checked, setChecked] = useState<any>(sizeURL);
+    // const [price, setPrice] =  useState<any>(priceURL);
+
+    // console.log(location.state);
+
+
+
+
+
+
+    // -----------------------------------------
+    console.log(location.state);
+
+
+    // console.log('checked', checked);
+    // console.log('price', price);
+    // console.log('selectedBrand', selectedBrand);
+    // console.log('selectedCategory', selectedCategory);
+
+
+
+
+    // useEffect(() => {
+    //     dispatch(getProductLister({
+    //         isOverwrite: true,
+    //         brandName: selectedBrand || undefined,
+    //         typeName: selectedCategory || undefined,
+    //         size: checked || undefined,
+    //         price: price || undefined,
+    //     }))
+    // }, [dispatch]);
     useEffect(() => {
-        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: selectedCategory || undefined, size: checked || undefined }))
-    }, [dispatch, selectedBrand, selectedCategory, selectedSize, totalCount]);
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: location.state?.brandName || undefined,
+            typeName: location.state?.typeName || undefined,
+            size: location.state?.size || undefined,
+            price: location.state?.price || undefined,
+        }))
+    }, [dispatch]);
 
 
 
     const onCategoryClick = (category: string) => {
         setSelectedCategory(category);
-        let newPath = `/products/filter/${category}`;
+        let newPath = `/products/filter`;
+        newPath += `/${category}`;
+        // if (selectedCategory) {
+        //     newPath += `/${category}`;
+        // }
         if (selectedBrand) {
+            // <Navigate to={selectedBrand} state={{ brandName: selectedBrand }} />
             newPath += `/${selectedBrand}`;
         }
-        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: checked || undefined }));
-        navigate(newPath);
+        if (checked.length >= 1) {
+            newPath += `/${checked}`;
+        }
+        if (price.length >= 1) {
+            newPath += `/${price.join('-')}`;
+        }
+        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: checked || undefined, price: price || undefined }));
+        navigate(newPath, {
+            state: {
+                typeName: category,
+                brandName: selectedBrand || undefined,
+                size: checked || undefined,
+                price: price || undefined
+            }
+        })
+        // navigate(newPath);
     };
 
-    const [checked, setChecked] = useState<any>([])
+
+
+
     const handleCheck = (event: any) => {
+
         let updatedList = [...checked];
         if (event.target.checked) {
-            updatedList = [...checked, event.target.value];
-            console.log(event.target.value);
+            if (!checked.includes(event.target.value)) {
+                updatedList.push(event.target.value);
+            }
+            // updatedList = [...checked, event.target.value];
 
         } else {
             updatedList.splice(checked.indexOf(event.target.value), 1);
+
         }
         setChecked(updatedList);
+        console.log(event.target.value);
     };
 
 
+    const handlePriceSelect = (prices: any,) => {
+
+        setPrice(prices)
+
+        let newPath = '/products/filter';
+        if (selectedCategory) {
+            newPath += `/${selectedCategory}`;
+        }
+        if (selectedBrand) {
+            newPath += `/${selectedBrand}`;
+        }
+        if (checked.length >= 1) {
+            newPath += `/${checked}`;
+        }
+
+        newPath += `/${prices.join('-')}`;
+        // navigate(newPath);
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: selectedBrand || undefined,
+            typeName: selectedCategory || undefined,
+            size: checked || undefined,
+            price: prices || undefined
+        }));
+        navigate(newPath, {
+            state: {
+                typeName: selectedCategory || undefined,
+                brandName: selectedBrand || undefined,
+                size: checked || undefined,
+                price: prices || undefined
+            }
+        })
+    };
     const clickOnSize = () => {
         setShow(!show)
         if (show) {
-            console.log(12);
 
             let newPath = '/products/filter';
             if (selectedCategory) {
@@ -69,14 +180,30 @@ const ShopPage = () => {
             if (selectedBrand) {
                 newPath += `/${selectedBrand}`;
             }
-            newPath += `/${checked}`;
-            navigate(newPath);
+            if (checked.length >= 1) {
+                newPath += `/${checked}`;
+            }
+
+            if (price.length >= 1) {
+                newPath += `/${price.join('-')}`;
+            }
+            // navigate(newPath);
             dispatch(getProductLister({
                 isOverwrite: true,
                 brandName: selectedBrand || undefined,
                 typeName: selectedCategory || undefined,
-                size: checked,
+                size: checked || undefined,
+                price: price || undefined
             }));
+            navigate(newPath, {
+                state: {
+                    typeName: selectedCategory || undefined,
+                    brandName: selectedBrand || undefined,
+                    size: checked || undefined,
+                    price: price || undefined
+                }
+            })
+
         }
     }
 
@@ -88,10 +215,25 @@ const ShopPage = () => {
             newPath += `/${selectedCategory}`;
         }
         newPath += `/${brand}`;
-        navigate(newPath);
-        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined, size: checked || undefined }));
+
+        if (checked.length >= 1) {
+            newPath += `/${checked}`;
+        }
+        if (price.length >= 1) {
+            newPath += `/${price.join('-')}`;
+        }
+        // navigate(newPath);
+        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined, size: checked || undefined, price: price || undefined }));
+        navigate(newPath, {
+            // replace: true,
+            state: {
+                typeName: selectedCategory || undefined,
+                brandName: brand || undefined,
+                size: checked || undefined,
+                price: price || undefined
+            },
+        })
     }
-    // console.log(allProducts);
 
     const clickOnHome = () => {
         navigate(`/`)
@@ -99,11 +241,35 @@ const ShopPage = () => {
     const navigateToClothingCategory = () => {
         setSelectedBrand(undefined)
         setSelectedCategory(undefined)
-        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: undefined }));
+        setChecked('')
+        setPrice('')
+        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: undefined, size: undefined, price: undefined }));
         navigate(RoutesList.Filter)
     }
 
+    const addAllCategory = () => {
 
+        let newPath = '/products/filter';
+        setSelectedCategory(undefined)
+        if (selectedBrand) {
+            newPath += `/${selectedBrand}`;
+        }
+        if (checked.length >= 1) {
+            newPath += `/${checked}`;
+        }
+        if (price.length >= 1) {
+            newPath += `/${price.join('-')}`;
+        }
+        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: undefined, size: checked || undefined, price: price || undefined }));
+        navigate(newPath, {
+            state: {
+                typeName: undefined,
+                brandName: selectedBrand || undefined,
+                size: checked || undefined,
+                price: price || undefined
+            }
+        })
+    }
 
     const addAllBrand = () => {
         let newPath = '/products/filter';
@@ -111,8 +277,22 @@ const ShopPage = () => {
             newPath += `/${selectedCategory}`;
         }
         setSelectedBrand(undefined)
-        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: selectedCategory || undefined }));
-        navigate(newPath);
+        if (checked.length >= 1) {
+            newPath += `/${checked}`;
+        }
+        if (price.length >= 1) {
+            newPath += `/${price.join('-')}`;
+        }
+        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: selectedCategory || undefined, size: checked || undefined, price: price || undefined }));
+        // navigate(newPath);
+        navigate(newPath, {
+            state: {
+                typeName: selectedCategory || undefined,
+                brandName: undefined,
+                size: checked || undefined,
+                price: price || undefined
+            }
+        })
     }
 
 
@@ -159,7 +339,8 @@ const ShopPage = () => {
             isOverwrite: true,
             brandName: selectedBrand || undefined,
             typeName: selectedCategory || undefined,
-            size: checked,
+            size: checked || undefined,
+            price: price || undefined,
             page: pageNumber
         }))
     };
@@ -175,13 +356,7 @@ const ShopPage = () => {
         );
     }
 
-    const [show, setShow] = useState(false)
-    const onclickClose = () => {
-        console.log(11);
-        console.log(show);
-        setShow(!show)
-    }
-
+    //Доделать филтр по цене
 
 
     return (
@@ -190,12 +365,14 @@ const ShopPage = () => {
                 <span onClick={clickOnHome}>Главная</span>
                 <li className={'sd'} onClick={navigateToClothingCategory}>Одежда</li>
                 {selectedCategory && <li>{selectedCategory}</li>}
+                {selectedBrand && <li>{selectedBrand}</li>}
             </ul>
             <div className={style.containerShopPage}>
                 <div className={style.containerFilter}>
                     <Accordion  >
                         <Accordion.Item eventKey="0">
                             <Accordion.Header className={style.NameFilter}>Одежда</Accordion.Header>
+
                             {typeProduct.map((type) =>
                                 <Accordion.Body key={type.id} onClick={() => onCategoryClick(type.name)} className={style.bodyFilter}>
                                     <CustomToggle eventKey="0" >
@@ -203,10 +380,15 @@ const ShopPage = () => {
                                     </CustomToggle>
                                 </Accordion.Body>
                             )}
+                            <Accordion.Body onClick={addAllCategory} className={classNames(style.bodyFilter, style.allCategory)}>
+                                <CustomToggle eventKey="0" >
+                                    <div >Показать всё </div>
+                                </CustomToggle>
+                            </Accordion.Body>
                         </Accordion.Item>
 
                         <Accordion.Item eventKey="1">
-                            <Accordion.Header>Обувь</Accordion.Header>
+                            <Accordion.Header className={style.NameFilter}>Обувь</Accordion.Header>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="1" >
                                     <div>Ещё в разработке =(</div>
@@ -220,7 +402,7 @@ const ShopPage = () => {
                         </Accordion.Item>
 
                         <Accordion.Item eventKey="2">
-                            <Accordion.Header>Аксесуары</Accordion.Header>
+                            <Accordion.Header className={style.NameFilter}>Аксесуары</Accordion.Header>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="2" >
                                     <div>Ещё в разработке =(</div>
@@ -243,23 +425,65 @@ const ShopPage = () => {
                             show={show}
                             onToggle={clickOnSize}
                             as={ButtonGroup}>
-                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">{checked.length ? checked.join(', ').toUpperCase() : 'Размер'}</Dropdown.Toggle>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">
+                                {checked.length ? checked.join(', ').toUpperCase() : 'Размер'}
+                            </Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
                                 <div className={style.groupSizes}>
 
-                                    <input className={style.checkBox} value={'xs'} onChange={(e) => handleCheck(e)} name="checkbox" id="xs" type="checkbox" />
+                                    <input
+                                        className={style.checkBox}
+                                        value={'xs'} onChange={(e
+                                        ) => handleCheck(e
+                                        )} name="checkbox"
+                                        id="xs"
+                                        type="checkbox"
+                                        checked={checked.includes('xs')}
+                                    />
                                     <label htmlFor="xs"> XS</label>
 
-                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'s'} name="checkbox" id="s" type="checkbox" />
+                                    <input
+                                        className={style.checkBox}
+                                        onChange={(e) => handleCheck(e)}
+                                        value={'s'}
+                                        name="checkbox"
+                                        id="s"
+                                        type="checkbox"
+                                        checked={checked.includes('s')}
+                                    />
                                     <label htmlFor="s">S </label>
 
-                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'m'} name="checkbox" id="m" type="checkbox" />
+                                    <input
+                                        className={style.checkBox}
+                                        onChange={(e) => handleCheck(e)}
+                                        value={'m'}
+                                        name="checkbox"
+                                        id="m"
+                                        type="checkbox"
+                                        checked={checked.includes('m')}
+                                    />
                                     <label htmlFor="m"> M</label>
 
-                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'l'} name="checkbox" id="l" type="checkbox" />
+                                    <input
+                                        className={style.checkBox}
+                                        onChange={(e) => handleCheck(e)}
+                                        value={'l'}
+                                        name="checkbox"
+                                        id="l"
+                                        type="checkbox"
+                                        checked={checked.includes('l')}
+                                    />
                                     <label htmlFor="l"> L</label>
 
-                                    <input className={style.checkBox} onChange={(e) => handleCheck(e)} value={'xl'} name="checkbox" id="xl" type="checkbox" />
+                                    <input
+                                        className={style.checkBox}
+                                        onChange={(e) => handleCheck(e)}
+                                        value={'xl'}
+                                        name="checkbox"
+                                        id="xl"
+                                        type="checkbox"
+                                        checked={checked.includes('xl')}
+                                    />
                                     <label htmlFor="xl"> XL</label>
 
                                 </div  >
@@ -269,11 +493,6 @@ const ShopPage = () => {
                                 >
                                     применить
                                 </button>
-                                {/* <Dropdown.Item onClick={() => clickOnSize('xs')} eventKey="1">XS</Dropdown.Item>
-                                <Dropdown.Item onClick={() => clickOnSize('s')} eventKey="2">S</Dropdown.Item>
-                                <Dropdown.Item onClick={() => clickOnSize('m')} eventKey="3">M</Dropdown.Item>
-                                <Dropdown.Item onClick={() => clickOnSize('l')} eventKey="4">L</Dropdown.Item>
-                                <Dropdown.Item onClick={() => clickOnSize('xl')} eventKey="5">XL</Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
                         <Dropdown as={ButtonGroup}>
@@ -298,13 +517,18 @@ const ShopPage = () => {
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
                         <Dropdown as={ButtonGroup}>
-                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">Цена</Dropdown.Toggle>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">{price.length ? `${price[0]} - ${price[1]}$` : 'Цена'}</Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
-                                <Dropdown.Item eventKey="100">до 100$</Dropdown.Item>
-                                <Dropdown.Item eventKey="200">100 - 200$</Dropdown.Item>
-                                <Dropdown.Item eventKey="400">200 - 400$</Dropdown.Item>
-                                <Dropdown.Item eventKey="500">от 500$</Dropdown.Item>
-                                <Dropdown.Item eventKey="5">All</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handlePriceSelect(['0', '100'])} eventKey="100">до 100$</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handlePriceSelect(['100', '200'])} eventKey="200">100 - 200$</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handlePriceSelect(['200', '400'])} eventKey="400">200 - 400$</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handlePriceSelect(['400', '2000'])} eventKey="500">400 - 2000$</Dropdown.Item>
+                                <Dropdown.Item
+                                    onClick={() => handlePriceSelect([])} eventKey="5">Сбросить</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
 

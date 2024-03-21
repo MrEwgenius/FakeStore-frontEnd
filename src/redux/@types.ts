@@ -79,6 +79,7 @@ export type GetProductListPayload = {
     page?: number
     typeName?: string
     brandName?: string
+    price?: string[]
 
 }
 

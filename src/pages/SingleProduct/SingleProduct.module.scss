@@ -74,28 +74,35 @@
             .sizeTable {
                 display: flex;
                 gap: 10px;
-                label {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    width: 35px;
-                    height: 35px;
-                    color: $primary-dark;
-                    font-size: 12px;
-                    line-height: 170%;
-                    border: 1px solid $extra-light;
-                    background: #fff;
-                    cursor: pointer;
-                    text-transform: uppercase;
-                }
-                input[type="radio"] {
-                    display: none;
-
-                    &:checked + label {
-                        background-color: $extra-light;
+                    label {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        width: 35px;
+                        height: 35px;
+                        color: $primary-dark;
+                        font-size: 12px;
+                        line-height: 170%;
+                        border: 1px solid $extra-light;
+                        background: #fff;
+                        cursor: pointer;
+                        text-transform: uppercase;
                     }
-                }
+                    input {
+                        display: none;
+
+                        &:checked + label {
+                            background-color: $gray;
+                        }
+                    }
+                    // input[type="radio"] {
+                    //     display: none;
+
+                    //     &:checked + label {
+                    //         background-color: $primary-dark;
+                    //     }
+                    // }
             }
         }
         .containerColors {

@@ -11,12 +11,17 @@
         min-width: 220px;
         .NameFilter {
             button {
+                background-color: #e2e1e1;
                 // background-color: #757;
             }
         }
+        .allCategory {
+            background-color: #f0b1b1;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
         .bodyFilter {
-            // background-color: #b95050;
-
             padding: 0;
             cursor: pointer;
             transition: all 0.3s;
@@ -64,21 +69,6 @@
                 background-color: #fff;
                 color: $primary-dark;
                 font-size: 14px;
-                // line-height: 170%;
-                // position: relative;
-                ::after {
-                    // position: absolute;
-                    // display: inline-block;
-                    // content: "" !important;
-                    // margin-left: 40px !important;
-                    // top: 0;
-                    // left: 0;
-                    // width: 15px;
-                    // height: 15px;
-
-                    // background-color: #f50505;
-                    // margin-left: 40px;
-                }
             }
             .superColor {
                 background-color: #f1eded;
