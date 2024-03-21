@@ -20,7 +20,7 @@ const FavoriteProducts = () => {
     useEffect(() => {
         dispatch(getBasketProducts())
     }, [dispatch])
- 
+
     const onSavedStatus = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
         return productInBasket ? 'удалить из корзины' : 'добавить в корзину';
@@ -54,8 +54,8 @@ const FavoriteProducts = () => {
     return (
         <div className={style.containerFavoriteProducts}>
 
-
-            {savedProduct ?
+            {savedProduct.length >= 1
+                ?
                 savedProduct.map((card, index) => (
 
                     <div key={card.id} className={style.containerProduct}>
@@ -70,7 +70,10 @@ const FavoriteProducts = () => {
                         </div>
                     </div>
                 ))
-                : 'd'
+                :
+                <div>
+                    Нет сохранённых продуктов
+                </div>
             }
 
 

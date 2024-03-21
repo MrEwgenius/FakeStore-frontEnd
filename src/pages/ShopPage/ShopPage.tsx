@@ -28,6 +28,22 @@ const ShopPage = () => {
     // const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
     // const [checked, setChecked] = useState<any>('')
     // const [price, setPrice] = useState<any>('')
+    // const pags = JSON.parse(localStorage.getItem('PageNumber')) 
+
+    // const [page, setPage] = useState(1)
+    // const localPage = JSON.parse(localStorage.getItem('PageNumber'))
+    const [page, setPage] = useState(() => {
+        const localData = localStorage.getItem('PageNumber');
+        console.log(localData);
+
+        return localData ? JSON.parse(localData) : 1;
+    });
+    // const [page, setPage] = useState(() => {
+    //     const storedPage = localStorage.getItem('PageNumber');
+    //     console.log(storedPage);
+
+    //     return storedPage ? JSON.parse(storedPage) : 1;
+    // });
     const [selectedCategory, setSelectedCategory] = useState<string | undefined>(location.state?.typeName);
     const [selectedBrand, setSelectedBrand] = useState<string | undefined>(location.state?.brandName);
     const [checked, setChecked] = useState<any>(location.state?.size || '')
@@ -51,10 +67,11 @@ const ShopPage = () => {
 
 
 
+    // console.log(page);
 
 
     // -----------------------------------------
-    console.log(location.state);
+    // console.log(location.state);
 
 
     // console.log('checked', checked);
@@ -81,9 +98,13 @@ const ShopPage = () => {
             typeName: location.state?.typeName || undefined,
             size: location.state?.size || undefined,
             price: location.state?.price || undefined,
+            page: page
         }))
     }, [dispatch]);
 
+    useEffect(() => {
+        localStorage.setItem('PageNumber', JSON.stringify(page));
+    }, [page]);
 
 
     const onCategoryClick = (category: string) => {
@@ -103,13 +124,21 @@ const ShopPage = () => {
         if (price.length >= 1) {
             newPath += `/${price.join('-')}`;
         }
-        dispatch(getProductLister({ isOverwrite: true, typeName: category, brandName: selectedBrand || undefined, size: checked || undefined, price: price || undefined }));
+        dispatch(getProductLister({
+            isOverwrite: true,
+            typeName: category,
+            brandName: selectedBrand || undefined,
+            size: checked || undefined,
+            price: price || undefined,
+        }));
+        setPage(1)
         navigate(newPath, {
             state: {
                 typeName: category,
                 brandName: selectedBrand || undefined,
                 size: checked || undefined,
-                price: price || undefined
+                price: price || undefined,
+
             }
         })
         // navigate(newPath);
@@ -132,7 +161,7 @@ const ShopPage = () => {
 
         }
         setChecked(updatedList);
-        console.log(event.target.value);
+        // console.log(event.target.value);
     };
 
 
@@ -153,12 +182,16 @@ const ShopPage = () => {
 
         newPath += `/${prices.join('-')}`;
         // navigate(newPath);
+        setPage(1)
         dispatch(getProductLister({
             isOverwrite: true,
             brandName: selectedBrand || undefined,
             typeName: selectedCategory || undefined,
             size: checked || undefined,
-            price: prices || undefined
+            price: prices || undefined,
+            // page: 1
+
+
         }));
         navigate(newPath, {
             state: {
@@ -188,12 +221,15 @@ const ShopPage = () => {
                 newPath += `/${price.join('-')}`;
             }
             // navigate(newPath);
+            setPage(1)
             dispatch(getProductLister({
                 isOverwrite: true,
                 brandName: selectedBrand || undefined,
                 typeName: selectedCategory || undefined,
                 size: checked || undefined,
-                price: price || undefined
+                price: price || undefined,
+                // page: 1
+
             }));
             navigate(newPath, {
                 state: {
@@ -223,7 +259,15 @@ const ShopPage = () => {
             newPath += `/${price.join('-')}`;
         }
         // navigate(newPath);
-        dispatch(getProductLister({ isOverwrite: true, brandName: brand, typeName: selectedCategory || undefined, size: checked || undefined, price: price || undefined }));
+        setPage(1)
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: brand,
+            typeName: selectedCategory || undefined,
+            size: checked || undefined,
+            price: price || undefined,
+            // page: 1
+        }));
         navigate(newPath, {
             // replace: true,
             state: {
@@ -239,11 +283,12 @@ const ShopPage = () => {
         navigate(`/`)
     }
     const navigateToClothingCategory = () => {
+        setPage(1)
         setSelectedBrand(undefined)
         setSelectedCategory(undefined)
         setChecked('')
         setPrice('')
-        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: undefined, size: undefined, price: undefined }));
+        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: undefined, size: undefined, price: undefined, }));
         navigate(RoutesList.Filter)
     }
 
@@ -260,7 +305,15 @@ const ShopPage = () => {
         if (price.length >= 1) {
             newPath += `/${price.join('-')}`;
         }
-        dispatch(getProductLister({ isOverwrite: true, brandName: selectedBrand || undefined, typeName: undefined, size: checked || undefined, price: price || undefined }));
+        setPage(1)
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: selectedBrand || undefined,
+            typeName: undefined,
+            size: checked || undefined,
+            price: price || undefined,
+            // page: 1
+        }));
         navigate(newPath, {
             state: {
                 typeName: undefined,
@@ -283,7 +336,15 @@ const ShopPage = () => {
         if (price.length >= 1) {
             newPath += `/${price.join('-')}`;
         }
-        dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: selectedCategory || undefined, size: checked || undefined, price: price || undefined }));
+        setPage(1)
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: undefined,
+            typeName: selectedCategory || undefined,
+            size: checked || undefined,
+            price: price || undefined,
+            // page: 1
+        }));
         // navigate(newPath);
         navigate(newPath, {
             state: {
@@ -325,15 +386,18 @@ const ShopPage = () => {
     }, [dispatch]);
 
 
-    const [page, setPage] = useState(1)
     const pagesCount = useMemo(
+
         () => Math.ceil(totalCount / PER_PAGE),
-        [totalCount]
+        [totalCount, page]
 
     );
 
+
+
     const handlePageChange = (pageNumber: number) => {
         setPage(pageNumber);
+        localStorage.setItem('PageNumber', JSON.stringify(pageNumber))
 
         dispatch(getProductLister({
             isOverwrite: true,
@@ -343,12 +407,14 @@ const ShopPage = () => {
             price: price || undefined,
             page: pageNumber
         }))
+
     };
 
     let items = [];
 
 
     for (let number = 1; number <= pagesCount; number++) {
+
         items.push(
             <Pagination.Item onClick={() => handlePageChange(number)} key={number} active={number === page}>
                 {number}
