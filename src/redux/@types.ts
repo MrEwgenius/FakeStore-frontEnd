@@ -80,6 +80,7 @@ export type GetProductListPayload = {
     typeName?: string
     brandName?: string
     price?: string[]
+    limit?: number
 
 }
 

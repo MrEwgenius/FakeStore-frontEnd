@@ -5,9 +5,13 @@ import nextIcon from '../../assets/Right-Arrow.svg'
 import { Carousel, Image } from "react-bootstrap";
 import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors,  setSavedStatus } from "src/redux/reducers/productSlice";
+import { ProductSelectors, getProductLister, setSavedStatus } from "src/redux/reducers/productSlice";
 import CardItem from "../CardItem/CardItem";
 import { ProductTypes, SaveStatus } from "src/@types";
+
+
+
+
 const Popular = () => {
     const indicatorStylePrevIcon = <div className={style.prevIcon}>
         <img src={prevIcon} alt="#" />
@@ -19,6 +23,8 @@ const Popular = () => {
     const dispatch = useDispatch();
     const productList = useSelector(ProductSelectors.getAllProductList);
 
+
+
     const onSavedStatus = (card: ProductTypes) => (status: SaveStatus) => {
         dispatch(setSavedStatus({ card, status }))
     }
@@ -26,10 +32,21 @@ const Popular = () => {
         // Вызываем ваш action для получения списка продуктов
         // dispatch(getProductList())
         // (dispatch(getProductList({page:2})))
-       
-        
+        dispatch(getProductLister({
+            isOverwrite: true,
+            limit: 8
+            // brandName: location.state?.brandName || undefined,
+            // typeName: location.state?.typeName || undefined,
+            // size: location.state?.size || undefined,
+            // price: location.state?.price || undefined,
+            // page: page
+        }))
+
+
 
     }, [dispatch]);
+    console.log(productList);
+
 
     const itemsPerSlide = 4;
 
@@ -51,9 +68,9 @@ const Popular = () => {
                 {slides.map((slide, index) => (
                     <Carousel.Item key={index}>
                         <div className={style.containerWrapper}>
-                            {/* {slide.map((product) => (
-                                <CardItem onSavedClick={onSavedStatus(product)} key={product.id} id={product.id} name={product.name} price={product.price} img={product.img} />
-                            ))} */}
+                            {slide.map((product) => (
+                                <CardItem onSavedClick={onSavedStatus(product)} key={product.id} id={product.id} name={product.name} price={product.price} img={product.image} />
+                            ))}
                         </div>
                     </Carousel.Item>
                 ))}

@@ -34,7 +34,6 @@ const ShopPage = () => {
     // const localPage = JSON.parse(localStorage.getItem('PageNumber'))
     const [page, setPage] = useState(() => {
         const localData = localStorage.getItem('PageNumber');
-        console.log(localData);
 
         return localData ? JSON.parse(localData) : 1;
     });
