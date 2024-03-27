@@ -1,7 +1,51 @@
 {
   "greeting": "Hello, Welcome!",
+  "search": "search",
+  "catalog": "catalog ",
+  "clothes": "clothes ",
+  "shoes": "shoes ",
+  "accessories": "accessories ",
+  "inDevelopment": "in Development ",
+  "showAll": "show all ",
+  "apply": "apply ",
+  "size": "size ",
+  "brand": "brand ",
+  "showAllBrand": "all brand ",
+  "price": "price ",
+  "reset": "reset ",
+  "home": "home ",
+  "popular": "popular ",
+  "isLoggedIn": "You are logged in! ",
+  "buttonUserExit": "Exit ",
+  "buttonAddProductUser": "Add New Product",
   "description": {
     "line1": "You're watching  YouTube Channel",
     "line2": "This is an Internationalisation Tutorial"
+  },
+  "addProduct": {
+    "name": "Product Name:",
+    "price": "Product Price:",
+    "brand": "Brand Name:",
+    "type": "Type Name:",
+    "sex": "Male/Female:",
+    "size": "Size:",
+    "img": "Product Pictures:",
+    "imgButtonAdd": "Add",
+    "buttonAddProduct": "Add Product",
+    "buttonRemoveAllImage": "Remove All",
+    "remove": "remove ",
+    "replace": "replace "
+  },
+  "basket": {
+    "title": "Basket",
+    "order": "order",
+    "paymentMethod": "payment method",
+    "card": "By card on the website",
+    "uponReceipt": "Upon receipt of the order",
+    "delivery": "delivery",
+    "totalPrice": "total:",
+    "basketEmpty": "YOUR BASKET IS EMPTY",
+    "BasketEmptySubtitle": "Add something to save time and make your shopping experience even more enjoyable.",
+    "goCatalog": "go to Catalog"
   }
 }

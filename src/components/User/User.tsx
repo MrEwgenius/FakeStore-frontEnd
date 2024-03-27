@@ -6,15 +6,17 @@ import { AuthSelectors, logoutUser } from "src/redux/reducers/authSlice";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
+import { useTranslation } from "react-i18next";
 
 
 const User = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const userRole = useSelector(AuthSelectors.getUserRole);
-    console.log('user role' , userRole);
+    console.log('user role', userRole);
 
 
     const clickOnAddProduct = () => {
@@ -28,19 +30,19 @@ const User = () => {
     return (
         <div>
             <FormPagesContainer
-                additionalInfo={ 
+                additionalInfo={
                     // userRole === 'ADMIN' ?
                     <button onClick={clickOnAddProduct}
                         className={classNames(style.additionalInfo,
                         )}>
-                        Добавить Продукт
+                        {t('buttonAddProductUser')}
                     </button>
                     // : <div></div>
                 }
-                btnTitle={"Exit"}
+                btnTitle={t('buttonUserExit')}
                 onSubmit={logOut}
             >
-                <div className={style.text}>Вы авторизованы!</div>
+                <div className={style.text}>{t('isLoggedIn')} </div>
 
             </FormPagesContainer>
 

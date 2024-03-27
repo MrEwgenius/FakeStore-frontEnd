@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProductSelectors, getProductLister, setSavedStatus } from "src/redux/reducers/productSlice";
 import CardItem from "../CardItem/CardItem";
 import { ProductTypes, SaveStatus } from "src/@types";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -23,7 +24,7 @@ const Popular = () => {
     const dispatch = useDispatch();
     const productList = useSelector(ProductSelectors.getAllProductList);
 
-
+    const { t } = useTranslation()
 
     const onSavedStatus = (card: ProductTypes) => (status: SaveStatus) => {
         dispatch(setSavedStatus({ card, status }))
@@ -58,7 +59,7 @@ const Popular = () => {
 
     return (
         <div className={style.containerPopular}>
-            <div className={style.title}>Популярное </div>
+            <div className={style.title}>{t('popular')} </div>
             <Carousel
                 indicators={false}
                 nextIcon={indicatorStyleNextIcon}

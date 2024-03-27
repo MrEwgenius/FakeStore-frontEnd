@@ -8,6 +8,7 @@ import { Navigate, useLocation, useNavigate, useParams, } from "react-router-dom
 import { RoutesList } from "../Router";
 import { PER_PAGE } from "src/utils/constans";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 const ShopPage = () => {
 
@@ -23,6 +24,15 @@ const ShopPage = () => {
 
 
     const [show, setShow] = useState(false)
+    const [page, setPage] = useState(() => {
+        const localData = localStorage.getItem('PageNumber');
+
+        return localData ? JSON.parse(localData) : 1;
+    });
+
+
+
+    const { t } = useTranslation()
 
     // const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
     // const [selectedBrand, setSelectedBrand] = useState<string | undefined>(undefined);
@@ -32,11 +42,6 @@ const ShopPage = () => {
 
     // const [page, setPage] = useState(1)
     // const localPage = JSON.parse(localStorage.getItem('PageNumber'))
-    const [page, setPage] = useState(() => {
-        const localData = localStorage.getItem('PageNumber');
-
-        return localData ? JSON.parse(localData) : 1;
-    });
     // const [page, setPage] = useState(() => {
     //     const storedPage = localStorage.getItem('PageNumber');
     //     console.log(storedPage);
@@ -427,8 +432,8 @@ const ShopPage = () => {
     return (
         <div>
             <ul className={style.navigationHistory}>
-                <span onClick={clickOnHome}>Главная</span>
-                <li className={'sd'} onClick={navigateToClothingCategory}>Одежда</li>
+                <span onClick={clickOnHome}>{t('home')} </span>
+                <li className={'sd'} onClick={navigateToClothingCategory}>{t('clothes')}</li>
                 {selectedCategory && <li>{selectedCategory}</li>}
                 {selectedBrand && <li>{selectedBrand}</li>}
             </ul>
@@ -436,7 +441,7 @@ const ShopPage = () => {
                 <div className={style.containerFilter}>
                     <Accordion  >
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header className={style.NameFilter}>Одежда</Accordion.Header>
+                            <Accordion.Header className={style.NameFilter}>{t('clothes')}</Accordion.Header>
 
                             {typeProduct.map((type) =>
                                 <Accordion.Body key={type.id} onClick={() => onCategoryClick(type.name)} className={style.bodyFilter}>
@@ -447,35 +452,35 @@ const ShopPage = () => {
                             )}
                             <Accordion.Body onClick={addAllCategory} className={classNames(style.bodyFilter, style.allCategory)}>
                                 <CustomToggle eventKey="0" >
-                                    <div >Показать всё </div>
+                                    <div >{t('showAll')} </div>
                                 </CustomToggle>
                             </Accordion.Body>
                         </Accordion.Item>
 
                         <Accordion.Item eventKey="1">
-                            <Accordion.Header className={style.NameFilter}>Обувь</Accordion.Header>
+                            <Accordion.Header className={style.NameFilter}>{t('shoes')}</Accordion.Header>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="1" >
-                                    <div>Ещё в разработке =(</div>
+                                    <div>{t('inDevelopment')}</div>
                                 </CustomToggle>
                             </Accordion.Body>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="1" >
-                                    <div>Ещё в разработке =(</div>
+                                    <div>{t('inDevelopment')}</div>
                                 </CustomToggle>
                             </Accordion.Body>
                         </Accordion.Item>
 
                         <Accordion.Item eventKey="2">
-                            <Accordion.Header className={style.NameFilter}>Аксесуары</Accordion.Header>
+                            <Accordion.Header className={style.NameFilter}>{t('accessories')}</Accordion.Header>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="2" >
-                                    <div>Ещё в разработке =(</div>
+                                    <div>{t('inDevelopment')}</div>
                                 </CustomToggle>
                             </Accordion.Body>
                             <Accordion.Body className={style.bodyFilter}>
                                 <CustomToggle eventKey="2" >
-                                    <div>Ещё в разработке =(</div>
+                                    <div>{t('inDevelopment')}</div>
                                 </CustomToggle>
                             </Accordion.Body>
                         </Accordion.Item>
@@ -491,7 +496,7 @@ const ShopPage = () => {
                             onToggle={clickOnSize}
                             as={ButtonGroup}>
                             <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">
-                                {checked.length ? checked.join(', ').toUpperCase() : 'Размер'}
+                                {checked.length ? checked.join(', ').toUpperCase() : t('size')}
                             </Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
                                 <div className={style.groupSizes}>
@@ -556,17 +561,18 @@ const ShopPage = () => {
                                     className={style.buttonChengeSizes}
                                     onClick={clickOnSize}
                                 >
-                                    применить
+                                    {t('apply')}
                                 </button>
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
                         <Dropdown as={ButtonGroup}>
-                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : "Бренды"}</Dropdown.Toggle>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : t('brand')}</Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
                                 <Dropdown.Item
                                     onClick={addAllBrand}
+                                    className={style.showAllBrand}
                                 >
-                                    {'Все Бренды'}
+                                    {t('showAllBrand')}
                                 </Dropdown.Item>
                                 {
                                     brandProducts.map((brand) =>
@@ -582,7 +588,7 @@ const ShopPage = () => {
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
                         <Dropdown as={ButtonGroup}>
-                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">{price.length ? `${price[0]} - ${price[1]}$` : 'Цена'}</Dropdown.Toggle>
+                            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">{price.length ? `${price[0]} - ${price[1]}$` : t('price')}</Dropdown.Toggle>
                             <Dropdown.Menu className={style.superColor}>
                                 <Dropdown.Item
                                     onClick={() => handlePriceSelect(['0', '100'])} eventKey="100">до 100$</Dropdown.Item>
@@ -593,7 +599,7 @@ const ShopPage = () => {
                                 <Dropdown.Item
                                     onClick={() => handlePriceSelect(['400', '2000'])} eventKey="500">400 - 2000$</Dropdown.Item>
                                 <Dropdown.Item
-                                    onClick={() => handlePriceSelect([])} eventKey="5">Сбросить</Dropdown.Item>
+                                    onClick={() => handlePriceSelect([])} eventKey="5">{t('reset') }</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
 

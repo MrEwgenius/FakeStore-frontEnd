@@ -7,6 +7,7 @@ import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 import classNames from "classnames"
 import { AuthSelectors } from "src/redux/reducers/authSlice"
+import { useTranslation } from "react-i18next"
 
 const AddProduct: React.FC = () => {
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
@@ -30,7 +31,7 @@ const AddProduct: React.FC = () => {
     const [images, setImages] = useState<ImageListType>([]);
     const maxNumber = 6;
 
-
+    const { t } = useTranslation()
 
 
 
@@ -42,7 +43,7 @@ const AddProduct: React.FC = () => {
     };
     const responseMessage = useSelector(ProductSelectors.getResponseMessage)
     const error = useSelector(ProductSelectors.getError);
-    console.log(responseMessage);
+    // console.log(responseMessage);
 
     useEffect(() => {
         if (error) {
@@ -125,17 +126,17 @@ const AddProduct: React.FC = () => {
 
         <form className={style.formContainer} onSubmit={handleSubmit} >
             <label form="name" className={style.group}>
-                <span className={style.groupName}>Название продукта:</span>
+                <span className={style.groupName}>{t('addProduct.name')} </span>
                 <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
 
             <label form="price" className={style.group}>
-                <span className={style.groupName}>Цена:</span>
+                <span className={style.groupName}>{t('addProduct.price')}</span>
                 <input type="number" name="price" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
             </label>
 
             <label form="brandName" className={style.group}>
-                <span className={style.groupName}>Название бренда:</span>
+                <span className={style.groupName}>{t('addProduct.brand')}</span>
                 {/* <input type="text" name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)} /> */}
                 <select name="brandName" value={brandName} onChange={(e) => setBrandName(e.target.value)}>
                     {brandProducts.map((brand) => {
@@ -145,7 +146,7 @@ const AddProduct: React.FC = () => {
             </label>
 
             <div className={style.group}>
-                <span className={style.groupName}>Тип продукта:</span>
+                <span className={style.groupName}>{t('addProduct.type')}</span>
                 {/* <input type="text" name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)} /> */}
                 <select name="typeName" value={typeName} onChange={(e) => setTypeName(e.target.value)}>
                     {typeProduct.map((type) =>
@@ -160,7 +161,7 @@ const AddProduct: React.FC = () => {
             </label>
 
             <div className={style.group}>
-                <span className={style.groupName}>Мужское/Женское:</span>
+                <span className={style.groupName}>{t('addProduct.sex')}</span>
                 <select name="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
                     <option value="male">man</option>
                     <option value="female">women</option>
@@ -168,7 +169,7 @@ const AddProduct: React.FC = () => {
             </div>
 
             <div className={style.group}>
-                <span className={style.groupName}>Размер:</span>
+                <span className={style.groupName}>{t('addProduct.size')}</span>
                 <div className={style.groupSizes}>
                     <div>
                         <label htmlFor="xs"> XS</label>
@@ -198,7 +199,7 @@ const AddProduct: React.FC = () => {
             </div>
 
             <div className={style.group}>
-                <span className={style.groupName}>Изображения продукта:</span>
+                <span className={style.groupName}>{t('addProduct.img')}</span>
                 <ReactImageUploading
                     multiple
                     value={images}
@@ -224,7 +225,7 @@ const AddProduct: React.FC = () => {
                                     disabled={maxNumber === images.length}
                                     className={style.addImageButton}
                                 >
-                                    Добавить
+                                    {t('addProduct.imgButtonAdd')}
                                 </button>
                                 <button
                                     className={classNames(style.removeAllImageButton,
@@ -233,7 +234,7 @@ const AddProduct: React.FC = () => {
                                     type="button"
                                     onClick={onImageRemoveAll}
                                 >
-                                    Удалить все
+                                    {t('addProduct.buttonRemoveAllImage')}
                                 </button>
                             </div>
 
@@ -251,14 +252,14 @@ const AddProduct: React.FC = () => {
                                             type="button"
                                             onClick={() => onImageUpdate(index)}
                                         >
-                                            Заменить
+                                            {t('addProduct.replace')}
                                         </button>
 
                                         <button
                                             type="button"
                                             onClick={() => onImageRemove(index)}
                                         >
-                                            Удалить
+                                            {t('addProduct.remove')}
                                         </button>
 
                                     </div>
@@ -271,7 +272,7 @@ const AddProduct: React.FC = () => {
 
             {error && <div className={style.error}>{`${error.message}`}</div>}
             {responseMessage && <div className={style.success}>{`${responseMessage}`}</div>}
-            <button className={style.button} type="submit">Добавить продукт</button>
+            <button className={style.button} type="submit">  {t('addProduct.buttonAddProduct')}</button>
         </form >
 
     )

@@ -51,7 +51,6 @@ const Header = () => {
         i18n.changeLanguage(lng);
     };
 
-    console.log(i18n.resolvedLanguage);
 
 
     return (
@@ -60,10 +59,10 @@ const Header = () => {
                 <div onClick={clickOnHome} className={style.logo}>FAKESTORE</div>
                 <div className={style.sexsave}>
                     {/* <div>Женщины</div> */}
-                    <div onClick={clickOnProducts}>Каталог</div>
+                    <div onClick={clickOnProducts}>{t('catalog')}</div>
                     <div>
                         <label className={style.label}>
-                            Поиск
+                            {t('search')}
                             <input type="text" onChange={() => { }} />
                         </label>
                     </div>
@@ -72,7 +71,7 @@ const Header = () => {
                 <div className={style.language}>
                     <select value={i18n.resolvedLanguage} onChange={(e) => changeLanguage(e.target.value)} name="languages" id="language">
                         <option
-                        
+
                             // selected={i18n.resolvedLanguage === 'ru'}
                             value="ru">RU</option>
                         <option

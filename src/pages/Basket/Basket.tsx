@@ -9,6 +9,7 @@ import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
 import { AuthSelectors } from "src/redux/reducers/authSlice"
+import { useTranslation } from "react-i18next"
 
 
 
@@ -35,6 +36,8 @@ const Basket = () => {
         navigate(RoutesList.Login)
 
     }
+
+    const { t } = useTranslation()
 
     const calculateTotalPrice = () => {
         let totalPrice = 0;
@@ -93,12 +96,15 @@ const Basket = () => {
                     >
                         Войти
                     </button>
-                </div>}
+                </div>
 
-            {!!basketProducts.length
+            }
+            
+
+            {!!basketProducts.length && !isLoggedIn
                 ?
                 <>
-                    <div className={style.basketTitle}>КОРЗИНА</div><div className={style.basketList}>
+                    <div className={style.basketTitle}>{t('basket.title')} </div><div className={style.basketList}>
                         <div className={style.basketForm}>
                             <div className={style.groupInputs}>
                                 <input className={style.inputField} placeholder="Name" type="text" />
@@ -106,25 +112,25 @@ const Basket = () => {
                                 <input className={style.inputField} placeholder="Email" type="email" />
                                 <input className={style.inputField} placeholder="Phone" type="number" />
                             </div>
-                            <div className={style.deliveryTitle}>Доставка</div>
+                            <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
                             <div className={style.deliveryAddress}>
                                 Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»
                             </div>
                             <div className={style.paymentMethods}>
-                                <div className={style.paymentMethodTitle}>Способ Оплаты</div>
+                                <div className={style.paymentMethodTitle}>{t('basket.paymentMethod')}</div>
                                 <div className={style.paymentMethod}>
                                     <input id="radio1" name="paymentMethod" type="radio" value="card" onChange={handlePaymentMethodChange} />
-                                    <label htmlFor="radio1"> Карточкой на сайте</label>
+                                    <label htmlFor="radio1"> {t('basket.card')}</label>
                                 </div>
 
                                 <div className={style.paymentMethod}>
                                     <input id="radio2" name="paymentMethod" type="radio" value="cash" onChange={handlePaymentMethodChange} />
-                                    <label htmlFor="radio2"> При получении заказа</label>
+                                    <label htmlFor="radio2"> {t('basket.uponReceipt')}</label>
                                 </div>
 
                                 <button className={classNames(style.button, {
                                     [style.disabled]: !isPaymentMethodSelected()
-                                })} disabled={!isPaymentMethodSelected()}>ЗАКАЗАТЬ</button>
+                                })} disabled={!isPaymentMethodSelected()}>{t('basket.order')}</button>
                             </div>
                         </div>
 
@@ -145,7 +151,7 @@ const Basket = () => {
                                 </div>
                             ))}
 
-                            <div className={style.totalPrice}>ВСЕГО: <span>{calculateTotalPrice()}$</span></div>
+                            <div className={style.totalPrice}>{t('basket.totalPrice')} <span>{calculateTotalPrice()}$</span></div>
 
                         </div>
                     </div>
@@ -153,18 +159,19 @@ const Basket = () => {
 
                 :
                 <div className={style.containerBasketEmpty}>
-                    <div className={style.emptyTitle} >Ваша корзина пуста</div>
+                    <div className={style.emptyTitle} >{t('basket.basketEmpty')} </div>
                     <div className={style.emptyImage} >
                         <img src={basketEmpty} alt="#!" />
                     </div>
                     <div className={style.subTitleBasketEmpty} >
-                        Добавьте что-то, чтобы сэкономить время и сделать шопинг еще более приятным.
+                        {t('basket.BasketEmptySubtitle')}
                     </div>
                     <button
                         className={style.buttonBasketEmpty}
                         onClick={navigateToCatalog}
                     >
-                        перейти в каталог
+                        {t('basket.goCatalog')}
+
                     </button>
                 </div>
             }

@@ -11,6 +11,7 @@
         min-width: 220px;
         .NameFilter {
             button {
+                text-transform: capitalize;
                 background-color: #e2e1e1;
                 // background-color: #757;
             }
@@ -20,6 +21,7 @@
             height: 30px;
             display: flex;
             align-items: center;
+            text-transform: capitalize;
         }
         .bodyFilter {
             padding: 0;
@@ -63,6 +65,7 @@
             width: 700px;
 
             .dropDownToogle {
+                text-transform: capitalize;
                 width: 185px;
                 height: 40px;
                 border-radius: 0;
@@ -72,12 +75,16 @@
                 font-size: 14px;
             }
             .superColor {
+                text-transform: capitalize;
                 background-color: #f1eded;
                 width: 100%;
                 padding: 0;
                 padding-top: 10px;
                 gap: 15px;
 
+                .showAllBrand {
+                    background-color: #ffcbcb;
+                }
                 .buttonChengeSizes {
                     border: none;
                     background: $primary-dark;
@@ -136,6 +143,10 @@
 .navigationHistory {
     span {
         cursor: pointer;
+        text-transform: capitalize;
+    }
+    li {
+        text-transform: capitalize;
     }
     li:last-child {
         color: $gray;
