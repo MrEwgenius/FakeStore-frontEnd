@@ -82,9 +82,9 @@ const Basket = () => {
     };
     return (
         <div className={style.containerBasket}>
-            {!isLoggedIn &&
+            {!isLoggedIn ?
                 <div className={style.containerBasketEmpty}>
-                    <div className={style.emptyTitle} >Для начала нужно Войти</div>
+                    <div className={style.emptyTitle} >{t('basket.signInTitle')}</div>
                     <div className={style.emptyImage} >
                         <img src={basketEmpty} alt="#!" />
                     </div>
@@ -94,87 +94,91 @@ const Basket = () => {
                         className={style.buttonBasketEmpty}
                         onClick={navigateSignIn}
                     >
-                        Войти
+                        {t('basket.signInButton')}
                     </button>
                 </div>
-
-            }
-            
-
-            {!!basketProducts.length && !isLoggedIn
-                ?
+                :
                 <>
-                    <div className={style.basketTitle}>{t('basket.title')} </div><div className={style.basketList}>
-                        <div className={style.basketForm}>
-                            <div className={style.groupInputs}>
-                                <input className={style.inputField} placeholder="Name" type="text" />
-                                <input className={style.inputField} placeholder="LastName" type="text" />
-                                <input className={style.inputField} placeholder="Email" type="email" />
-                                <input className={style.inputField} placeholder="Phone" type="number" />
-                            </div>
-                            <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
-                            <div className={style.deliveryAddress}>
-                                Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»
-                            </div>
-                            <div className={style.paymentMethods}>
-                                <div className={style.paymentMethodTitle}>{t('basket.paymentMethod')}</div>
-                                <div className={style.paymentMethod}>
-                                    <input id="radio1" name="paymentMethod" type="radio" value="card" onChange={handlePaymentMethodChange} />
-                                    <label htmlFor="radio1"> {t('basket.card')}</label>
-                                </div>
 
-                                <div className={style.paymentMethod}>
-                                    <input id="radio2" name="paymentMethod" type="radio" value="cash" onChange={handlePaymentMethodChange} />
-                                    <label htmlFor="radio2"> {t('basket.uponReceipt')}</label>
-                                </div>
+                    {!!basketProducts.length
+                        ?
+                        <>
+                            <div className={style.basketTitle}>{t('basket.title')} </div><div className={style.basketList}>
+                                <div className={style.basketForm}>
+                                    <div className={style.groupInputs}>
+                                        <input className={style.inputField} placeholder="Name" type="text" />
+                                        <input className={style.inputField} placeholder="LastName" type="text" />
+                                        <input className={style.inputField} placeholder="Email" type="email" />
+                                        <input className={style.inputField} placeholder="Phone" type="number" />
+                                    </div>
+                                    <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
+                                    <div className={style.deliveryAddress}>
+                                        Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»
+                                    </div>
+                                    <div className={style.paymentMethods}>
+                                        <div className={style.paymentMethodTitle}>{t('basket.paymentMethod')}</div>
+                                        <div className={style.paymentMethod}>
+                                            <input id="radio1" name="paymentMethod" type="radio" value="card" onChange={handlePaymentMethodChange} />
+                                            <label htmlFor="radio1"> {t('basket.card')}</label>
+                                        </div>
 
-                                <button className={classNames(style.button, {
-                                    [style.disabled]: !isPaymentMethodSelected()
-                                })} disabled={!isPaymentMethodSelected()}>{t('basket.order')}</button>
-                            </div>
-                        </div>
+                                        <div className={style.paymentMethod}>
+                                            <input id="radio2" name="paymentMethod" type="radio" value="cash" onChange={handlePaymentMethodChange} />
+                                            <label htmlFor="radio2"> {t('basket.uponReceipt')}</label>
+                                        </div>
 
-
-                        <div className={style.basketProductList}>
-
-                            {basketProducts && basketProducts.map((card) => (
-                                <div key={card.id} className={style.containerProduct}>
-
-                                    <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
-                                    <div className={style.cardInfo}>
-                                        <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
-                                        <div className={style.typeProduct}>{card.typeName}</div>
-                                        <div className={style.price}>{card.price}$</div>
-                                        <img onClick={() => onDeletePost(card.id)} className={style.close} src={close} alt="#!" />
-
+                                        <button className={classNames(style.button, {
+                                            [style.disabled]: !isPaymentMethodSelected()
+                                        })} disabled={!isPaymentMethodSelected()}>{t('basket.order')}</button>
                                     </div>
                                 </div>
-                            ))}
 
-                            <div className={style.totalPrice}>{t('basket.totalPrice')} <span>{calculateTotalPrice()}$</span></div>
 
+                                <div className={style.basketProductList}>
+
+                                    {basketProducts && basketProducts.map((card) => (
+                                        <div key={card.id} className={style.containerProduct}>
+
+                                            <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
+                                            <div className={style.cardInfo}>
+                                                <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
+                                                <div className={style.typeProduct}>{card.typeName}</div>
+                                                <div className={style.price}>{card.price}$</div>
+                                                <img onClick={() => onDeletePost(card.id)} className={style.close} src={close} alt="#!" />
+
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    <div className={style.totalPrice}>{t('basket.totalPrice')} <span>{calculateTotalPrice()}$</span></div>
+
+                                </div>
+                            </div>
+                        </>
+
+                        :
+                        <div className={style.containerBasketEmpty}>
+                            <div className={style.emptyTitle} >{t('basket.basketEmpty')} </div>
+                            <div className={style.emptyImage} >
+                                <img src={basketEmpty} alt="#!" />
+                            </div>
+                            <div className={style.subTitleBasketEmpty} >
+                                {t('basket.BasketEmptySubtitle')}
+                            </div>
+                            <button
+                                className={style.buttonBasketEmpty}
+                                onClick={navigateToCatalog}
+                            >
+                                {t('basket.goCatalog')}
+
+                            </button>
                         </div>
-                    </div>
+                    }
                 </>
 
-                :
-                <div className={style.containerBasketEmpty}>
-                    <div className={style.emptyTitle} >{t('basket.basketEmpty')} </div>
-                    <div className={style.emptyImage} >
-                        <img src={basketEmpty} alt="#!" />
-                    </div>
-                    <div className={style.subTitleBasketEmpty} >
-                        {t('basket.BasketEmptySubtitle')}
-                    </div>
-                    <button
-                        className={style.buttonBasketEmpty}
-                        onClick={navigateToCatalog}
-                    >
-                        {t('basket.goCatalog')}
-
-                    </button>
-                </div>
             }
+
+
 
         </div >
     )

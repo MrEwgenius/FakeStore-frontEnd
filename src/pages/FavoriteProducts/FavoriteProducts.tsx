@@ -6,6 +6,7 @@ import style from './FavoriteProducts.module.scss'
 import close from '../../assets/close.svg'
 import { ProductTypes, SaveStatus } from "src/@types";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const FavoriteProducts = () => {
 
@@ -23,7 +24,7 @@ const FavoriteProducts = () => {
 
     const onSavedStatus = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
-        return productInBasket ? 'удалить из корзины' : 'добавить в корзину';
+        return productInBasket ?  t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
     };
 
     const toggleBasket = (card: ProductTypes) => {
@@ -48,7 +49,7 @@ const FavoriteProducts = () => {
 
     }
 
-
+    const { t } = useTranslation()
 
 
     return (
@@ -72,7 +73,7 @@ const FavoriteProducts = () => {
                 ))
                 :
                 <div>
-                    Нет сохранённых продуктов
+                    {t('faboriteProduct.listEmpty')}
                 </div>
             }
 

@@ -89,13 +89,6 @@ const Header = () => {
                         EN
                     </div> */}
                 </div>
-                <div>
-                    {t('description.line1')}
-                    <Trans >
-
-
-                    </Trans>
-                </div>
                 <div className={style.wrapContainer}>
                     {/* <div onClick={clickOnHome} className={style.nav}>Home</div> */}
                     {/* <div onClick={clickOnProducts} className={style.nav}>Products</div> */}

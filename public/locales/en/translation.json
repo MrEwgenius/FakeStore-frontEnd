@@ -46,6 +46,16 @@
     "totalPrice": "total:",
     "basketEmpty": "YOUR BASKET IS EMPTY",
     "BasketEmptySubtitle": "Add something to save time and make your shopping experience even more enjoyable.",
-    "goCatalog": "go to Catalog"
+    "goCatalog": "go to Catalog",
+    "signInButton": "Sign In",
+    "signInTitle": "YOU NEED TO LOG IN FIRST"
+  },
+  "faboriteProduct":{
+    "listEmpty":"Saved products list is empty",
+    "removeBasketProduct":"remove from basket",
+    "addToBasketProduct":"add to basket"
+    
+
+  
   }
 }

@@ -46,7 +46,14 @@
     "totalPrice": "Всего:",
     "basketEmpty": "ВАША КОРЗИНА ПУСТА",
     "BasketEmptySubtitle": "Добавьте что-то, чтобы сэкономить время и сделать шопинг еще более приятным.",
-    "goCatalog": "Перейти в каталог"
-    
+    "goCatalog": "Перейти в каталог",
+    "signInButton": "Войти",
+    "signInTitle": "Для начала нужно войти"
+  },
+
+  "faboriteProduct": {
+    "listEmpty": "Нет сохранённых товаров",
+    "removeBasketProduct": "удалить из корзины",
+    "addToBasketProduct": "добавить в Корзину"
   }
 }
