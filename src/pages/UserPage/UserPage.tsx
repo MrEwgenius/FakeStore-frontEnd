@@ -11,7 +11,10 @@ const UserPage = () => {
 
     const navigate = useNavigate()
     const clickOn = () => {
-        navigate(RoutesList.Registration)
+        navigate(RoutesList.PersonalInfo)
+    }
+    const clickFavoriteProduct = () => {
+        navigate(RoutesList.PersonFavoriteProducts)
     }
     const clickOff = () => {
         navigate(RoutesList.UserAccount)
@@ -23,16 +26,15 @@ const UserPage = () => {
             <div className={style.title}>Мой Аккаунт</div>
             <div className={style.containerWrap}>
                 <ul className={style.navigationUserPage}>
-                    <li><img src={user} alt="" /> Личная информация </li>
+                    <li onClick={clickOn}><img src={user} alt="#!" /> Личная информация </li>
 
-                    <li> <img src={adress} alt="" /> Адрес</li>
-                    <li><img src={saved} alt="" /> Лист пожеланий  </li>
-                    <li><img src={exit} alt="" /> Выйти  </li>
-                <div onClick={clickOn}>лево</div>
-                <div onClick={clickOff}>выкл</div>
+                    <li> <img src={adress} alt="#!" /> Адрес</li>
+                    <li onClick={clickFavoriteProduct}><img src={saved} alt="#!" /> Лист пожеланий  </li>
+                    <li><img src={exit} alt="#!" /> Выйти  </li>
+                    <div onClick={clickOff}>выкл</div>
                 </ul>
 
-                <div >
+                <div className={style.outletContainer}>
                     <Outlet />
                 </div>
 

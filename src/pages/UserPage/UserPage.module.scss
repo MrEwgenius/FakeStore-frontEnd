@@ -1,5 +1,13 @@
 @import "../../styles/solors.scss";
 .userPage {
+    background-color: #d47373;
+    // width: 100%;
+    display: flex;
+    // flex: 1;
+    flex-direction: column;
+    // height: 100%;
+    width: 1440px;
+    margin: auto;
     .title {
         font-size: 27px;
         font-weight: 500;
@@ -10,43 +18,53 @@
         text-transform: uppercase;
     }
     .containerWrap {
+        border-top: 1px solid $line-grey;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
+        gap: 80px;
+        flex: 1;
         // border-top: 1px solid black;
         position: relative;
-        // border-bottom: 1px solid black;
+
         &::after {
             content: "";
             position: absolute;
-            top: 0;
-            left: 1px;
-            width: 100%;
-            height: 1px;
+            top: 0px;
+            left: 200px;
+            height: 100%;
+            width: 1px;
             background-color: $line-grey;
             // border-right: 1px solid black;
         }
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: -50px;
-            left: 1px;
-            width: 100%;
-            height: 1px;
-            background-color: $line-grey;
-            // border-right: 1px solid black;
+        // border-bottom: 1px solid black;
+
+        // &::after {
+        //     content: "";
+        //     position: absolute;
+        //     top: -100px;
+        //     left: 200px;
+        //     height: 100%;
+        //     width: 1px;
+        //     background-color: $line-grey;
+        //     // border-right: 1px solid black;
+        // }
+        .outletContainer {
+            padding: 55px;
         }
         .navigationUserPage {
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid $line-grey;
+            // display: flex;
+            // flex-direction: column;
+            // border-right: 1px solid $line-grey;
             // border-left: 1px solid $line-grey;
-
+            background-color: #ad8080;
             padding: 15px;
             padding-right: 40px;
+            // flex: 1;
             gap: 20px;
             position: relative;
-            min-height: 450px;
+            // min-height: 450px;
             li {
+                cursor: pointer;
                 display: flex;
                 gap: 10px;
                 align-items: center;

@@ -430,7 +430,7 @@ const ShopPage = () => {
 
 
     return (
-        <div>
+        <div className={style.containerMain}>
             <ul className={style.navigationHistory}>
                 <span onClick={clickOnHome}>{t('home')} </span>
                 <li className={'sd'} onClick={navigateToClothingCategory}>{t('clothes')}</li>

@@ -1,28 +1,17 @@
 @import "../../styles/solors.scss";
 .containerFavoriteProducts {
-    max-width: 900px;
-    margin: auto;
+    // max-width: 900px;
     // margin-top: 40px;
-    // display: flex;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    background-color: #c78f8f;
+    display: flex;
     // grid-template-rows: 380px 380px ;
-    background-color: #fff;
     gap: 80px;
+    flex-direction: column;
     flex-wrap: wrap;
     position: relative;
     justify-content: center;
-    padding: 40px;
+    // padding: 40px;
 
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%; /* задаем положение для линии */
-        width: 1px;
-        height: 100%;
-        background-color: #ccc; /* цвет линии */
-    }
 
     .containerProduct {
         width: 380px;
@@ -34,12 +23,12 @@
         border-radius: 10px;
         padding: 5px;
         position: relative;
-        &:nth-child(2n + 1)::after {
+        &::after {
             content: "";
             position: absolute;
-            bottom: -40px;
-            left: -300px;
-            width: 1440px;
+            bottom: -55px;
+            left: -135px;
+            width: 887px;
             height: 1px;
             background-color: $line-grey;
         }

@@ -32,8 +32,7 @@ const Home = () => {
     return (
         <div className={styles.containerPagesContainer}>
             <Header />
-            {/* <Banner /> */}
-            {/* <Abaut /> */}
+
             <div className={styles.outlet}>
                 {/* <FormPagesContainer additionalInfo={
                     <div className={styles.additionalInfo}>
@@ -43,7 +42,9 @@ const Home = () => {
                 } title={"title"} btnTitle={"WAF"} onSubmit={()=>{}} >
                 <div></div>
             </FormPagesContainer> */}
-                <Outlet />
+                <div className={styles.outletContainer}>
+                    <Outlet />
+                </div>
 
             </div>
 

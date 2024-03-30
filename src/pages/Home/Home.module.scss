@@ -1,18 +1,29 @@
 .containerPagesContainer {
-    display: flex;
-    flex-direction: column;
+    // align-items: center;
     // flex: 1;
-    min-height: 100vh;
     // background-color: #ad8888;
-    width: 1440px;
-
-    margin: auto;
+    // width: 1440px;
+    // min-height: 100vh;
+    // display: flex;
+    // flex-direction: column;
+    // margin: auto;
     .outlet {
+        // justify-content: start;
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 121px);
         // background-color: #4b99a7;
+        // min-height: 100vh;
         // margin-top: 30px;
         // margin-bottom: 40px;
 
-        flex: 1;
+        background-color: #528857;
+        // height: 100%;
+        // margin: auto;
+        // flex: 1;
+        .outletContainer {
+            flex: 1;
+        }
     }
     .footer {
     }
