@@ -13,6 +13,7 @@ import { RoutesList } from "../Router";
 import prevIcon from '../../assets/LeftArrow.svg'
 import nextIcon from '../../assets/Right-Arrow.svg'
 import CardItem from "src/components/CardItem/CardItem";
+import { AuthSelectors } from "src/redux/reducers/authSlice";
 
 
 const SingleProduct = () => {
@@ -56,11 +57,12 @@ const SingleProduct = () => {
             setUserRole(decodedToken);
         }
     }, [accessToken]);
+    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
 
 
 
     const toggleBasket = () => {
-        if (userRole && userRole.role === 'ADMIN') {
+        if (isLoggedIn) {
 
             if (id) {
                 const productInBasket = basketProduct.find(product => product.id === Number(id));

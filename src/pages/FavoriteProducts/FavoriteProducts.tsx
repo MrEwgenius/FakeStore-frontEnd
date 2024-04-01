@@ -7,6 +7,8 @@ import close from '../../assets/close.svg'
 import { ProductTypes, SaveStatus } from "src/@types";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { AuthSelectors } from "src/redux/reducers/authSlice";
+import { RoutesList } from "../Router";
 
 const FavoriteProducts = () => {
 
@@ -16,6 +18,7 @@ const FavoriteProducts = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
 
 
     useEffect(() => {
@@ -24,18 +27,27 @@ const FavoriteProducts = () => {
 
     const onSavedStatus = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
-        return productInBasket ?  t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
+        return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
     };
 
     const toggleBasket = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
-        if (productInBasket) {
+        if (isLoggedIn) {
 
-            dispatch(deleteBasketProduct(card.id));
-            dispatch(getBasketProducts())
+            if (productInBasket) {
+
+                dispatch(deleteBasketProduct(card.id));
+                dispatch(getBasketProducts())
+            } else {
+                dispatch(addBasketProductFavorite(card.id));
+                dispatch(getBasketProducts())
+            }
         } else {
-            dispatch(addBasketProductFavorite(card.id));
-            dispatch(getBasketProducts())
+            const confirmSignIn = window.confirm('Для начало нужно Войти!');
+            if (confirmSignIn) {
+                navigate(RoutesList.Login)
+            }
+
         }
     };
 

@@ -94,7 +94,7 @@ const Basket = () => {
                         className={style.buttonBasketEmpty}
                         onClick={navigateSignIn}
                     >
-                        {t('basket.цsignInButton')}
+                        {t('basket.signInButton')}
                     </button>
                 </div>
                 :

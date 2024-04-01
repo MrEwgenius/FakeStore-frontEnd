@@ -44,7 +44,7 @@ const Header = () => {
     }
     const clickOnUser = () => {
         // navigate(RoutesList.Login)
-        navigate(RoutesList.UserAccount)
+        navigate(RoutesList.PersonalInfo)
 
     }
 

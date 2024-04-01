@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import style from "./UserPage.module.scss";
 import { Outlet, useNavigate } from "react-router-dom";
 import { RoutesList } from "../Router";
@@ -6,10 +6,15 @@ import user from '../../assets/User.svg';
 import adress from '../../assets/adress.svg';
 import exit from '../../assets/exit.svg';
 import saved from '../../assets/Save.svg';
+import addProduct from '../../assets/medical.svg';
+import { useDispatch } from "react-redux";
+import { logoutUser } from "src/redux/reducers/authSlice";
+import { jwtDecode } from "jwt-decode";
 
 const UserPage = () => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const clickOn = () => {
         navigate(RoutesList.PersonalInfo)
     }
@@ -19,10 +24,33 @@ const UserPage = () => {
     const clickOff = () => {
         navigate(RoutesList.UserAccount)
     }
+    const logOut = () => {
+        const logOutUser = window.confirm('Вы точно хотите выйти из аккаунта?');
+        if (logOutUser) {
+            dispatch(logoutUser())
+            navigate(RoutesList.Home)
+        }
+    }
+    const clickOnAddProduct = () => {
+        navigate(RoutesList.AddProduct)
+    }
+
+    const [userRole, setUserRole] = useState<any>(null);
+
+
+    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
+
+    useEffect(() => {
+        if (accessToken) {
+            const decodedToken = jwtDecode(accessToken);
+            setUserRole(decodedToken);
+        }
+    }, [accessToken]);
 
 
     return (
         <div className={style.userPage}>
+            {/* <div className={style.containerMain}> */}
             <div className={style.title}>Мой Аккаунт</div>
             <div className={style.containerWrap}>
                 <ul className={style.navigationUserPage}>
@@ -30,7 +58,11 @@ const UserPage = () => {
 
                     <li> <img src={adress} alt="#!" /> Адрес</li>
                     <li onClick={clickFavoriteProduct}><img src={saved} alt="#!" /> Лист пожеланий  </li>
-                    <li><img src={exit} alt="#!" /> Выйти  </li>
+                    {/* <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li> */}
+                    {userRole && userRole.role === 'ADMIN' && (
+                        <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li>
+                    )}
+                    <li onClick={logOut} ><img src={exit} alt="#!" /> Выйти  </li>
                     <div onClick={clickOff}>выкл</div>
                 </ul>
 
@@ -39,6 +71,7 @@ const UserPage = () => {
                 </div>
 
             </div>
+            {/* </div> */}
         </div>
     )
 }

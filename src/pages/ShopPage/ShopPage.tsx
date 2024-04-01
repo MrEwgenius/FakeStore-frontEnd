@@ -599,7 +599,7 @@ const ShopPage = () => {
                                 <Dropdown.Item
                                     onClick={() => handlePriceSelect(['400', '2000'])} eventKey="500">400 - 2000$</Dropdown.Item>
                                 <Dropdown.Item
-                                    onClick={() => handlePriceSelect([])} eventKey="5">{t('reset') }</Dropdown.Item>
+                                    onClick={() => handlePriceSelect([])} eventKey="5">{t('reset')}</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>{'   '}
 

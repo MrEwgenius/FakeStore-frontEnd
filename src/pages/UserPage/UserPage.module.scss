@@ -1,6 +1,6 @@
 @import "../../styles/solors.scss";
 .userPage {
-    background-color: #d47373;
+    // background-color: #d47373;
     // width: 100%;
     display: flex;
     // flex: 1;
@@ -8,6 +8,9 @@
     // height: 100%;
     width: 1440px;
     margin: auto;
+    flex: 1;
+    // min-height: calc(100vh - 121px);
+
     .title {
         font-size: 27px;
         font-weight: 500;
@@ -22,20 +25,20 @@
         display: flex;
         // justify-content: space-between;
         gap: 80px;
-        flex: 1;
         // border-top: 1px solid black;
-        position: relative;
+            flex: 1;
+            position: relative;
 
-        &::after {
-            content: "";
-            position: absolute;
-            top: 0px;
-            left: 200px;
-            height: 100%;
-            width: 1px;
-            background-color: $line-grey;
-            // border-right: 1px solid black;
-        }
+        // &::after {
+        //     content: "";
+        //     position: absolute;
+        //     top: 0px;
+        //     left: 200px;
+        //     height: 100%;
+        //     width: 1px;
+        //     background-color: $line-grey;
+        //     // border-right: 1px solid black;
+        // }
         // border-bottom: 1px solid black;
 
         // &::after {
@@ -50,18 +53,24 @@
         // }
         .outletContainer {
             padding: 55px;
+            width: 100%;
+            // height: 100%;
+            flex: 1;
         }
         .navigationUserPage {
+            min-width: 240px;
             // display: flex;
             // flex-direction: column;
-            // border-right: 1px solid $line-grey;
+            border-right: 1px solid $line-grey;
             // border-left: 1px solid $line-grey;
-            background-color: #ad8080;
+            // background-color: #ad8080;
             padding: 15px;
             padding-right: 40px;
             // flex: 1;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
             position: relative;
+            gap: 20px;
             // min-height: 450px;
             li {
                 cursor: pointer;

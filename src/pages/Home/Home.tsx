@@ -42,9 +42,9 @@ const Home = () => {
                 } title={"title"} btnTitle={"WAF"} onSubmit={()=>{}} >
                 <div></div>
             </FormPagesContainer> */}
-                <div className={styles.outletContainer}>
+                {/* <div className={styles.outletContainer}> */}
                     <Outlet />
-                </div>
+                {/* </div> */}
 
             </div>
 

@@ -2,7 +2,6 @@
 .containerFavoriteProducts {
     // max-width: 900px;
     // margin-top: 40px;
-    background-color: #c78f8f;
     display: flex;
     // grid-template-rows: 380px 380px ;
     gap: 80px;
@@ -10,8 +9,8 @@
     flex-wrap: wrap;
     position: relative;
     justify-content: center;
+    flex: 1;
     // padding: 40px;
-
 
     .containerProduct {
         width: 380px;
@@ -28,7 +27,7 @@
             position: absolute;
             bottom: -55px;
             left: -135px;
-            width: 887px;
+            width: 316%;
             height: 1px;
             background-color: $line-grey;
         }
