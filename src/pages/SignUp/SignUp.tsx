@@ -12,6 +12,7 @@ import { signUpUser } from "src/redux/reducers/authSlice";
 
 const SignUp = () => {
     const [name, setName] = useState("Ewgenii");
+    const [lastName, setLastName] = useState("Bolynskii");
     const [email, setEmail] = useState("ewgen@mail.ru");
     const [password, setPassword] = useState("12345");
     const [confirmPassword, setConfirmPassword] = useState("12345");
@@ -22,11 +23,12 @@ const SignUp = () => {
 
     const onSubmit = () => {
         const data = {
-            // username: name,
+            userName: name,
+            userLastName: lastName,
             email,
             password,
         };
-        
+
         dispath(signUpUser({ data, callback: () => { } }))
     }
 
@@ -36,42 +38,51 @@ const SignUp = () => {
     }
 
     return (
-        <FormPagesContainer
-            btnTitle={"Sign Up"}
-            onSubmit={onSubmit}
-            additionalInfo={
-                <div className={classNames(styles.additionalInfo,
-                )}>
-                    {"Already have an account?"}
-                    <span onClick={clickOnLogin} className={styles.signIn}>Sign In</span>
-                </div>
-            }
-        >
-            <Input
-                title={"Name"}
-                placeholder={"Your name"}
-                onChange={setName}
-                value={name}
-            />
-            <Input
-                title={"Email"}
-                placeholder={"Your email"}
-                onChange={setEmail}
-                value={email}
-            />
-            <Input
-                title={"Password"}
-                placeholder={"Your password"}
-                onChange={setPassword}
-                value={password}
-            />
-            <Input
-                title={"Confirm Password"}
-                placeholder={"Confirm password"}
-                onChange={setConfirmPassword}
-                value={confirmPassword}
-            />
-        </FormPagesContainer>
+        <>
+            <div>Регитстрация</div>
+            <FormPagesContainer
+                btnTitle={"Sign Up"}
+                onSubmit={onSubmit}
+                additionalInfo={
+                    <div className={classNames(styles.additionalInfo,
+                    )}>
+                        {"Already have an account?"}
+                        <span onClick={clickOnLogin} className={styles.signIn}>Sign In</span>
+                    </div>
+                }
+            >
+                <Input
+                    title={"Name"}
+                    placeholder={"Your name"}
+                    onChange={setName}
+                    value={name}
+                />
+                <Input
+                    title={"lastName"}
+                    placeholder={"Your lastName"}
+                    onChange={setLastName}
+                    value={lastName}
+                />
+                <Input
+                    title={"Email"}
+                    placeholder={"Your email"}
+                    onChange={setEmail}
+                    value={email}
+                />
+                <Input
+                    title={"Password"}
+                    placeholder={"Your password"}
+                    onChange={setPassword}
+                    value={password}
+                />
+                <Input
+                    title={"Confirm Password"}
+                    placeholder={"Confirm password"}
+                    onChange={setConfirmPassword}
+                    value={confirmPassword}
+                />
+            </FormPagesContainer>
+        </>
     );
 };
 

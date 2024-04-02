@@ -1,0 +1,15 @@
+@import "../../styles/solors.scss";
+
+.containerUserInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    div {
+        width: 200px;
+        border-bottom: 1px solid  $primary-light;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 23.8px;
+        color: $primary-light;
+    }
+}

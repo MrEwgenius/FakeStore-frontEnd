@@ -13,11 +13,13 @@ function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
 
     const { data, callback } = action.payload
 
+
     const response: ApiResponse<signUpResponseData> = yield call(
         API.signUpUser,
         data
     )
     if (response.data && response.ok) {
+        console.log(response.data)
 
 
 
@@ -37,7 +39,7 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
     const response: ApiResponse<SignInResponseData> = yield call(API.signInUser, data)
     if (response.data && response.ok) {
 
-        
+
         yield put(setAccessToken(response.data.token))
         yield put(setUserRole(response.data.role))
         localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)

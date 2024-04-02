@@ -49,7 +49,6 @@ const Basket = () => {
     useEffect(() => {
         dispatch(getBasketProducts())
     }, [dispatch])
-    console.log(basketProducts);
 
     const onDeletePost = (id: number) => {
         if (basketProducts
@@ -68,7 +67,6 @@ const Basket = () => {
 
     }
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
-    console.log(isLoggedIn);
 
 
 

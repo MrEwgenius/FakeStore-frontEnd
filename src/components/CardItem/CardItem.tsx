@@ -65,7 +65,7 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,click
         slides.push(img.slice(i, i + itemsPerSlide));
     }
     
-console.log(userRole);
+// console.log(userRole);
 
 
     return (

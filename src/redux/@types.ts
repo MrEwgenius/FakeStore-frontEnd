@@ -38,11 +38,15 @@ export type PayloadWithDataAndCallbackAndToken<Data> = {
 export type SignUpUserData = {
     email: string,
     password: string,
+    userName:string,
+    userLastName:string,
 }
 
 export type signUpResponseData = {
     email: string,
     id: number,
+    userName:string,
+    userLastName:string,
     token: string
 }
 

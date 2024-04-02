@@ -8,7 +8,8 @@ i18n
   .use(initReactI18next)
   .use(Backend)
   .init({
-    debug: true,
+    // ↓↓↓ выводи в лог инфу
+    debug: false,
     fallbackLng: "ru",
     returnObjects: true,
     interpolation: {

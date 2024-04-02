@@ -61,10 +61,11 @@ const Router = () => {
                     </>} />
                     <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts />} />
                     <Route path={RoutesList.Basket} element={<Basket />} />
-                    {/* <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} /> */}
+                    <Route path={RoutesList.Login} element={<SignIn />} />
+                    <Route path={RoutesList.Registration} element={<SignUp />} />
                     <Route path={RoutesList.UserAccount} element={isLoggedIn ? <UserPage /> : <SignIn />} >
 
-                        <Route path={RoutesList.Registration} element={<SignUp />} />
+                        {/* <Route path={RoutesList.Login} element={<SignIn />} /> */}
                         <Route path={RoutesList.PersonalInfo} element={<PersonalInfo />} />
                         <Route path={RoutesList.PersonFavoriteProducts} element={<PersonalFaforiteProduct />} />
                         <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
