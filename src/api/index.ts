@@ -10,15 +10,28 @@ const API = create({
     baseURL: 'http://localhost:5000/api',
 
 });
-const getProducts = (limit?: number, typeName?: string, brandName?: string, page?: number, size?: string[], price?: string[],) => {
-    // return API.get(`/product/`, { typeName, brandName  });
+const getProducts = (
+    limit?: number,
+    typeName?: string,
+    brandName?: string,
+    page?: number,
+    size?: string[],
+    price?: string[],
+    order?: string,
+) => {
     return API.get(`/product/`,
-        { limit: limit || PER_PAGE, typeName, brandName, page, size, price });
+        {
+            limit: limit || PER_PAGE,
+            typeName,
+            brandName,
+            page,
+            size,
+            price,
+            order
+        });
 
 };
-// const getFilterProducts = (filter?: string) => {
-//     return API.get(`/product/filter/${filter}/`);
-// };
+
 
 
 

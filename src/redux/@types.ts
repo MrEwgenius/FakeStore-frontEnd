@@ -85,6 +85,7 @@ export type GetProductListPayload = {
     brandName?: string
     price?: string[]
     limit?: number
+    order?: string
 
 }
 
