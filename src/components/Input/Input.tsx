@@ -13,6 +13,7 @@ type InputProps = {
     errorText?: string;
     isTextarea?: boolean;
     className?: string;
+    type?: string;
     onKeyDown?: (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 };
 
@@ -29,6 +30,7 @@ const Input = forwardRef<(HTMLInputElement | null) | (LegacyRef<HTMLTextAreaElem
             onChange,
             disabled,
             value,
+            type,
             isTextarea,
             className,
             onKeyDown,
@@ -44,6 +46,7 @@ const Input = forwardRef<(HTMLInputElement | null) | (LegacyRef<HTMLTextAreaElem
         const inputProps = {
             onChange: onInputChange,
             value,
+            type,
             placeholder,
             className: classNames(styles.input, className, {
                 [styles.disabled]: disabled,

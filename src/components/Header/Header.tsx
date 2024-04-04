@@ -2,7 +2,8 @@ import React, { useEffect } from "react"
 import style from './Header.module.scss'
 import backet from '../../assets/Backet.svg'
 import user from '../../assets/User.svg'
-import save from '../../assets/Save.svg'
+import save from 'src/assets/Save.svg'
+// import save from '../../assets/Save.svg'
 import classNames from "classnames"
 import { useNavigate } from "react-router-dom"
 import { RoutesList } from "src/pages/Router"

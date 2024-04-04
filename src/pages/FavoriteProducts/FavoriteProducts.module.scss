@@ -1,30 +1,46 @@
 @import "../../styles/solors.scss";
 .containerFavoriteProducts {
-    max-width: 900px;
-    margin: 0 auto;
+    // margin: 0 auto;
+    // margin: 0 auto;
     // margin-top: 40px;
     // display: flex;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    // grid-template-rows: 380px 380px ;
-    gap: 80px;
-    flex-wrap: wrap;
-    position: relative;
-    justify-content: center;
-    padding: 40px;
-
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%; /* задаем положение для линии */
-        width: 1px;
-        height: 100%;
-        background-color: #ccc; /* цвет линии */
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
+    // // grid-template-rows: 380px 380px ;
+    // gap: 80px;
+    // flex-wrap: wrap;
+    // position: relative;
+    // justify-content: center;
+    // padding: 40px;
+    // position: relative;
+    
+    overflow: hidden;
+    .containerWrapper {
+        max-width: 1040px;
+        margin: 0 auto;
+        display: grid;
+        // max-width: 1000px;
+        grid-template-columns: repeat(auto-fit, 380px);
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 80px;
+        position: relative;
+        justify-content: center;
+        padding: 40px;
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%; /* задаем положение для линии */
+            width: 1px;
+            height: 100%;
+            background-color: #ccc; /* цвет линии */
+        }
     }
 
     .containerProduct {
-        width: 380px;
+        // width: 380px;
+        width: 100%;
         display: flex;
         gap: 25px;
         align-items: center;

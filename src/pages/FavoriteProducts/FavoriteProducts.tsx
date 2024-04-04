@@ -69,20 +69,23 @@ const FavoriteProducts = () => {
 
             {savedProduct.length >= 1
                 ?
-                savedProduct.map((card, index) => (
+                <div className={style.containerWrapper}>
 
-                    <div key={card.id} className={style.containerProduct}>
+                    {savedProduct.map((card, index) => (
 
-                        <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
-                        <div className={style.cardInfo}>
-                            <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
-                            <div className={style.typeProduct}>{card.typeName}</div>
-                            <div className={style.price}>{card.price}$</div>
-                            <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
-                            <button onClick={() => toggleBasket(card)} className={style.addBucketButton}>{onSavedStatus(card)}</button>
+                        <div key={card.id} className={style.containerProduct}>
+
+                            <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
+                            <div className={style.cardInfo}>
+                                <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
+                                <div className={style.typeProduct}>{card.typeName}</div>
+                                <div className={style.price}>{card.price}$</div>
+                                <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
+                                <button onClick={() => toggleBasket(card)} className={style.addBucketButton}>{onSavedStatus(card)}</button>
+                            </div>
                         </div>
-                    </div>
-                ))
+                    ))}
+                </div>
                 :
                 <div>
                     {t('faboriteProduct.listEmpty')}

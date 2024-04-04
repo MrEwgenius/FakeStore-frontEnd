@@ -16,7 +16,7 @@ const PersonalInfo = () => {
             const decodedToken = jwtDecode(accessToken);
             setUserRole(decodedToken);
         }
-    }, [accessToken]);
+    }, [accessToken,]);
     console.log(userRole);
 
     return (

@@ -12,10 +12,23 @@
         // background-color: #3a3a3a8a;
     }
 }
+.container {
+    // text-align: center;
+    // margin: auto;
+    // margin: 0 auto;
+    
+}
 .carusel {
+    max-width: 1440px;
+    margin: auto;
+    height: 585px;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+
     position: relative;
-    .carousel-indicators{
-    background-color: #915050;
+    // background-color: #ca1616;
+    .carousel-indicators {
     }
 }
 .textBanner1 {

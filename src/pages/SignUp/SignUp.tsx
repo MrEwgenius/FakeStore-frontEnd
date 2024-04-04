@@ -22,14 +22,19 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const onSubmit = () => {
-        const data = {
-            userName: name,
-            userLastName: lastName,
-            email,
-            password,
-        };
+        if (password === confirmPassword) {
 
-        dispath(signUpUser({ data, callback: () => { } }))
+            const data = {
+                userName: name,
+                userLastName: lastName,
+                email,
+                password,
+            };
+
+            dispath(signUpUser({ data, callback: () => { } }))
+        } else {
+            alert('Пароли не совпадают')
+        }
     }
 
     const clickOnLogin = () => {
@@ -70,12 +75,15 @@ const SignUp = () => {
                     value={email}
                 />
                 <Input
+                    type="password"
                     title={"Password"}
                     placeholder={"Your password"}
                     onChange={setPassword}
+
                     value={password}
                 />
                 <Input
+                    type="password"
                     title={"Confirm Password"}
                     placeholder={"Confirm password"}
                     onChange={setConfirmPassword}

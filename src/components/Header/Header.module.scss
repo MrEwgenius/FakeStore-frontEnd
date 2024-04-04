@@ -1,7 +1,7 @@
 @import "../../styles/solors.scss";
 .containerHeader {
     // background-color: #8f97e6;
-    width: 1440px;
+    max-width: 1440px;
     padding: 20px 45px;
     margin: auto;
     // flex: 1;
@@ -85,7 +85,7 @@
                 cursor: pointer;
 
                 img {
-                    width: 18px;
+                    // width: 18px;
                     object-fit: cover;
                 }
             }
