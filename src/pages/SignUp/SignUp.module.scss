@@ -9,24 +9,99 @@
 //   }
 // }
 .additionalInfo {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: $secondary;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: $secondary;
 
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  // margin-top: 24px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    // margin-top: 24px;
 }
 .darkAdditionalInfo {
-  color: $medium;
+    color: $medium;
 }
 .signIn {
-  color: $secondary;
-  margin-left: 4px;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
+    color: $secondary;
+    margin-left: 4px;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.containerSignUp {
+    width: 521px;
+    margin: 0 auto;
+    .title {
+        font-size: 27px;
+        font-weight: 500;
+        line-height: 34.15px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        color: $primary-dark;
+    }
+    .containerForm {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .containerName {
+            display: flex;
+            gap: 20px;
+        }
+        .containerPassword {
+            display: flex;
+            gap: 20px;
+        }
+        input {
+            position: relative;
+            border: none;
+            color: $primary-dark;
+            border-bottom: 1px solid $primary-dark;
+            border-radius: 0;
+            padding: 5px;
+            transition: all 0.4s;
+
+            &::placeholder {
+                color: $gray;
+            }
+            &:focus {
+                transition: all 0.4s;
+                // border-bottom: 2px solid $primary-dark;
+                // background-color: rgba(13, 110, 253, 0.25);
+                // box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+                box-shadow: none;
+            }
+        }
+    }
+    .containerButtonSubText {
+        display: flex;
+        gap: 20px;
+        margin-top: 30px;
+        align-items: center;
+        button {
+            width: 250px;
+            height: 50px;
+            border: none;
+            text-transform: uppercase;
+            background-color: $primary-dark;
+            color: $white;
+        }
+        div {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.39px;
+            text-align: left;
+            color: $primary-dark;
+
+            span {
+                color: $error;
+                cursor: pointer;
+            }
+        }
+    }
 }
