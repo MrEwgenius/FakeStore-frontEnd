@@ -1,36 +1,114 @@
 @import "../../styles/solors.scss";
 
 .containerSignIn {
+    width: 250px;
+    margin:50px auto 0;
+    .title {
+        font-size: 27px;
+        font-weight: 500;
+        line-height: 34.15px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        color: $primary-dark;
+    }
+    .containerName {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-  
+    input {
+        position: relative;
+        border: none;
+        color: $primary-dark;
+        border-bottom: 1px solid $primary-dark;
+        border-radius: 0;
+        padding: 5px;
+        transition: all 0.4s;
+
+        &::placeholder {
+            color: $gray;
+        }
+        &:focus {
+            transition: all 0.4s;
+            // border-bottom: 2px solid $primary-dark;
+            // background-color: rgba(13, 110, 253, 0.25);
+            // box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            box-shadow: none;
+        }
+    }
+    .containerCheckPassword {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        input,
+        label {
+            cursor: pointer;
+        }
+        input {
+            // width: 15px;
+            // height: 15px;
+        }
+    }
+    .containerButtonSubText {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        button {
+            width: 250px;
+            height: 50px;
+            border: none;
+            text-transform: uppercase;
+            background-color: $primary-dark;
+            color: $white;
+            margin-bottom: 20px;
+        }
+        div {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.39px;
+            text-align: left;
+            color: $error;
+
+            &:hover {
+                border-bottom: 1px solid $error;
+            }
+        }
+    }
 }
 .signIn {
-  color: $secondary;
-  margin-left: 4px;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
+    color: $secondary;
+    margin-left: 4px;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 .additionalInfo {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: $secondary;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: $secondary;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
 }
 
 .forgotPasword {
-  margin-top: 16px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  cursor: pointer;
-  display: inline-block;
+    margin-top: 16px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+    display: inline-block;
 }
 .darkForgotPasword {
-  color: white;
+    color: white;
 }

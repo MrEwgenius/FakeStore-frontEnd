@@ -78,10 +78,24 @@
             }
         }
     }
+    .containerCheckPassword {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        input,
+        label {
+            cursor: pointer;
+        }
+        input {
+            // width: 15px;
+            // height: 15px;
+        }
+    }
     .containerButtonSubText {
         display: flex;
         gap: 20px;
-        margin-top: 30px;
+        margin-top: 10px;
         align-items: center;
         button {
             width: 250px;

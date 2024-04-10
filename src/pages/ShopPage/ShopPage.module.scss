@@ -1,13 +1,14 @@
 @import "../../styles/solors.scss";
 .containerMain {
     max-width: 1440px;
-    margin: 0 auto;
+    // margin: 0 auto;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
 }
 .containerShopPage {
     margin-top: 60px;
-    padding: 0 15px;
+    // padding: 0 15px;
     display: flex;
     justify-content: space-between;
     gap: 55px;

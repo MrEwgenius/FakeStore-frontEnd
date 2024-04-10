@@ -17,11 +17,15 @@ import { AuthSelectors } from "src/redux/reducers/authSlice";
 
 
 const SingleProduct = () => {
-    const [mainImage, setMainImage] = useState(0);
+
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { id } = useParams()
+
+
+    const [mainImage, setMainImage] = useState(0);
     const [userRole, setUserRole] = useState<any>(null);
     const basketProduct = useSelector(ProductSelectors.getBasketProducts)
-    const navigate = useNavigate()
     const SingleProduct = useSelector(ProductSelectors.getSinglePost)
     const savedProduct = useSelector(ProductSelectors.getSavedProduct)
 
@@ -33,14 +37,15 @@ const SingleProduct = () => {
     }
 
 
-    const { id } = useParams()
-    useEffect(() => {
-        if (id) {
 
+    useEffect(() => {
+        dispatch(getBasketProducts())
+        
+        if (id) {
             dispatch(getSingleProduct(id))
         }
 
-    }, [id,])
+    }, [id,dispatch])
 
     const saveIndex = savedProduct.findIndex(item => item.id === SingleProduct?.id)
 

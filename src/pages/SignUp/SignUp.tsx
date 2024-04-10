@@ -4,14 +4,15 @@ import classNames from "classnames";
 
 import styles from "./SignUp.module.scss";
 import { useDispatch } from "react-redux";
-import FormPagesContainer from "src/components/FormPagesContainer/FormPagesContainer";
-import Input from "src/components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import { RoutesList } from "../Router";
 import { signUpUser } from "src/redux/reducers/authSlice";
 import { Form } from "react-bootstrap";
 
 const SignUp = () => {
+    const dispath = useDispatch();
+    const navigate = useNavigate();
+
     const [name, setName] = useState("Ewgenii");
     const [lastName, setLastName] = useState("Bolynskii");
     const [email, setEmail] = useState("ewgen@mail.ru");
@@ -19,12 +20,8 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState("12345");
 
 
-    const dispath = useDispatch();
-    const navigate = useNavigate();
-
     const onSubmit = () => {
         if (password === confirmPassword) {
-
             const data = {
                 userName: name,
                 userLastName: lastName,
@@ -38,9 +35,34 @@ const SignUp = () => {
         }
     }
 
-    const clickOnLogin = () => {
-        navigate(RoutesList.Login)
 
+
+    const checkPasswords = () => {
+        return confirmPassword.length >= 1 && password === confirmPassword
+    }
+
+
+    // if (confirmPassword.length >= 1 && password === confirmPassword) {
+    //     return true
+
+    // } else {
+    //     return false
+    // }
+
+    const navToLogin = () => {
+        navigate(RoutesList.Login)
+    }
+
+    const [checked, setChecked] = useState<boolean>(false)
+    const [typePassword, setTypePassword] = useState<string>('password')
+
+    const showPassword = (e: any) => {
+
+        e.target.checked
+            ? setTypePassword('text')
+            : setTypePassword('password')
+
+        setChecked(e.target.checked)
     }
 
     return (
@@ -49,80 +71,62 @@ const SignUp = () => {
             <div className={styles.containerForm} >
 
                 <div className={styles.containerName}>
-                    <Form.Control placeholder="Имя" />
-                    <Form.Control placeholder="Фамилия" />
-                </div>
-                <Form.Control type="email" placeholder="E-mail" />
-                <div className={styles.containerPassword}>
-                    {/* <Form.Label htmlFor="password">Password</Form.Label> */}
                     <Form.Control
-                        type="password"
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                        placeholder="Имя"
+                    />
+                    <Form.Control
+                        onChange={(e) => setLastName(e.target.value)}
+                        value={lastName}
+                        placeholder="Фамилия"
+                    />
+                </div>
+                <Form.Control
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="E-mail"
+                />
+                <div className={styles.containerPassword}>
+                    <Form.Control
+                        type={typePassword}
                         id="password"
-                        // isInvalid
-                        isValid
-                        aria-describedby="passwordHelpBlock"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                     />
 
-                    {/* <Form.Label htmlFor="confirmPassword">confirmPassword</Form.Label> */}
                     <Form.Control
-                        type="password"
+                        type={typePassword}
                         id="confirmPassword"
-                        aria-describedby="passwordHelpBlock"
+                        isInvalid={!checkPasswords()}
+                        isValid={checkPasswords()}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="ConfirmPassword"
                     />
                 </div>
 
             </div>
-            <div className={styles.containerButtonSubText}>
-                <button>зарегистрироваться</button>
-                <div>У меня уже есть акаунт чтобы <span>войти</span></div>
+            <div className={styles.containerCheckPassword}>
+                <input
+                    checked={checked}
+                    onChange={(e) => showPassword(e)}
+                    id="checkPassword"
+                    type="checkbox"
+                />
+                <label htmlFor="checkPassword">
+                    Показать пароль
+                </label>
             </div>
-            {/* <FormPagesContainer
-                btnTitle={"Sign Up"}
-                onSubmit={onSubmit}
-                additionalInfo={
-                    <div className={classNames(styles.additionalInfo,
-                    )}>
-                        {"Already have an account?"}
-                        <span onClick={clickOnLogin} className={styles.signIn}>Sign In</span>
-                    </div>
-                }
-            >
-                <Input
-                    title={"Name"}
-                    placeholder={"Your name"}
-                    onChange={setName}
-                    value={name}
-                />
-                <Input
-                    title={"lastName"}
-                    placeholder={"Your lastName"}
-                    onChange={setLastName}
-                    value={lastName}
-                />
-                <Input
-                    title={"Email"}
-                    placeholder={"Your email"}
-                    onChange={setEmail}
-                    value={email}
-                />
-                <Input
-                    type="password"
-                    title={"Password"}
-                    placeholder={"Your password"}
-                    onChange={setPassword}
+            <div className={styles.containerButtonSubText}>
+                <button onClick={onSubmit}>зарегистрироваться</button>
+                <div>У меня уже есть акаунт чтобы
+                    <span onClick={navToLogin}>войти</span>
+                </div>
+            </div>
 
-                    value={password}
-                />
-                <Input
-                    type="password"
-                    title={"Confirm Password"}
-                    placeholder={"Confirm password"}
-                    onChange={setConfirmPassword}
-                    value={confirmPassword}
-                />
-            </FormPagesContainer> */}
         </div>
     );
 };

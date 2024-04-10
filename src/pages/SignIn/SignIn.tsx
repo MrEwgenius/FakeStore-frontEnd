@@ -1,20 +1,21 @@
 import React, { useContext, useState } from 'react';
-import FormPagesContainer from '../../components/FormPagesContainer/FormPagesContainer';
 import styles from "./SignIn.module.scss";
-import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RoutesList } from '../Router';
-import Input from 'src/components/Input/Input';
 import { AuthSelectors, signInUser } from 'src/redux/reducers/authSlice';
+import { Form } from 'react-bootstrap';
 
 
 const SignIn = () => {
-    const [email, setEmail] = useState("user@mail.ru");
-    const [password, setPassword] = useState("12345");
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const [email, setEmail] = useState("user@mail.ru");
+    const [password, setPassword] = useState("12345");
+    const [checked, setChecked] = useState<boolean>(false)
+    const [typePassword, setTypePassword] = useState<string>('password')
 
 
     const onSubmit = () => {
@@ -25,51 +26,54 @@ const SignIn = () => {
         }))
     }
 
-    const onReset = () => {
-        // navigate(RoutesList.ResetPassword)
-    }
-
-    const clickOnRegister = () => {
+    const navToRegister = () => {
         navigate(RoutesList.Registration)
 
     }
 
-    
+    const showPassword = (e: any) => {
+        e.target.checked ? setTypePassword('text') : setTypePassword('password')
+        setChecked(e.target.checked)
+
+    }
 
 
     return (
         <div className={styles.containerSignIn}>
-            <FormPagesContainer
 
-                btnTitle={"Sign In"}
-                onSubmit={onSubmit}
-                additionalInfo={
-                    <div className={classNames(styles.additionalInfo,
-                    )}>
-                        {"No Account?"}
-                        <span onClick={clickOnRegister} className={styles.signIn}>Sign Up</span>
-                    </div>
-                }
+            <div className={styles.title}>Вход</div>
 
-            >
-                <Input
-                    title={"Email"}
-                    placeholder={"Your email"}
-                    onChange={setEmail}
+            <div className={styles.containerName}>
+                <Form.Control
+                    onChange={(e) => setEmail(e.target.value)}
                     value={email}
+                    placeholder="E-mail"
                 />
-                <div>
-                    <Input
-                        title={"Password"}
-                        placeholder={"Your password"}
-                        onChange={setPassword}
-                        value={password}
-                    />
-                    <div onClick={onReset} className={classNames(styles.forgotPasword, {
-                    })}>{'Forgot password?'}</div>
-                </div>
+                <Form.Control
+                    type={typePassword}
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    placeholder="Пароль"
+                />
+            </div>
 
-            </FormPagesContainer>
+
+            <div className={styles.containerCheckPassword}>
+                <input
+                    id="checkPassword"
+                    type="checkbox"
+                    checked={checked}
+                    onChange={(e) => showPassword(e)}
+                />
+                <label htmlFor="checkPassword">
+                    Показать пароль
+                </label>
+            </div>
+            <div className={styles.containerButtonSubText}>
+                <button onClick={onSubmit}>Войти</button>
+                <div onClick={navToRegister}>У меня нет аккаунта </div>
+            </div>
+           
         </div>
     )
 }
