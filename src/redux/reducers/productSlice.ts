@@ -18,7 +18,9 @@ type initialState = {
     typeProduct: TypeListTypes,
     brandProduct: BrandListTypes,
     producrList: ProductListTypes,
+    searchProducrList: ProductListTypes,
     totalCount: number,
+    searchTotalCount: number,
     producrListBasket: ProductListTypes,
     basketProducts: ProductListTypes,
     message: any | null,
@@ -34,7 +36,9 @@ const initialState: initialState = {
     typeProduct: [],
     brandProduct: [],
     producrList: [],
+    searchProducrList: [],
     totalCount: 0,
+    searchTotalCount: 0,
     producrListBasket: [],
     basketProducts: [],
     message: '',
@@ -127,6 +131,20 @@ const productSlice = createSlice({
 
 
         },
+        getSearchProductLister: (_, __: PayloadAction<GetProductListPayload>) => { },
+        setSearchProductLister: (state, action: PayloadAction<SetProductListPayload>) => {
+            const { total, isOverwrite, product, message } = action.payload
+
+            state.searchTotalCount = total
+
+            if (isOverwrite) {
+                state.searchProducrList = product
+            } else {
+                state.searchProducrList.push(...product)
+            }
+
+
+        },
         getBasketProducts: (_, __: PayloadAction<undefined>) => { },
         setBasketProducts: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
@@ -185,6 +203,9 @@ export const {
     removeProduct,
     responseMessage,
 
+    getSearchProductLister,
+    setSearchProductLister,
+
 
 
 } = productSlice.actions
@@ -202,7 +223,9 @@ export const ProductSelectors = {
     getTotalProductCount: (state: Rootstate) => state.productReducer.totalCount,
     getBasketProduct: (state: Rootstate) => state.productReducer.producrListBasket,
     getBasketProducts: (state: Rootstate) => state.productReducer.basketProducts,
-    getResponseMessage: (state: Rootstate) => state.productReducer.message
+    getResponseMessage: (state: Rootstate) => state.productReducer.message,
+    getSearchProductList: (state: Rootstate) => state.productReducer.searchProducrList,
+
 
 
 

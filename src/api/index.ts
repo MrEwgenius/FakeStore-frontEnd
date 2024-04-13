@@ -18,6 +18,7 @@ const getProducts = (
     size?: string[],
     price?: string[],
     order?: string,
+    search?: string,
 ) => {
     return API.get(`/product/`,
         {
@@ -27,7 +28,8 @@ const getProducts = (
             page,
             size,
             price,
-            order
+            order,
+            search
         });
 
 };

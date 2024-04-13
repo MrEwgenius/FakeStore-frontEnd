@@ -1,0 +1,54 @@
+@import "../../styles/solors.scss";
+
+.containerSearchProducts {
+    width: 80%;
+    margin: 40px auto 0;
+
+    .searchContainer {
+        margin-bottom: 30px;
+        span {
+            width: 100%;
+            background-color: #f7f8fa;
+            padding: 10px;
+            color: $secondary;
+            position: relative;
+            padding-left: 40px;
+            img {
+                position: absolute;
+                left: 0;
+                top: 4px;
+                width: 35px;
+            }
+        }
+        .titleSearch {
+            font-size: 24px;
+            margin-bottom: 20px;
+            line-height: 28px;
+            font-weight: 500;
+        }
+    }
+
+    .searchErrorContainer {
+        span {
+            width: 100%;
+            background-color: #f8353e;
+            padding: 10px;
+            color: $white;
+            position: relative;
+            padding-left: 40px;
+            img {
+                position: absolute;
+                left: 0;
+                top: 4px;
+                width: 35px;
+            }
+        }
+        .titleSearchError {
+            font-size: 24px;
+            margin-bottom: 20px;
+            line-height: 28px;
+            font-weight: 500;
+
+        }
+    }
+}

@@ -18,13 +18,14 @@ import Basket from "./Basket/Basket";
 import UserPage from "./UserPage/UserPage";
 import PersonalInfo from "src/components/PersonalInfo/PersonalInfo";
 import PersonalFaforiteProduct from "src/components/PersonalFaforiteProduct/PersonalFaforiteProduct";
+import SearchList from "./SearchList/SearchList";
 
 export enum RoutesList {
 
     Home = '/',
     Trend = '/product',
     Filter = '/products/filter?/:typeName?/:brandName?/:size?/:price?/:order?/',
-
+    
     UserAccount = '/user',
     Registration = '/user/registration',
     PersonalInfo = '/user/personal',
@@ -38,7 +39,7 @@ export enum RoutesList {
 
     Cards = '/cards',
     Post = '/titles/:id',
-    Search = '/titles/search/title/:title',
+    Search = '/product/search/:search',
     Default = '*',
 
 }
@@ -63,6 +64,8 @@ const Router = () => {
                     <Route path={RoutesList.Basket} element={<Basket />} />
                     <Route path={RoutesList.Login} element={<SignIn />} />
                     <Route path={RoutesList.Registration} element={<SignUp />} />
+                    <Route path={RoutesList.Search} element={<SearchList />} />
+
                     <Route path={RoutesList.UserAccount} element={isLoggedIn ? <UserPage /> : <SignIn />} >
 
                         {/* <Route path={RoutesList.Login} element={<SignIn />} /> */}

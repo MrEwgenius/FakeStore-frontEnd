@@ -14,10 +14,11 @@
         justify-content: space-between;
 
         .sexsave {
-            div {
+            .katalog {
                 cursor: pointer;
             }
             display: flex;
+            align-items: center;
             font-size: 16px;
             text-transform: uppercase;
             font-weight: 400;
@@ -26,17 +27,74 @@
             gap: 45px;
             color: $primary-dark;
             .label {
-                cursor: pointer;
+                display: flex;
+                align-items: center;
+                position: relative;
+                label {
+                    cursor: pointer;
+                }
                 input {
+                    position: relative;
                     margin-top: -5px;
-                    width: 150px;
+                    width: 300px;
                     margin-left: 20px;
-                    border: none;
                     // background-color: #8f97e6;
+                    padding: 10px 5px;
+                    border-radius: 25px;
+                    border: 1px solid black;
                     border-bottom: 1px solid $primary-dark;
                     outline: none;
                     &:focus-visible {
-                        // background-color: #8f97e6;
+                        background-color: #8f97e6;
+                    }
+                }
+                .searchSVG {
+                    cursor: pointer;
+                    position: absolute;
+                    right: 10px;
+                    top: 0;
+                    width: 30px;
+                }
+                .rusultSearch {
+                    padding: 10px;
+                    max-height: 400px;
+                    z-index: 1002;
+                    // overflow: scroll;
+                    overflow-y: scroll;
+                    background-color: #ecebeb;
+                    width: 300px;
+                    position: absolute;
+                    top: 50px;
+                    left: 90px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    .searchContainer {
+                        cursor: pointer;
+                        padding: 10px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        gap: 20px;
+                        background-color: #e0e0e0;
+                        border: 1px solid transparent;
+                        transition: all 0.4s;
+                        img {
+                            width: 60px;
+                            height: 80px;
+                            object-fit: cover;
+                        }
+                        &:hover {
+                            border: 1px solid $gray;
+                        }
+                    }
+                    .descriptionProductSearch {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        span {
+                            text-transform: capitalize;
+                        }
                     }
                 }
             }
@@ -94,4 +152,54 @@
             }
         }
     }
+}
+// .modal {
+//     border-radius: 10px;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+// }
+// .modals {
+//     // width: 50px;
+//     position: relative;
+//     border-radius: 10px;
+// }
+// .dialog {
+//     position: absolute;
+//     left: 550px;
+//     top: 42px;
+//     // background-color: red;
+
+//     input {
+//         border: 1px solid black;
+//         outline: none;
+//         width: 900px;
+
+//         height: 40px;
+//         border-radius: 10px;
+//     }
+// }
+
+.modals {
+    padding: 20px;
+    min-width: 400px;
+    // width: 100%; /* Задайте ширину модального окна по вашему усмотрению */
+    // padding: 20px; /* Добавьте отступы для контента модального окна */
+    // background-color: white; /* Добавьте фоновый цвет для контейнера модального окна */
+    border-radius: 10px; /* Задайте скругление углов для контейнера модального окна */
+}
+
+.dialog {
+    // background-color: #fff;
+    max-width: 400px;
+}
+
+.dialog input {
+    width: 100%; /* Сделайте ширину поискового поля равной 100% ширины контейнера */
+    padding: 10px; /* Добавьте отступы вокруг текста внутри поля */
+    border: 1px solid #ccc; /* Добавьте границу вокруг поля */
+    border-radius: 5px; /* Скруглите углы поля */
+    outline: none; /* Уберите стандартное выделение поля */
+    box-sizing: border-box; /* Установите box-sizing: border-box для корректного учета внутренних отступов и границ */
 }

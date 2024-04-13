@@ -1,8 +1,10 @@
-import React, { useEffect } from "react"
+import React, { KeyboardEvent, useEffect, useState } from "react"
 import style from './Header.module.scss'
 import backet from '../../assets/Backet.svg'
 import user from '../../assets/User.svg'
 import save from 'src/assets/Save.svg'
+import searchSVG from 'src/assets/search.svg'
+
 // import save from '../../assets/Save.svg'
 import classNames from "classnames"
 import { useNavigate } from "react-router-dom"
@@ -13,6 +15,8 @@ import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 import { t } from "i18next"
 import { Trans, useTranslation } from "react-i18next"
 import i18n from "src/i18n/i18n"
+import { Modal } from "react-bootstrap"
+import { ProductSelectors, getProductLister, getSearchProductLister } from "src/redux/reducers/productSlice"
 const Header = () => {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
@@ -23,7 +27,8 @@ const Header = () => {
 
 
     const clickOnProducts = () => {
-        navigate(RoutesList.Filter)
+        // navigate(RoutesList.Filter)
+        navigate('/products/filter')
 
     }
     // useEffect(()=>{
@@ -53,6 +58,73 @@ const Header = () => {
         i18n.changeLanguage(lng);
     };
 
+    const [inpValue, setinpValue] = useState('')
+    const [showDelivery, setShowDelivery] = useState(false);
+    const handleCloseshowDelivery = () => {
+        return setShowDelivery(false);
+        // setinpValue('')
+
+    }
+    const handleShowshowDelivery = () => {
+        setShowDelivery(true);
+        // setinpValue('')
+
+    }
+
+    const searchProducts = useSelector(ProductSelectors.getSearchProductList)
+
+    useEffect(() => {
+        dispatch(getSearchProductLister({
+            isOverwrite: true,
+            search: inpValue
+        }));
+    }, [dispatch, inpValue]);
+
+    const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setShowResults(true)
+        if (event.key === 'Enter' && inpValue) {
+            // handleSearchOpened()
+
+            navigate(`/product/search/${inpValue}`)
+            handleCloseshowDelivery()
+        }
+    }
+    const clickOnSearch = () => {
+        if (inpValue) {
+
+            navigate(`/product/search/${inpValue}`)
+            handleCloseshowDelivery()
+        }
+
+    }
+    const handleFocus = () => {
+        setShowResults(true);
+
+    };
+
+
+    const [showResults, setShowResults] = useState(false);
+
+    const clickOnProduct = (id: number) => {
+        setShowResults(false);
+        navigate(`/product/${id}`)
+
+    }
+
+    const handleClickOutside = (event: any) => {
+        const resultList = document.getElementById("rusultSearch");
+        const searchInput = document.querySelector('.searchInput')
+        if (resultList && !resultList.contains(event.target as Node) && (!searchInput || !searchInput.contains(event.target as Node))) {
+            setShowResults(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
 
     return (
@@ -61,13 +133,57 @@ const Header = () => {
                 <div onClick={clickOnHome} className={style.logo}>FAKESTORE</div>
                 <div className={style.sexsave}>
                     {/* <div>Женщины</div> */}
-                    <div onClick={clickOnProducts}>{t('catalog')}</div>
-                    <div>
-                        <label className={style.label}>
+                    <div className={style.katalog} onClick={clickOnProducts}>{t('catalog')}</div>
+                    <div className={style.label}>
+                        <label onClick={handleShowshowDelivery} >
                             {t('search')}
-                            <input type="text" onChange={() => { }} />
                         </label>
+
+                        <input
+                            className={'searchInput'}
+                            onFocus={handleFocus}
+                            placeholder='Search...'
+                            onChange={(e) => setinpValue(e.target.value)}
+                            value={inpValue} type="text"
+                            onKeyDown={onKeyDown}
+                        />
+                        <img onClick={clickOnSearch} className={style.searchSVG} src={searchSVG} alt="0-" />
+                        {showResults && searchProducts.length > 0 ? (
+                            <div id="rusultSearch" className={style.rusultSearch}>
+                                {searchProducts.map((el) => (
+                                    <div id="searchContainer" onClick={() => clickOnProduct(el.id)} className={style.searchContainer} key={el.id}>
+                                        <img src={process.env.REACT_APP_API_URL + el.image[0]} alt="=(" />
+                                        <div className={style.descriptionProductSearch}>
+                                            <span>{el.name}</span>
+                                            <div>{el.price}$</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div></div>
+                        )}
+
                     </div>
+                    {/* <Modal dialogClassName={style.dialog} contentClassName={style.modals} className={style.modal} show={showDelivery} onHide={handleCloseshowDelivery}>
+
+                            <div>
+                                {searchProducts.map((el) =>
+                                (
+                                    <div className={style.searchContainer} key={el.id}>
+                                        <img src={`${process.env.REACT_APP_API_URL}${el.image}`} alt="=(" />
+                                        <div>
+                                            <div>{el.name}</div>
+                                            <div>{el.price}$</div>
+                                        </div>
+                                    </div>)
+
+                                )}
+
+
+                            </div>
+
+                        </Modal> */}
 
                 </div>
                 <div className={style.language}>
@@ -109,6 +225,7 @@ const Header = () => {
 
                 </div>
             </div>
+
         </div >
     )
 }

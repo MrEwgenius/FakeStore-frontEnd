@@ -2,7 +2,7 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSingleProduct, getTypeProduct, getTypeProductList, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
+import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct, getTypeProductList, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
 import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
 import { AddPostDataPayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
@@ -117,7 +117,7 @@ function* BrandProductsWorker() {
 
 function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
     try {
-        const { limit, brandName, typeName, page, isOverwrite, size, price, order } = action.payload;
+        const { limit, search, brandName, typeName, page, isOverwrite, size, price, order } = action.payload;
 
         const response: ApiResponse<ProductsData | null> = yield call(
             API.getProducts,
@@ -127,7 +127,8 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
             page,
             size,
             price,
-            order
+            order,
+            search
 
         );
 
@@ -145,6 +146,41 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
         console.error("Error fetching product list:", error);
     }
 }
+
+function* getSearchProductWorker(action: PayloadAction<GetProductListPayload>) {
+    yield delay(500)
+    try {
+        const { limit, search, brandName, typeName, page, isOverwrite, size, price, order } = action.payload;
+
+        const response: ApiResponse<ProductsData | null> = yield call(
+            API.getProducts,
+            limit,
+            typeName,
+            brandName,
+            page,
+            size,
+            price,
+            order,
+            search
+
+        );
+
+        if (response.data) {
+            const { rows, count } = response.data;
+
+
+            yield put(setSearchProductLister({
+                total: count,
+                product: rows,
+                isOverwrite,
+            }));
+        }
+    } catch (error) {
+        console.error("Error fetching product list:", error);
+    }
+
+}
+
 function* getBasketProduct() {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
 
@@ -238,6 +274,7 @@ export default function* productSagaWatcher() {
         takeLatest(deleteBasketProduct, removeBasketProduct),
         takeLatest(addBasketProductFavorite, addBasketProduct),
         takeLatest(removeProduct, deleteProductWorker),
+        takeLatest(getSearchProductLister, getSearchProductWorker),
 
 
     ])

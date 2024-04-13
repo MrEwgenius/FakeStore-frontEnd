@@ -274,7 +274,7 @@ const ShopPage = () => {
         setPrice('')
         setOrder(undefined)
         dispatch(getProductLister({ isOverwrite: true, brandName: undefined, typeName: undefined, size: undefined, price: undefined, order: undefined }));
-        navigate(RoutesList.Filter)
+        navigate('/products/filter')
     }
 
     const addAllCategory = () => {
