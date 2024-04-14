@@ -9,7 +9,6 @@ import search from 'src/assets/search.svg'
 const SearchList = () => {
     const dispatch = useDispatch()
     const params = useParams()
-    console.log(params.search);
 
 
     const searchProduct = useSelector(ProductSelectors.getSearchProductList)

@@ -33,6 +33,19 @@ const getProducts = (
         });
 
 };
+const getSearchProducts = (
+    limit?: number,
+    page?: number,
+    search?: string,
+) => {
+    return API.get(`/product/search/${search}/`,
+        {
+            limit: limit || PER_PAGE,
+            page,
+            search
+        });
+
+};
 
 
 
@@ -128,6 +141,7 @@ export default {
     getBasketProduct,
     removeBasketProduct,
     addBasketProduct,
-    deleteProduct
+    deleteProduct,
+    getSearchProducts
 
 }

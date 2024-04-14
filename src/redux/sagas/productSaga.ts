@@ -150,17 +150,12 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
 function* getSearchProductWorker(action: PayloadAction<GetProductListPayload>) {
     yield delay(500)
     try {
-        const { limit, search, brandName, typeName, page, isOverwrite, size, price, order } = action.payload;
+        const { limit, search,  page, isOverwrite, order } = action.payload;
 
         const response: ApiResponse<ProductsData | null> = yield call(
-            API.getProducts,
+            API.getSearchProducts,
             limit,
-            typeName,
-            brandName,
             page,
-            size,
-            price,
-            order,
             search
 
         );

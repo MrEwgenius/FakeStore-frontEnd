@@ -46,6 +46,8 @@ const SingleProduct = () => {
         }
 
     }, [id,dispatch])
+    console.log(SingleProduct);
+    
 
     const saveIndex = savedProduct.findIndex(item => item.id === SingleProduct?.id)
 

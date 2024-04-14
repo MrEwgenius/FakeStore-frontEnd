@@ -27,14 +27,10 @@ const Header = () => {
 
 
     const clickOnProducts = () => {
-        // navigate(RoutesList.Filter)
         navigate('/products/filter')
 
     }
-    // useEffect(()=>{
 
-    //     (dispatch(getProductList({page:2})))
-    // },[dispatch])
 
     const clickOnHome = () => {
         navigate(`/`)
@@ -49,7 +45,6 @@ const Header = () => {
 
     }
     const clickOnUser = () => {
-        // navigate(RoutesList.Login)
         navigate(RoutesList.PersonalInfo)
 
     }
@@ -59,55 +54,84 @@ const Header = () => {
     };
 
     const [inpValue, setinpValue] = useState('')
-    const [showDelivery, setShowDelivery] = useState(false);
-    const handleCloseshowDelivery = () => {
-        return setShowDelivery(false);
-        // setinpValue('')
+    // const [showDelivery, setShowDelivery] = useState(false);
 
-    }
-    const handleShowshowDelivery = () => {
-        setShowDelivery(true);
-        // setinpValue('')
 
-    }
+    // const handleCloseshowDelivery = () => {
+    //     setShowDelivery(false);
+    //     setinpValue('')
+
+
+    // }
+    // const handleShowshowDelivery = () => {
+    //     setShowDelivery(true);
+    //     setinpValue('')
+
+    // }
 
     const searchProducts = useSelector(ProductSelectors.getSearchProductList)
 
     useEffect(() => {
-        dispatch(getSearchProductLister({
-            isOverwrite: true,
-            search: inpValue
-        }));
-    }, [dispatch, inpValue]);
+        if (inpValue) {
+
+            dispatch(getSearchProductLister({
+                isOverwrite: true,
+                search: inpValue
+            }));
+        } else {
+
+
+
+        }
+    }, [inpValue, dispatch]);
 
     const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        // if (!/^[a-zA-Zа-яА-Я0-9]+$/.test(event.key)) {
+        //     event.preventDefault();
+        //     return;
+        // }
         setShowResults(true)
         if (event.key === 'Enter' && inpValue) {
-            // handleSearchOpened()
 
+
+            // handleCloseshowDelivery()
+            setShowResults(false);
             navigate(`/product/search/${inpValue}`)
-            handleCloseshowDelivery()
+            setinpValue('')
         }
     }
+
+
+
     const clickOnSearch = () => {
         if (inpValue) {
 
             navigate(`/product/search/${inpValue}`)
-            handleCloseshowDelivery()
+            setShowResults(false);
+            // handleCloseshowDelivery()
+
+            setinpValue('')
         }
 
     }
     const handleFocus = () => {
-        setShowResults(true);
+        // setShowResults(true);
+        setinpValue('')
+        console.log('handlFocus');
+
 
     };
 
 
     const [showResults, setShowResults] = useState(false);
 
+
     const clickOnProduct = (id: number) => {
         setShowResults(false);
-        navigate(`/product/${id}`)
+        navigate(`/product/${id}/`)
+        // navigate(RoutesList.SingleProduct)
+        setinpValue('')
+
 
     }
 
@@ -116,6 +140,10 @@ const Header = () => {
         const searchInput = document.querySelector('.searchInput')
         if (resultList && !resultList.contains(event.target as Node) && (!searchInput || !searchInput.contains(event.target as Node))) {
             setShowResults(false);
+            setinpValue('')
+            // handleCloseshowDelivery()
+
+            // dispatch(getSearchProductLister({ isOverwrite: true, search: undefined }));
         }
     };
 
@@ -135,20 +163,22 @@ const Header = () => {
                     {/* <div>Женщины</div> */}
                     <div className={style.katalog} onClick={clickOnProducts}>{t('catalog')}</div>
                     <div className={style.label}>
-                        <label onClick={handleShowshowDelivery} >
+                        <label >
                             {t('search')}
                         </label>
 
                         <input
+                            // onClick={handleShowshowDelivery}
                             className={'searchInput'}
                             onFocus={handleFocus}
                             placeholder='Search...'
                             onChange={(e) => setinpValue(e.target.value)}
-                            value={inpValue} type="text"
+                            value={inpValue}
+                            type="text"
                             onKeyDown={onKeyDown}
                         />
                         <img onClick={clickOnSearch} className={style.searchSVG} src={searchSVG} alt="0-" />
-                        {showResults && searchProducts.length > 0 ? (
+                        {showResults && searchProducts && searchProducts.length && searchProducts.length > 0 ? (
                             <div id="rusultSearch" className={style.rusultSearch}>
                                 {searchProducts.map((el) => (
                                     <div id="searchContainer" onClick={() => clickOnProduct(el.id)} className={style.searchContainer} key={el.id}>
