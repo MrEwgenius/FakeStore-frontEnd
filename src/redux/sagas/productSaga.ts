@@ -2,9 +2,9 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct, getTypeProductList, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
+import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct,  removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
-import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
+import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, GetUserInfo, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
 import { AddPostDataPayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 import { log } from "console";
@@ -150,7 +150,7 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
 function* getSearchProductWorker(action: PayloadAction<GetProductListPayload>) {
     yield delay(500)
     try {
-        const { limit, search,  page, isOverwrite, order } = action.payload;
+        const { limit, search, page, isOverwrite, order } = action.payload;
 
         const response: ApiResponse<ProductsData | null> = yield call(
             API.getSearchProducts,
@@ -251,6 +251,7 @@ function* addBasketProduct(action: PayloadAction<number>) {
         }
     }
 }
+
 
 
 

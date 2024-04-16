@@ -10,6 +10,7 @@ import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
 import { AuthSelectors } from "src/redux/reducers/authSlice"
 import { useTranslation } from "react-i18next"
+import { jwtDecode } from "jwt-decode"
 
 
 
@@ -78,6 +79,18 @@ const Basket = () => {
     const isPaymentMethodSelected = () => {
         return selectedPaymentMethod !== null;
     };
+
+
+    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
+    const [userRole, setUserRole] = useState<any>(null);
+
+    useEffect(() => {
+        if (accessToken) {
+            const decodedToken = jwtDecode(accessToken);
+            setUserRole(decodedToken);
+        }
+    }, [accessToken,]);
+    console.log(userRole);
     return (
         <div className={style.containerBasket}>
             {!isLoggedIn ?
@@ -103,12 +116,21 @@ const Basket = () => {
                         <>
                             <div className={style.basketTitle}>{t('basket.title')} </div><div className={style.basketList}>
                                 <div className={style.basketForm}>
-                                    <div className={style.groupInputs}>
+                                    {userRole ?
+                                        <div className={style.groupInputs} >
+                                            <div>{userRole.userName}</div>
+                                            <div>{userRole.userLastName}</div>
+                                            <div>{userRole.email}</div>
+                                        </div>
+                                        :
+                                        <div>Для начала нужно войти</div>
+                                    }
+                                    {/* <div className={style.groupInputs}>
                                         <input className={style.inputField} placeholder="Name" type="text" />
                                         <input className={style.inputField} placeholder="LastName" type="text" />
                                         <input className={style.inputField} placeholder="Email" type="email" />
                                         <input className={style.inputField} placeholder="Phone" type="number" />
-                                    </div>
+                                    </div> */}
                                     <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
                                     <div className={style.deliveryAddress}>
                                         Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»

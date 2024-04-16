@@ -70,6 +70,18 @@ const getBrand = () => {
 
 }
 
+const userAuth = (token: string) => {
+
+    return API.get(`/user/auth`,
+
+        {},
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        },);
+
+}
 
 
 
@@ -142,6 +154,7 @@ export default {
     removeBasketProduct,
     addBasketProduct,
     deleteProduct,
-    getSearchProducts
+    getSearchProducts,
+    userAuth
 
 }

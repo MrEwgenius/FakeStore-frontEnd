@@ -4,8 +4,9 @@ import { ApiResponse } from 'apisauce'
 
 import API from "src/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "src/utils/constans";
-import { SignInResponseData, SignInUserPayload, SignUpUserPayload, signUpResponseData } from "../@types";
-import { logoutUser, setAccessToken, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
+import { SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, signUpResponseData } from "../@types";
+import { getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
+import { GetUserInfo } from "src/@types";
 
 
 
@@ -39,17 +40,53 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
     const response: ApiResponse<SignInResponseData> = yield call(API.signInUser, data)
     if (response.data && response.ok) {
 
+        if (response.data.token) {
 
-        yield put(setAccessToken(response.data.token))
-        yield put(setUserRole(response.data.role))
-        localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
-        // localStorage.setItem(REFRESH_TOKEN_KEY, response.data.token)
+            yield put(setAccessToken(response.data.token))
+            yield put(setUserRole(response.data.role))
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
+            // localStorage.setItem(REFRESH_TOKEN_KEY, response.data.token)
 
-        callback();
+            callback();
+        } else {
+            console.log('некоректный токен');
+
+        }
+
 
     } else {
         console.error('sign In User Error', response.problem);
     }
+}
+
+
+function* userAuthWorker() {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+    if (accessToken) {
+        const response: ApiResponse<UserInfoData> = yield call(
+            API.userAuth,
+            accessToken,
+
+
+        )
+
+        if (response.data && response.ok) {
+
+            yield put(setUserInfo(response.data))
+
+
+        } else {
+            if (response.data) {
+                console.log('Add Post Error', response.data);
+
+
+            }
+
+        }
+    }
+
+
 }
 
 // function* activateUserWorker(action: PayloadAction<ActivateUserPayload>) {
@@ -126,6 +163,8 @@ export default function* authSagaWatcher() {
         // takeLatest(activateUser, activateUserWorker),
         // takeLatest(getUserInfo, getUserInfoWorker),
         takeLatest(logoutUser, logoutWorker),
+        takeLatest(getUserInfo, userAuthWorker),
+
         // takeLatest(resetPassword, resetPassswordWorker),
         // takeLatest(resetPasswordConfirmation, resetPasswordConfirmationWorker),
     ])

@@ -10,7 +10,7 @@ import { ProductImage, ProductTypes, SaveStatus } from "src/@types";
 import { Carousel } from "react-bootstrap";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 
-import { AuthSelectors, signInUser } from "src/redux/reducers/authSlice";
+import { AuthSelectors, logoutUser, signInUser } from "src/redux/reducers/authSlice";
 
 
 type CardsListProps = {
@@ -25,7 +25,7 @@ type CardsListProps = {
 
 }
 
-const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,clickRemoveProduct }) => {
+const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, clickRemoveProduct }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -40,9 +40,20 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,click
     const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
 
     useEffect(() => {
+        // if (accessToken == null) {
+        //     console.log(123);
+        //     dispatch(logoutUser())
+
+        // }
+
         if (accessToken) {
+
             const decodedToken = jwtDecode(accessToken);
             setUserRole(decodedToken);
+        } else {
+
+
+
         }
     }, [accessToken]);
 
@@ -64,8 +75,8 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick,click
     for (let i = 0; i < img.length; i += itemsPerSlide) {
         slides.push(img.slice(i, i + itemsPerSlide));
     }
-    
-// console.log(userRole);
+
+    // console.log(userRole);
 
 
     return (

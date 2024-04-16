@@ -7,12 +7,14 @@ type initialState = {
     userRole: string;
     accessToken: string,
     userInfo: UserInfoData | null,
+
 }
 
 const initialState: initialState = {
     accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || '',
     userInfo: null,
     userRole: ''
+
 };
 const authSlice = createSlice({
     name: 'authReducer',
@@ -38,6 +40,11 @@ const authSlice = createSlice({
         // setUserInfo: (state, action: PayloadAction<UserInfoData | null>) => {
         //     state.userInfo = action.payload
         // },
+        getUserInfo: (_, __: PayloadAction<undefined>) => { },
+        setUserInfo: (state, action: PayloadAction<UserInfoData | null>) => {
+            state.userInfo = action.payload
+
+        },
 
         logoutUser: (_, __: PayloadAction<undefined>) => { },
         // resetPassword: (_, __: PayloadAction<ResetPasswordPayload>) => { },
@@ -55,6 +62,9 @@ export const {
     // setUserInfo,
     // getUserInfo,
     logoutUser,
+    getUserInfo,
+    setUserInfo,
+
     // resetPassword,
     // resetPasswordConfirmation,
 } = authSlice.actions
@@ -62,7 +72,7 @@ export const {
 export const AuthSelectors = {
     getLoggedIn: (state: Rootstate) => !!state.authReducer.accessToken,
     getUserRole: (state: Rootstate) => state.authReducer.userRole,
-    // getUserInfo: (state: Rootstate) => state.authReducer.userInfo,
+    getUserInfo: (state: Rootstate) => state.authReducer.userInfo,
 }
 
 export default authSlice.reducer

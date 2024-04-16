@@ -48,12 +48,23 @@ export type ProductListTypes = ProductTypes[];
 export type TypeListTypes = TypeTypes[];
 export type BrandListTypes = BrandTypes[];
 
+export type GetUserInfo = {
+
+    token: string,
+    role: string,
+    email: string,
+    userName: string,
+    userLastName: string,
+    adress: string,
+
+}
+
 
 export type SetProductListPayload = {
     total: number
     product: ProductListTypes,
     isOverwrite?: boolean;
-    message?:string
+    message?: string
 
 }
 

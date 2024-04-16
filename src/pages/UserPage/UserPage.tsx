@@ -34,6 +34,9 @@ const UserPage = () => {
     const clickOnAddProduct = () => {
         navigate(RoutesList.AddProduct)
     }
+    const clickOnAdress = () => {
+        navigate(RoutesList.Adress)
+    }
 
     const [userRole, setUserRole] = useState<any>(null);
 
@@ -56,7 +59,7 @@ const UserPage = () => {
                 <ul className={style.navigationUserPage}>
                     <li onClick={clickOn}><img src={user} alt="#!" /> Личная информация </li>
 
-                    <li> <img src={adress} alt="#!" /> Адрес</li>
+                    <li onClick={clickOnAdress}> <img src={adress} alt="#!" /> Адрес</li>
                     <li onClick={clickFavoriteProduct}><img src={saved} alt="#!" /> Лист пожеланий  </li>
                     {/* <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li> */}
                     {userRole && userRole.role === 'ADMIN' && (

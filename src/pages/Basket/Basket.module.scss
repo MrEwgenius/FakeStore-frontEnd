@@ -70,7 +70,6 @@
     margin: 0 auto;
     width: 1040px;
     position: relative;
-    
 
     .basketForm {
         border-left: 1px solid $line-grey;
@@ -80,6 +79,16 @@
             flex-direction: column;
             gap: 20px;
             margin-bottom: 25px;
+            div {
+                display: block;
+                color: $primary-light;
+                border: none;
+                font-size: 16px;
+                width: 250px;
+                border-bottom: 1px solid $primary-light;
+
+                outline: none;
+            }
             input {
                 display: block;
                 color: $primary-light;
@@ -242,7 +251,6 @@
         width: 1px;
         height: 92px;
         background-color: $line-grey;
-
     }
     &::after {
         content: "";

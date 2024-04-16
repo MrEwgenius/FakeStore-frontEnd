@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
+import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetUserInfo, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
 import { AddPostDataPayload, GetProductListPayload, GetProductPayload } from '../@types';
 
 
@@ -167,6 +167,7 @@ const productSlice = createSlice({
 
 
         },
+       
 
     },
 
@@ -205,6 +206,7 @@ export const {
 
     getSearchProductLister,
     setSearchProductLister,
+
 
 
 
