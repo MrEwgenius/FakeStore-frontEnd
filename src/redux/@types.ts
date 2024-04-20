@@ -69,6 +69,9 @@ export type SignInData = {
     email: string,
     password: string,
 }
+export type addUserAddressData = {
+    address: string,
+}
 
 export type SignInResponseData = {
     access: string,
@@ -97,5 +100,6 @@ export type GetProductListPayload = {
 
 
 export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>
+export type addUserAddressPayload = PayloadWithDataAndCallback<addUserAddressData>
 export type AddPostDataPayload = PayloadWithDataAndCallback<any>
 export type AddPostDataPayloadToken = PayloadWithDataAndCallbackAndToken<any>

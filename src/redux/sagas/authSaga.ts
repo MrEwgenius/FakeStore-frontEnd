@@ -4,8 +4,8 @@ import { ApiResponse } from 'apisauce'
 
 import API from "src/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "src/utils/constans";
-import { SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, signUpResponseData } from "../@types";
-import { getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
+import { SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, addUserAddressPayload, signUpResponseData } from "../@types";
+import { addUserAddress, getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
 import { GetUserInfo } from "src/@types";
 
 
@@ -43,7 +43,7 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
         if (response.data.token) {
 
             yield put(setAccessToken(response.data.token))
-            yield put(setUserRole(response.data.role))
+            // yield put(setUserRole(response.data.role))
             localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
             // localStorage.setItem(REFRESH_TOKEN_KEY, response.data.token)
 
@@ -79,12 +79,51 @@ function* userAuthWorker() {
         } else {
             if (response.data) {
                 console.log('Add Post Error', response.data);
+                localStorage.removeItem(ACCESS_TOKEN_KEY)
+                yield put(setAccessToken(''))
 
 
             }
 
         }
     }
+
+
+}
+
+function* addUserAddressWorker(action: PayloadAction<addUserAddressPayload>) {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const { data, callback } = action.payload
+
+
+    if (accessToken) {
+        const response: ApiResponse<UserInfoData> = yield call(
+            API.addUserAddress,
+            data,
+            accessToken
+
+
+        )
+
+        if (response.data) {
+            yield put(setAccessToken(response.data.token))
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
+
+
+
+            callback();
+        } else {
+            if (response.data) {
+                console.log('add User Address Error', response.data);
+
+
+
+            }
+
+        }
+    }
+
+
 
 
 }
@@ -117,7 +156,6 @@ function* userAuthWorker() {
 
 function* logoutWorker() {
     localStorage.removeItem(ACCESS_TOKEN_KEY)
-    localStorage.removeItem(REFRESH_TOKEN_KEY)
     yield put(setAccessToken(''))
 }
 
@@ -164,6 +202,7 @@ export default function* authSagaWatcher() {
         // takeLatest(getUserInfo, getUserInfoWorker),
         takeLatest(logoutUser, logoutWorker),
         takeLatest(getUserInfo, userAuthWorker),
+        takeLatest(addUserAddress, addUserAddressWorker)
 
         // takeLatest(resetPassword, resetPassswordWorker),
         // takeLatest(resetPasswordConfirmation, resetPasswordConfirmationWorker),

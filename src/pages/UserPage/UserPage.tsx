@@ -21,9 +21,6 @@ const UserPage = () => {
     const clickFavoriteProduct = () => {
         navigate(RoutesList.PersonFavoriteProducts)
     }
-    const clickOff = () => {
-        navigate(RoutesList.UserAccount)
-    }
     const logOut = () => {
         const logOutUser = window.confirm('Вы точно хотите выйти из аккаунта?');
         if (logOutUser) {
@@ -66,7 +63,6 @@ const UserPage = () => {
                         <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li>
                     )}
                     <li onClick={logOut} ><img src={exit} alt="#!" /> Выйти  </li>
-                    <div onClick={clickOff}>выкл</div>
                 </ul>
 
                 <div className={style.outletContainer}>

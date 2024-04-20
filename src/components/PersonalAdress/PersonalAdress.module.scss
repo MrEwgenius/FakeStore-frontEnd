@@ -1,0 +1,40 @@
+@import "src/styles/solors.scss";
+
+.containerPersonalAdress {
+    position: relative;
+    max-width: 100%;
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -55px;
+        left: -81px;
+        width: calc(100% + 81px);
+        height: 1px;
+        background-color: $line-grey;
+    }
+    .titlePersonalAddress {
+        font-size: 20px;
+        line-height: 19.6px;
+        color: $primary-dark;
+    }
+    .containerWrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 600px;
+        .nameAdress {
+            font-size: 18px;
+            line-height: 19.6px;
+            color: $primary-dark;
+        }
+    }
+}
+.buttonEddAndSaveitUserAddress {
+    background-color: $extra-light;
+    text-transform: capitalize;
+    padding: 5px 2px;
+    outline: none;
+    border-radius: 20px;
+    border: 1px solid $medium;
+    color: $primary-light;
+}

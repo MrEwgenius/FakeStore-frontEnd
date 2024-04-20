@@ -1,6 +1,6 @@
 import { create } from "apisauce";
 import { DataBrand } from "src/@types";
-import { SignInData, SignUpUserData } from "src/redux/@types";
+import { SignInData, SignUpUserData, addUserAddressData } from "src/redux/@types";
 import { PER_PAGE } from "src/utils/constans";
 
 
@@ -125,6 +125,16 @@ const signUpUser = (data: SignUpUserData) => {
 const signInUser = (data: SignInData) => {
     return API.post(`/user/login`, data);
 }
+const addUserAddress = (data: addUserAddressData, token: string) => {
+    return API.post(`/user/useraddress`, data,
+
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        },);
+
+}
 
 // import axios from 'axios';
 
@@ -155,6 +165,8 @@ export default {
     addBasketProduct,
     deleteProduct,
     getSearchProducts,
-    userAuth
+    userAuth,
+    addUserAddress,
+
 
 }

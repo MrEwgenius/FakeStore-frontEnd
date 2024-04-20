@@ -11,6 +11,9 @@
     justify-content: center;
     flex: 1;
     // padding: 40px;
+    max-width: 100%;
+
+
 
     .containerProduct {
         width: 380px;
@@ -26,7 +29,7 @@
             content: "";
             position: absolute;
             bottom: -55px;
-            left: -135px;
+            left: -81px;
             width: 316%;
             height: 1px;
             background-color: $line-grey;

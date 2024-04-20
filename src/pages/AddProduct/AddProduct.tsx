@@ -6,22 +6,34 @@ import { ProductSelectors, addNewProduct, getBrandProduct, getTypeProduct } from
 import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 import classNames from "classnames"
-import { AuthSelectors } from "src/redux/reducers/authSlice"
+import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice"
 import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
+import { RoutesList } from "../Router"
 
 const AddProduct: React.FC = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
-    const dispatch = useDispatch();
+    const userInfo = useSelector(AuthSelectors.getUserInfo)
 
+  
+    
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
+    
     useEffect(() => {
-        { (dispatch(getTypeProduct())) }
-        { (dispatch(getBrandProduct())) }
+        if (!userInfo) {
+            navigate(RoutesList.Home);
+        } else {
+            dispatch(getTypeProduct());
+            dispatch(getBrandProduct());
+        }
+    }, [dispatch, navigate, userInfo]);
+    console.log(userInfo);
 
 
-    }, [dispatch]);
 
 
     const [clothingType, setClothingType] = useState('bike')
