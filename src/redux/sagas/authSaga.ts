@@ -4,8 +4,8 @@ import { ApiResponse } from 'apisauce'
 
 import API from "src/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "src/utils/constans";
-import { SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, addUserAddressPayload, signUpResponseData } from "../@types";
-import { addUserAddress, getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
+import { SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, addUserAddressPayload, addUserNameLastNamePayload, signUpResponseData } from "../@types";
+import { addUserAddress, addUserNameLastName, getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
 import { GetUserInfo } from "src/@types";
 
 
@@ -102,13 +102,11 @@ function* addUserAddressWorker(action: PayloadAction<addUserAddressPayload>) {
             data,
             accessToken
 
-
         )
 
         if (response.data) {
             yield put(setAccessToken(response.data.token))
             localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
-
 
 
             callback();
@@ -123,8 +121,36 @@ function* addUserAddressWorker(action: PayloadAction<addUserAddressPayload>) {
         }
     }
 
+}
+function* addUserNameLastNameWorker(action: PayloadAction<addUserNameLastNamePayload>) {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const { data, callback } = action.payload
 
 
+    if (accessToken) {
+        const response: ApiResponse<UserInfoData> = yield call(
+            API.addUserNameLastName,
+            data,
+            accessToken
+
+        )
+
+        if (response.data) {
+            yield put(setAccessToken(response.data.token))
+            localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
+
+
+            callback();
+        } else {
+            if (response.data) {
+                console.log('add User Address Error', response.data);
+
+
+
+            }
+
+        }
+    }
 
 }
 
@@ -202,7 +228,8 @@ export default function* authSagaWatcher() {
         // takeLatest(getUserInfo, getUserInfoWorker),
         takeLatest(logoutUser, logoutWorker),
         takeLatest(getUserInfo, userAuthWorker),
-        takeLatest(addUserAddress, addUserAddressWorker)
+        takeLatest(addUserAddress, addUserAddressWorker),
+        takeLatest(addUserNameLastName, addUserNameLastNameWorker),
 
         // takeLatest(resetPassword, resetPassswordWorker),
         // takeLatest(resetPasswordConfirmation, resetPasswordConfirmationWorker),

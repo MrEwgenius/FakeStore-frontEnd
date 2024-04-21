@@ -16,6 +16,7 @@ const PersonalAdress = () => {
     useEffect(() => {
 
         dispatch(getUserInfo())
+        
     }, [dispatch])
 
     const handleStreetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

@@ -8,7 +8,7 @@ import { ProductSelectors, delBasketProduct, deleteBasketProduct, getBasketProdu
 import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
-import { AuthSelectors } from "src/redux/reducers/authSlice"
+import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice"
 import { useTranslation } from "react-i18next"
 import { jwtDecode } from "jwt-decode"
 
@@ -37,6 +37,14 @@ const Basket = () => {
         navigate(RoutesList.Login)
 
     }
+
+    const userInfo = useSelector(AuthSelectors.getUserInfo)
+    useEffect(() => {
+
+        dispatch(getUserInfo())
+    }, [dispatch])
+
+    console.log(userInfo);
 
     const { t } = useTranslation()
 
@@ -90,7 +98,6 @@ const Basket = () => {
             setUserRole(decodedToken);
         }
     }, [accessToken,]);
-    console.log(userRole);
     return (
         <div className={style.containerBasket}>
             {!isLoggedIn ?
@@ -116,11 +123,11 @@ const Basket = () => {
                         <>
                             <div className={style.basketTitle}>{t('basket.title')} </div><div className={style.basketList}>
                                 <div className={style.basketForm}>
-                                    {userRole ?
+                                    {userInfo ?
                                         <div className={style.groupInputs} >
-                                            <div>{userRole.userName}</div>
-                                            <div>{userRole.userLastName}</div>
-                                            <div>{userRole.email}</div>
+                                            <div>{userInfo.userName}</div>
+                                            <div>{userInfo.userLastName}</div>
+                                            <div>{userInfo.email}</div>
                                         </div>
                                         :
                                         <div>Для начала нужно войти</div>
@@ -132,9 +139,12 @@ const Basket = () => {
                                         <input className={style.inputField} placeholder="Phone" type="number" />
                                     </div> */}
                                     <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
-                                    <div className={style.deliveryAddress}>
-                                        Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»
-                                    </div>
+                                    {userInfo && userInfo?.adress &&
+
+                                        <div className={style.deliveryAddress}>
+                                            {userInfo.adress}
+                                        </div>
+                                    }
                                     <div className={style.paymentMethods}>
                                         <div className={style.paymentMethodTitle}>{t('basket.paymentMethod')}</div>
                                         <div className={style.paymentMethod}>

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Rootstate } from '../store';
 import { ACCESS_TOKEN_KEY } from 'src/utils/constans';
-import { addUserAddressPayload, SignInUserPayload, SignUpUserPayload, UserInfoData } from '../@types';
+import { addUserAddressPayload, addUserNameLastNamePayload, SignInUserPayload, SignUpUserPayload, UserInfoData } from '../@types';
 
 type initialState = {
     userRole: string;
@@ -26,6 +26,7 @@ const authSlice = createSlice({
 
         signInUser: (_, __: PayloadAction<SignInUserPayload>) => { },
         addUserAddress: (_, __: PayloadAction<addUserAddressPayload>) => { },
+        addUserNameLastName: (_, __: PayloadAction<addUserNameLastNamePayload>) => { },
 
         setAccessToken: (state, action: PayloadAction<string>) => {
             state.accessToken = action.payload
@@ -67,6 +68,7 @@ export const {
     getUserInfo,
     setUserInfo,
     addUserAddress,
+    addUserNameLastName,
 
     // resetPassword,
     // resetPasswordConfirmation,

@@ -4,12 +4,28 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    div {
-        width: 200px;
-        border-bottom: 1px solid  $primary-light;
+    .group {
+        display: flex;
+        gap: 40px;
         font-size: 20px;
-        font-weight: 400;
-        line-height: 23.8px;
         color: $primary-light;
+        line-height: 25px;
+        div,
+        input {
+            border: none;
+            height: 25px;
+
+            border-bottom: 1px solid $primary-light;
+            width: 200px;
+        }
+        input {
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+        span {
+            color: $red;
+            font-size: 16px;
+            cursor: pointer;
+        }
     }
 }
