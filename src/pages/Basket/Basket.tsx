@@ -128,6 +128,7 @@ const Basket = () => {
                                             <div>{userInfo.userName}</div>
                                             <div>{userInfo.userLastName}</div>
                                             <div>{userInfo.email}</div>
+                                            <div>{userInfo.userNumber}</div>
                                         </div>
                                         :
                                         <div>Для начала нужно войти</div>

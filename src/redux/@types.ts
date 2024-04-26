@@ -58,6 +58,7 @@ export type UserInfoData = {
     userName: string,
     userLastName: string,
     adress: string,
+    userNumber: string,
 }
 
 export type UserInfoDataPayload = PayloadWithDataAndCallback<UserInfoData>
@@ -75,6 +76,7 @@ export type addUserAddressData = {
 export type addUserNameLastNameData = {
     userName?: string,
     userLastName?: string,
+    userNumber?:string,
 }
 
 export type SignInResponseData = {

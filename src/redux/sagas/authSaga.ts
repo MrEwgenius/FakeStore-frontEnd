@@ -137,6 +137,7 @@ function* addUserNameLastNameWorker(action: PayloadAction<addUserNameLastNamePay
 
         if (response.data) {
             yield put(setAccessToken(response.data.token))
+            
             localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
 
 
