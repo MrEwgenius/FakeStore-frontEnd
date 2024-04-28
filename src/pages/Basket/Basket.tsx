@@ -87,17 +87,13 @@ const Basket = () => {
     const isPaymentMethodSelected = () => {
         return selectedPaymentMethod !== null;
     };
+    const clicAddUserNumber = () => {
+        navigate(RoutesList.PersonalInfo)
+
+    }
 
 
-    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
-    const [userRole, setUserRole] = useState<any>(null);
 
-    useEffect(() => {
-        if (accessToken) {
-            const decodedToken = jwtDecode(accessToken);
-            setUserRole(decodedToken);
-        }
-    }, [accessToken,]);
     return (
         <div className={style.containerBasket}>
             {!isLoggedIn ?
@@ -128,7 +124,12 @@ const Basket = () => {
                                             <div>{userInfo.userName}</div>
                                             <div>{userInfo.userLastName}</div>
                                             <div>{userInfo.email}</div>
-                                            <div>{userInfo.userNumber}</div>
+                                            <div className={classNames(style.userNumber, { [style.missingUserNumber]: !userInfo.userNumber })} >
+                                                {userInfo.userNumber ? userInfo.userNumber : 'Нужно указать номер телефона'}
+                                            </div>
+                                            {!userInfo.userNumber &&
+                                                <button onClick={clicAddUserNumber}>добавить телефон</button>
+                                            }
                                         </div>
                                         :
                                         <div>Для начала нужно войти</div>
@@ -158,9 +159,19 @@ const Basket = () => {
                                             <label htmlFor="radio2"> {t('basket.uponReceipt')}</label>
                                         </div>
 
-                                        <button className={classNames(style.button, {
-                                            [style.disabled]: !isPaymentMethodSelected()
-                                        })} disabled={!isPaymentMethodSelected()}>{t('basket.order')}</button>
+                                        <button className={classNames(style.button, 
+                                        {
+                                            [style.disabled]: !isPaymentMethodSelected() 
+                                        },
+                                        {
+                                            [style.disabled]: !userInfo?.userNumber
+
+                                        }
+                                    )}
+                                            disabled={
+                                                !userInfo?.userNumber ||
+                                                !isPaymentMethodSelected()
+                                            }>{t('basket.order')}</button>
                                     </div>
                                 </div>
 

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import authSlice, { AuthSelectors, addUserNameLastName, getUserInfo } from "src/redux/reducers/authSlice";
 import style from './PersonalInfo.module.scss'
 import Inputmask, { ReactInputMask } from 'react-input-mask';
+import classNames from "classnames";
 
 const PersonalInfo = () => {
     const dispatch = useDispatch()
@@ -114,7 +115,9 @@ const PersonalInfo = () => {
                     </div>
                     <div className={style.group}>
                         {!showNumber &&
-                            <div onClick={clickonClick}>{userInfo.userNumber}</div>
+                            <div
+                            className={classNames(style.userNumber, { [style.missingUserNumber]: !userInfo.userNumber })}
+                            onClick={clickonClick}>{userInfo.userNumber ? userInfo.userNumber : 'Укажите номер'}</div>
                         }
                         {showNumber &&
                             <>

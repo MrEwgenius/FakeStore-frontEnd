@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Rootstate } from '../store';
 import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetUserInfo, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
-import { AddPostDataPayload, GetProductListPayload, GetProductPayload } from '../@types';
+import { AddBrandPayload, AddPostDataPayload, AddTypePayload, GetProductListPayload, GetProductPayload } from '../@types';
 
 
 let lokStorGet = localStorage.getItem('SavedProduct')
@@ -149,6 +149,10 @@ const productSlice = createSlice({
         setBasketProducts: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
         },
+        addType: (_, __: PayloadAction<AddTypePayload>) => {
+        },
+        addBrand: (_, __: PayloadAction<AddBrandPayload>) => {
+        },
         deleteBasketProduct: (_, __: PayloadAction<number>) => { },
         addBasketProductFavorite: (_, __: PayloadAction<number>) => { },
         setBasketProductFavorite: (state, action: PayloadAction<ProductListTypes>) => {
@@ -206,6 +210,8 @@ export const {
 
     getSearchProductLister,
     setSearchProductLister,
+    addType,
+    addBrand,
 
 
 

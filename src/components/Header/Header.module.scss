@@ -2,7 +2,7 @@
 .containerHeader {
     // background-color: #8f97e6;
     max-width: 1440px;
-    padding: 20px 45px;
+    padding: 20px 15px;
     margin: auto;
     // flex: 1;
 
@@ -19,40 +19,40 @@
             }
             display: flex;
             align-items: center;
-            font-size: 16px;
             text-transform: uppercase;
-            font-weight: 400;
-            line-height: 22px;
             letter-spacing: 0.1em;
-            gap: 45px;
+            gap: 65px;
             color: $primary-dark;
             .label {
                 display: flex;
                 align-items: center;
+                height: 35px;
                 position: relative;
                 label {
                     cursor: pointer;
                 }
                 input {
                     position: relative;
-                    margin-top: -5px;
                     width: 300px;
-                    margin-left: 20px;
                     // background-color: #8f97e6;
-                    padding: 10px 5px;
+                    // padding: 10px 5px;
+                    padding: 0 5px;
+                    // height: 30px;
+                    height: 100%;
                     border-radius: 25px;
-                    border: 1px solid black;
-                    border-bottom: 1px solid $primary-dark;
+                    border: none;
+                    border: 1px solid $gray;
+                    // border-bottom: 1px solid $primary-dark;
                     outline: none;
                     &:focus-visible {
-                        background-color: #8f97e6;
+                        background-color: rgb(233, 233, 233);
                     }
                 }
                 .searchSVG {
                     cursor: pointer;
                     position: absolute;
                     right: 10px;
-                    top: 0;
+                    top: 2px;
                     width: 30px;
                 }
                 .rusultSearch {
@@ -64,8 +64,8 @@
                     background-color: #ecebeb;
                     width: 300px;
                     position: absolute;
-                    top: 50px;
-                    left: 90px;
+                    top: 55px;
+                    left: 7px;
                     display: flex;
                     flex-direction: column;
                     gap: 10px;

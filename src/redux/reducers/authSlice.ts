@@ -23,6 +23,7 @@ const authSlice = createSlice({
 
         signUpUser: (_, __: PayloadAction<SignUpUserPayload>) => {
         },
+        
 
         signInUser: (_, __: PayloadAction<SignInUserPayload>) => { },
         addUserAddress: (_, __: PayloadAction<addUserAddressPayload>) => { },

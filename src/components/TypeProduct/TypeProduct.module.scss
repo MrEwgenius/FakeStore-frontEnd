@@ -1,0 +1,39 @@
+@import "../../styles/solors.scss";
+
+.containerTypeProduct {
+    margin: 60px auto 0;
+    position: relative;
+    .errorMesage {
+        width: 300px;
+
+        color: $error;
+    }
+    .input {
+        display: block;
+        height: 35px;
+        width: 300px;
+        border-radius: 10px;
+        outline: none;
+        border: 1px solid gray;
+        padding: 0 5px 0;
+    }
+    .error {
+        border: 1px solid red;
+    }
+    .errorButton {
+        pointer-events: none;
+    }
+    button {
+        margin-top: 20px;
+        height: 30px;
+        width: 150px;
+        border-radius: 10px;
+        border: 1px solid gray;
+        transition: all 0.2s;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        &:hover {
+            background-color: rgb(204, 202, 202);
+        }
+    }
+}

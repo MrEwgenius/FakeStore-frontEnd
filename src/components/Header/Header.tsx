@@ -163,9 +163,6 @@ const Header = () => {
                     {/* <div>Женщины</div> */}
                     <div className={style.katalog} onClick={clickOnProducts}>{t('catalog')}</div>
                     <div className={style.label}>
-                        <label >
-                            {t('search')}
-                        </label>
 
                         <input
                             // onClick={handleShowshowDelivery}

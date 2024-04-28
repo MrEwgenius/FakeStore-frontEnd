@@ -31,6 +31,12 @@ const UserPage = () => {
     const clickOnAddProduct = () => {
         navigate(RoutesList.AddProduct)
     }
+    const clickOnAddType = () => {
+        navigate(RoutesList.AddType)
+    }
+    const clickOnAddBrand = () => {
+        navigate(RoutesList.AddBrand)
+    }
     const clickOnAdress = () => {
         navigate(RoutesList.Adress)
     }
@@ -58,9 +64,14 @@ const UserPage = () => {
 
                     <li onClick={clickOnAdress}> <img src={adress} alt="#!" /> Адрес</li>
                     <li onClick={clickFavoriteProduct}><img src={saved} alt="#!" /> Лист пожеланий  </li>
-                    {/* <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li> */}
                     {userRole && userRole.role === 'ADMIN' && (
                         <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li>
+                    )}
+                    {userRole && userRole.role === 'ADMIN' && (
+                        <li onClick={clickOnAddType}><img src={addProduct} alt="#!" /> Добавить тип </li>
+                    )}
+                    {userRole && userRole.role === 'ADMIN' && (
+                        <li onClick={clickOnAddBrand}><img src={addProduct} alt="#!" /> Добавить бренд </li>
                     )}
                     <li onClick={logOut} ><img src={exit} alt="#!" /> Выйти  </li>
                 </ul>

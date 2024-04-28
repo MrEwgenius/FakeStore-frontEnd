@@ -22,6 +22,7 @@ const ShopPage = () => {
     const totalCount = useSelector(ProductSelectors.getTotalProductCount)
     const allProducts = useSelector(ProductSelectors.getAllProductList)
 
+    console.log(totalCount);
 
     const [show, setShow] = useState(false)
     const [page, setPage] = useState(() => {
@@ -655,6 +656,8 @@ const ShopPage = () => {
                         </div>
 
                         <div className={style.orderContainer}>
+                            <div className={style.countProducts}>{totalCount} товаров</div>
+
                             <Dropdown className={style.orderProduct} as={ButtonGroup}>
                                 <Dropdown.Toggle className={(style.dropDownToogle, style.orderProduct)} id="dropdown-custom-4"><span>Cортировать:</span>{order ? getLabelByOrder(order) : ' '}</Dropdown.Toggle>
                                 <Dropdown.Menu className={style.superColor}>

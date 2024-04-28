@@ -20,19 +20,23 @@ import PersonalInfo from "src/components/PersonalInfo/PersonalInfo";
 import PersonalFaforiteProduct from "src/components/PersonalFaforiteProduct/PersonalFaforiteProduct";
 import SearchList from "./SearchList/SearchList";
 import PersonalAdress from "src/components/PersonalAdress/PersonalAdress";
+import TypeProduct from "src/components/TypeProduct/TypeProduct";
+import BrandProduct from "src/components/BrandProduct/BrandProduct";
 
 export enum RoutesList {
 
     Home = '/',
     Trend = '/product',
     Filter = '/products/filter?/:typeName?/:brandName?/:size?/:price?/:order?/',
-    
+
     UserAccount = '/user',
     Registration = '/user/registration',
     PersonalInfo = '/user/personal',
     Login = '/user/login',
     SingleProduct = '/product/:id',
     AddProduct = '/addproduct',
+    AddType = '/addtype',
+    AddBrand = '/addbrand',
     FavoriteProducts = '/savedproduct',
     PersonFavoriteProducts = '/user/savedproduct',
     Search = '/product/search/:search',
@@ -80,6 +84,8 @@ const Router = () => {
                     </Route>
                     {/* <Route path={RoutesList.Registration} element={<SignUp />} /> */}
                     <Route path={RoutesList.AddProduct} element={<AddProduct />} />
+                    <Route path={RoutesList.AddType} element={<TypeProduct />} />
+                    <Route path={RoutesList.AddBrand} element={<BrandProduct />} />
                     <Route path={RoutesList.SingleProduct} element={<SingleProduct />} />
 
                     <Route

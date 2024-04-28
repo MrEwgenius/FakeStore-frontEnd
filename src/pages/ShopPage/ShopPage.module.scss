@@ -67,13 +67,16 @@
             margin-bottom: 20px;
         }
         .sortProducts {
-            margin-bottom: 50px;
-            // width: 700px;
+            margin-bottom: 30px;
             .orderContainer {
+                margin-top: 10px;
                 display: flex;
                 // flex-direction: column;
-                justify-content: end;
+                justify-content: space-between;
                 align-items: center;
+                .countProducts{
+                color: $gray;
+                }
             }
             .orderProduct {
                 width: 260px;

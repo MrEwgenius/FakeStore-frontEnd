@@ -2,10 +2,10 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addBasketProductFavorite, addNewProduct, addNewProductFailure, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct,  removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
+import { addBasketProductFavorite, addBrand, addNewProduct, addNewProductFailure, addType, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
 import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, GetUserInfo, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
-import { AddPostDataPayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
+import { AddBrandPayload, AddPostDataPayload, AddTypePayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 import { log } from "console";
 
@@ -252,6 +252,69 @@ function* addBasketProduct(action: PayloadAction<number>) {
     }
 }
 
+function* addTypeWorker(action: PayloadAction<AddTypePayload>) {
+
+    const { data, callback } = action.payload
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+
+    if (accessToken) {
+
+        const response: ApiResponse<undefined> = yield call(
+            API.addType,
+            data,
+            accessToken
+        )
+        if (response.data && response.ok) {
+
+            callback()
+
+
+        } else {
+            console.log(response.data);
+
+            yield put(addNewProductFailure(response.data))
+
+
+        }
+
+
+
+    }
+
+}
+function* addBrandWorker(action: PayloadAction<AddBrandPayload>) {
+
+    const { data, callback } = action.payload
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+
+    if (accessToken) {
+
+        const response: ApiResponse<undefined> = yield call(
+            API.addBrand,
+            data,
+            accessToken
+        )
+        if (response.data && response.ok) {
+
+            callback()
+
+
+        } else {
+            console.log(response.data);
+
+            yield put(addNewProductFailure(response.data))
+
+
+        }
+
+
+
+    }
+
+}
+
 
 
 
@@ -271,6 +334,8 @@ export default function* productSagaWatcher() {
         takeLatest(addBasketProductFavorite, addBasketProduct),
         takeLatest(removeProduct, deleteProductWorker),
         takeLatest(getSearchProductLister, getSearchProductWorker),
+        takeLatest(addType, addTypeWorker),
+        takeLatest(addBrand, addBrandWorker),
 
 
     ])

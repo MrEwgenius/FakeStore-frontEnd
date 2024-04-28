@@ -1,6 +1,6 @@
 import { create } from "apisauce";
 import { DataBrand } from "src/@types";
-import { SignInData, SignUpUserData, addUserAddressData, addUserNameLastNameData } from "src/redux/@types";
+import { AddTypeData, SignInData, SignUpUserData, addUserAddressData, addUserNameLastNameData } from "src/redux/@types";
 import { PER_PAGE } from "src/utils/constans";
 
 
@@ -64,9 +64,33 @@ const getType = () => {
     return API.get(`/type`)
 
 }
+const addType = (data: AddTypeData, token: string) => {
+
+    return API.post(`/type`,
+        data, {
+
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    },
+    )
+
+}
 const getBrand = () => {
 
     return API.get(`/brand`)
+
+}
+const addBrand = (data: AddTypeData, token: string) => {
+
+    return API.post(`/brand`,
+        data, {
+
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    },
+    )
 
 }
 
@@ -178,6 +202,8 @@ export default {
     userAuth,
     addUserAddress,
     addUserNameLastName,
+    addType,
+    addBrand
 
 
 
