@@ -1,8 +1,11 @@
 @import "../../styles/solors.scss";
 
 .containerBrandProduct {
-    margin: 60px auto 0;
+    margin: 0px auto 0;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    
 
     .errorMesage {
         width: 300px;

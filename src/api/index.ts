@@ -118,9 +118,12 @@ const getBasketProduct = (token: string) => {
             },
         },);
 }
-const addBasketProduct = (token: string, id: number) => {
+const addBasketProduct = (token: string, id: number, size: string) => {
     return API.post(`/basket/addbasketproduct`,
-        { productId: id },
+        {
+            productId: id,
+            sizeBasketProduct: size,
+        },
         {
             headers: {
                 Authorization: `Bearer ${token}`

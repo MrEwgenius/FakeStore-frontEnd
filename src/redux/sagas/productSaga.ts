@@ -2,9 +2,9 @@
 import { all, takeLatest, call, put, select, delay } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ApiResponse } from 'apisauce'
-import { addBasketProductFavorite, addBrand, addNewProduct, addNewProductFailure, addType, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct, setTypeProduct, } from "../reducers/productSlice";
+import { addBasketProductFavorite, addBrand, addNewProduct, addNewProductFailure, addType, deleteBasketProduct, getBasketProducts, getBrandProduct, getBrandProductList, getProductLister, getSearchProductLister, getSingleProduct, getTypeProduct, removeProduct, responseMessage, setBasketProductFavorite, setBasketProducts, setBrandProduct, setProductLister, setSearchProductLister, setSingleProduct,  setTypeProduct, } from "../reducers/productSlice";
 import API from "../../api";
-import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, GetUserInfo, ProductListTypes, ProductTypes, TypeListTypes } from "../../@types";
+import { BasketProductsData, BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetProductResponsData, GetUserInfo, ProductListTypes, ProductTypes, TypeListTypes, addBasketProductPayload, } from "../../@types";
 import { AddBrandPayload, AddPostDataPayload, AddTypePayload, BrandProductsData, GetProductListPayload, GetProductPayload, ProductsData, TypeProductsData } from "../@types";
 import { ACCESS_TOKEN_KEY } from "src/utils/constans";
 import { log } from "console";
@@ -182,13 +182,16 @@ function* getBasketProduct() {
     if (accessToken) {
 
 
-        const response: ApiResponse<ProductListTypes> = yield call(
+        const response: ApiResponse<BasketProductsData> = yield call(
             API.getBasketProduct,
             accessToken,
         )
 
         if (response.data && response.ok) {
-            yield put(setBasketProducts(response.data))
+
+            yield put(setBasketProducts(response.data.products))
+            // yield put(setSizeBasketProducts(response.data.basketItems))
+
 
         } else {
             if (response.data) {
@@ -225,15 +228,18 @@ function* removeBasketProduct(action: PayloadAction<number>) {
         }
     }
 }
-function* addBasketProduct(action: PayloadAction<number>) {
+function* addBasketProduct(action: PayloadAction<addBasketProductPayload>) {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+
+    const { id, sizeBasketProduct } = action.payload
 
     if (accessToken) {
 
         const response: ApiResponse<undefined> = yield call(
             API.addBasketProduct,
             accessToken,
-            action.payload,
+            id,
+            sizeBasketProduct,
         )
 
         if (response.data && response.ok) {

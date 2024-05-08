@@ -7,21 +7,18 @@
     margin-top: 40px;
     gap: 100px;
     margin-bottom: 100px;
-    
 }
 .carousel {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     a {
         width: 60px;
         height: 60px;
         top: 150px;
-        
     }
-    
 }
 .mainImageWrap {
     position: relative;
@@ -62,7 +59,6 @@
 .containerWrapper {
     display: flex;
     gap: 36px;
-    
 
     .containerDescription {
         .productName {
@@ -107,8 +103,11 @@
                 display: block;
             }
             .sizeTable {
-                display: flex;
+                display: inline-flex;
                 gap: 10px;
+                .groupLable {
+                    display: inline-block;
+                }
                 label {
                     display: flex;
                     flex-direction: column;
@@ -127,9 +126,13 @@
                 input {
                     display: none;
 
-                    &:checked + label {
+                    // &:checked + label {
+                    //     background-color: $gray;
+                    // }
+                }
+                .sizeLabelActive{
                         background-color: $gray;
-                    }
+                
                 }
                 // input[type="radio"] {
                 //     display: none;
@@ -141,8 +144,6 @@
             }
         }
         .containerColors {
-    
-
             margin-bottom: 20px;
             span {
                 color: $primary-dark;

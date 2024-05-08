@@ -22,7 +22,8 @@ export type ProductTypes = {
     typeName: string,
     size: string[],
     product_images: ProductImage[]
-    image: string[]
+    image: string[],
+    sizeBasketProduct: string,
 
 
 }
@@ -42,11 +43,31 @@ export type BrandTypes = {
     name: string,
 
 }
+export type SizeBasketProduct = {
+    productId: number,
+
+    sizeBasketProduct: string
+}
 
 
 export type ProductListTypes = ProductTypes[];
+export type SizeBasketProductTypes = SizeBasketProduct[];
 export type TypeListTypes = TypeTypes[];
 export type BrandListTypes = BrandTypes[];
+
+export type BasketProductsData = {
+
+    products: ProductListTypes,
+    basketItems: SizeBasketProductTypes
+
+}
+
+export type addBasketProduct = {
+
+    id: number,
+    sizeBasketProduct: string,
+
+}
 
 export type GetUserInfo = {
 
@@ -69,6 +90,7 @@ export type SetProductListPayload = {
 }
 
 export type SetSearchedPostsPayload = SetProductListPayload
+export type addBasketProductPayload = addBasketProduct
 
 export type GetProductResponsData = {
     results: ProductListTypes,

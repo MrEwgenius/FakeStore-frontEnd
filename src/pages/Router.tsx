@@ -34,9 +34,9 @@ export enum RoutesList {
     PersonalInfo = '/user/personal',
     Login = '/user/login',
     SingleProduct = '/product/:id',
-    AddProduct = '/addproduct',
-    AddType = '/addtype',
-    AddBrand = '/addbrand',
+    AddProduct = '/user/addproduct',
+    AddType = '/user/addtype',
+    AddBrand = '/user/addbrand',
     FavoriteProducts = '/savedproduct',
     PersonFavoriteProducts = '/user/savedproduct',
     Search = '/product/search/:search',
@@ -81,11 +81,11 @@ const Router = () => {
                         <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
 
 
+                    <Route path={RoutesList.AddType} element={<TypeProduct />} />
+                    <Route path={RoutesList.AddProduct} element={<AddProduct />} />
+                    <Route path={RoutesList.AddBrand} element={<BrandProduct />} />
                     </Route>
                     {/* <Route path={RoutesList.Registration} element={<SignUp />} /> */}
-                    <Route path={RoutesList.AddProduct} element={<AddProduct />} />
-                    <Route path={RoutesList.AddType} element={<TypeProduct />} />
-                    <Route path={RoutesList.AddBrand} element={<BrandProduct />} />
                     <Route path={RoutesList.SingleProduct} element={<SingleProduct />} />
 
                     <Route

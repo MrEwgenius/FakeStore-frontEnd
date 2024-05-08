@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { ProductSelectors, addBasketProductFavorite, deleteBasketProduct, getBasketProducts, setBasketProduct, setSavedStatus } from "src/redux/reducers/productSlice";
+import { ProductSelectors, addBasketProductFavorite, deleteBasketProduct, getBasketProducts, setSavedStatus } from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
 import style from './FavoriteProducts.module.scss'
 import close from '../../assets/close.svg'
@@ -29,6 +29,7 @@ const FavoriteProducts = () => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
         return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
     };
+    console.log();
 
     const toggleBasket = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
@@ -39,8 +40,13 @@ const FavoriteProducts = () => {
                 dispatch(deleteBasketProduct(card.id));
                 dispatch(getBasketProducts())
             } else {
-                dispatch(addBasketProductFavorite(card.id));
-                dispatch(getBasketProducts())
+                // dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct }));
+                // dispatch(getBasketProducts())
+                const size = selectedSizes[card.id]; // Получаем выбранный размер для этой карточки
+                if (size) {
+                    dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct: size }));
+                    dispatch(getBasketProducts());
+                }
             }
         } else {
             const confirmSignIn = window.confirm('Для начало нужно Войти!');
@@ -63,6 +69,37 @@ const FavoriteProducts = () => {
 
     const { t } = useTranslation()
 
+    // const [sizeBasketProduct, setSizeBasketProduct] = useState('')
+    const [selectedSizes, setSelectedSizes] = useState<{ [key: number]: string }>({});
+
+    const toggleSize = (cardId: number, size: string) => {
+        setSelectedSizes((current) => ({
+            ...current,
+            [cardId]: current[cardId] === size ? "" : size, // Обновляем размер для каждой карточки
+
+        }));
+
+    };
+    // const toggleSize = (size: string) => {
+    //     setSizeBasketProduct((currentSize) =>
+    //         currentSize === size ? "" : size
+    //     );
+    // };
+    console.log('selectedSizes', selectedSizes);
+    {
+
+        savedProduct.map((card) => {
+
+            // console.log(card.size);
+            card.size.map((el) => {
+                // console.log(el);
+
+
+            })
+
+
+        })
+    }
 
     return (
         <div className={style.containerFavoriteProducts}>
@@ -80,8 +117,44 @@ const FavoriteProducts = () => {
                                 <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
                                 <div className={style.typeProduct}>{card.typeName}</div>
                                 <div className={style.price}>{card.price}$</div>
+                                <div className={style.sizeTable}>
+
+                                    {card.size.map((sizes, idx) =>
+                                        <div className={style.groupLable} key={idx}>
+                                            <input
+                                                checked={selectedSizes[card.id] === sizes}
+                                                value={sizes}
+                                                name="size"
+                                                id={sizes + card.id}
+                                                type="radio"
+                                                onChange={() => { }}
+
+                                            />
+                                            <label
+                                                onClick={() => toggleSize(card.id, sizes)}
+                                                key={idx}
+                                                htmlFor={sizes + card.id}
+                                                className={
+                                                    selectedSizes[card.id] === sizes
+                                                        ? style.sizeLabelActive
+                                                        : style.sizeLabel
+                                                }
+                                            >
+                                                {sizes}
+                                            </label>
+                                        </div>
+                                    )}
+                                </div >
                                 <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
-                                <button onClick={() => toggleBasket(card)} className={style.addBucketButton}>{onSavedStatus(card)}</button>
+                                <button
+                                    disabled={
+                                        !selectedSizes[card.id] && onSavedStatus(card) === t('faboriteProduct.addToBasketProduct')
+                                    }
+                                    onClick={() => toggleBasket(card)}
+                                    className={style.addBucketButton}
+                                >
+                                    {onSavedStatus(card)}
+                                </button>
                             </div>
                         </div>
                     ))}

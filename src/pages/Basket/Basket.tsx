@@ -4,7 +4,7 @@ import basketEmpty from '../../assets/basketEmpty.png'
 import { useNavigate } from "react-router-dom"
 import { RoutesList } from "../Router"
 import { useDispatch, useSelector } from "react-redux"
-import { ProductSelectors, delBasketProduct, deleteBasketProduct, getBasketProducts } from "src/redux/reducers/productSlice"
+import { ProductSelectors, deleteBasketProduct, getBasketProducts } from "src/redux/reducers/productSlice"
 import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
@@ -23,12 +23,15 @@ const Basket = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const basketProduct = useSelector(ProductSelectors.getBasketProduct)
     const basketProducts = useSelector(ProductSelectors.getBasketProducts)
+    // const sizeBasketProduct = useSelector(ProductSelectors.getSizeBasketProduct)
 
-    const removeBasketProduct = (card: ProductTypes) => {
-        dispatch(delBasketProduct({ card }))
-    }
+    console.log(basketProducts);
+
+
+
+
+
     const navigateToCatalog = () => {
         navigate(RoutesList.Filter)
 
@@ -44,7 +47,7 @@ const Basket = () => {
         dispatch(getUserInfo())
     }, [dispatch])
 
-    console.log(userInfo);
+    // console.log(userInfo);
 
     const { t } = useTranslation()
 
@@ -60,8 +63,7 @@ const Basket = () => {
     }, [dispatch])
 
     const onDeletePost = (id: number) => {
-        if (basketProducts
-        ) {
+        if (basketProducts) {
             basketProducts.map((product) => {
                 if (id === product.id) {
 
@@ -134,12 +136,6 @@ const Basket = () => {
                                         :
                                         <div>Для начала нужно войти</div>
                                     }
-                                    {/* <div className={style.groupInputs}>
-                                        <input className={style.inputField} placeholder="Name" type="text" />
-                                        <input className={style.inputField} placeholder="LastName" type="text" />
-                                        <input className={style.inputField} placeholder="Email" type="email" />
-                                        <input className={style.inputField} placeholder="Phone" type="number" />
-                                    </div> */}
                                     <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
                                     {userInfo && userInfo?.adress &&
 
@@ -159,15 +155,15 @@ const Basket = () => {
                                             <label htmlFor="radio2"> {t('basket.uponReceipt')}</label>
                                         </div>
 
-                                        <button className={classNames(style.button, 
-                                        {
-                                            [style.disabled]: !isPaymentMethodSelected() 
-                                        },
-                                        {
-                                            [style.disabled]: !userInfo?.userNumber
+                                        <button className={classNames(style.button,
+                                            {
+                                                [style.disabled]: !isPaymentMethodSelected()
+                                            },
+                                            {
+                                                [style.disabled]: !userInfo?.userNumber
 
-                                        }
-                                    )}
+                                            }
+                                        )}
                                             disabled={
                                                 !userInfo?.userNumber ||
                                                 !isPaymentMethodSelected()
@@ -185,6 +181,9 @@ const Basket = () => {
                                             <div className={style.cardInfo}>
                                                 <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
                                                 <div className={style.typeProduct}>{card.typeName}</div>
+
+                                                < div className={style.typeProduct}>размер:{card.sizeBasketProduct}</div>
+
                                                 <div className={style.price}>{card.price}$</div>
                                                 <img onClick={() => onDeletePost(card.id)} className={style.close} src={close} alt="#!" />
 

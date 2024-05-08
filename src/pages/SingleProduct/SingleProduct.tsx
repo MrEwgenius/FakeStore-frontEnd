@@ -23,13 +23,26 @@ const SingleProduct = () => {
     const { id } = useParams()
 
 
-    const [mainImage, setMainImage] = useState(0);
-    const [userRole, setUserRole] = useState<any>(null);
     const basketProduct = useSelector(ProductSelectors.getBasketProducts)
     const SingleProduct = useSelector(ProductSelectors.getSinglePost)
     const savedProduct = useSelector(ProductSelectors.getSavedProduct)
-
     const allProducts = useSelector(ProductSelectors.getAllProductList)
+    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
+
+
+    const [mainImage, setMainImage] = useState(0);
+    const [userRole, setUserRole] = useState<any>(null);
+    const [showDelivery, setShowDelivery] = useState(false);
+    const handleCloseshowDelivery = () => setShowDelivery(false);
+    const handleShowshowDelivery = () => setShowDelivery(true);
+    const [showReturns, setShowReturns] = useState(false);
+    const handleCloseshowReturns = () => setShowReturns(false);
+    const handleShowshowReturns = () => setShowReturns(true);
+    const [sizeBasketProduct, setSizeBasketProduct] = useState('')
+
+
+    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
+    const saveIndex = savedProduct.findIndex(item => item.id === SingleProduct?.id)
 
 
     const onSavedStatus = (card: ProductTypes, status: SaveStatus) => {
@@ -40,23 +53,12 @@ const SingleProduct = () => {
 
     useEffect(() => {
         dispatch(getBasketProducts())
-        
+
         if (id) {
             dispatch(getSingleProduct(id))
         }
 
-    }, [id,dispatch])
-    console.log(SingleProduct);
-    
-
-    const saveIndex = savedProduct.findIndex(item => item.id === SingleProduct?.id)
-
-    const onSavedStatusTextButton = () => {
-        const productInBasket = basketProduct.find(product => product.id === Number(id));
-        return productInBasket ? 'удалить из корзины' : 'добавить в корзину';
-    };
-
-    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
+    }, [id, dispatch, sizeBasketProduct])
 
     useEffect(() => {
         if (accessToken) {
@@ -64,31 +66,46 @@ const SingleProduct = () => {
             setUserRole(decodedToken);
         }
     }, [accessToken]);
-    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
+
+
+
+
+    const onSavedStatusTextButton = () => {
+        const productInBasket = basketProduct.find(product => product.id === Number(id));
+        return productInBasket ? 'удалить из корзины' : 'добавить в корзину';
+    };
+
+
+
+
 
 
 
     const toggleBasket = () => {
         if (isLoggedIn) {
-
+            
             if (id) {
-                const productInBasket = basketProduct.find(product => product.id === Number(id));
+                const productInBasket = basketProduct.find(product =>
+                    product.id === Number(id)
+                );
+                
                 if (productInBasket) {
-
                     dispatch(deleteBasketProduct(Number(id)));
-                    dispatch(getBasketProducts())
                 } else {
-                    dispatch(addBasketProductFavorite(Number(id)));
-                    dispatch(getBasketProducts())
+                    if (sizeBasketProduct) {
+                        dispatch(addBasketProductFavorite({ id: Number(id), sizeBasketProduct: sizeBasketProduct }));
+                    }
                 }
             }
+            dispatch(getBasketProducts())
+            
         } else {
             const confirmSignIn = window.confirm('Для начало нужно Войти!');
             if (confirmSignIn) {
                 navigate(RoutesList.Login)
             }
-
         }
+        toggleSize('')
 
     };
     const handleThumbnailClick = (index: number) => {
@@ -96,12 +113,12 @@ const SingleProduct = () => {
     };
 
 
-    const [showDelivery, setShowDelivery] = useState(false);
-    const handleCloseshowDelivery = () => setShowDelivery(false);
-    const handleShowshowDelivery = () => setShowDelivery(true);
-    const [showReturns, setShowReturns] = useState(false);
-    const handleCloseshowReturns = () => setShowReturns(false);
-    const handleShowshowReturns = () => setShowReturns(true);
+    const toggleSize = (size: string) => {
+        setSizeBasketProduct((currentSize) =>
+            currentSize === size ? "" : size
+        );
+    };
+
 
     const indicatorStylePrevIcon = <div className={style.prevIcon}>
         <img src={prevIcon} alt="#" />
@@ -110,18 +127,15 @@ const SingleProduct = () => {
         <img src={nextIcon} alt="#" />
     </div>
 
-    useEffect(() => {
-        dispatch(getProductLister({
-            isOverwrite: true,
-            typeName: SingleProduct?.typeName,
-        }))
-    }, [dispatch, SingleProduct]);
+
     const itemsPerSlide = 3;
 
     const slides = [];
     for (let i = 0; i < allProducts.length; i += itemsPerSlide) {
         slides.push(allProducts.slice(i, i + itemsPerSlide));
     }
+
+
 
 
 
@@ -160,15 +174,34 @@ const SingleProduct = () => {
                             <span>Размер</span>
                             <div className={style.sizeTable}>
                                 {SingleProduct.size && SingleProduct.size.map((sizes, idx) =>
-                                    <div key={idx}>
-                                        <input name="size" id={sizes} type="radio" />
-                                        <label key={idx} htmlFor={sizes}>{sizes}</label>
+                                    <div className={style.groupLable} key={idx}>
+                                        <input
+                                            checked={sizeBasketProduct === sizes}
+                                            value={sizes}
+                                            name="size"
+                                            id={sizes}
+                                            type="radio"
+                                            onChange={() => { }}
+
+                                        />
+                                        <label
+                                            onClick={() => toggleSize(sizes)}
+                                            key={idx}
+                                            htmlFor={sizes}
+                                            className={
+                                                sizeBasketProduct === sizes
+                                                    ? style.sizeLabelActive
+                                                    : style.sizeLabel
+                                            }
+                                        >
+                                            {sizes}
+                                        </label>
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div className={style.sizes} >Таблица размеров</div>
-                        <div className={style.containerColors} >
+                        {/* <div className={style.containerColors} >
                             <span>Цвет</span>
                             <div className={style.colorTable}>
                                 <input name="color" id="color1" type="radio" />
@@ -183,9 +216,19 @@ const SingleProduct = () => {
                                 <input name="color" id="color4" type="radio" />
                                 <label htmlFor="color4"></label>
                             </div>
-                        </div>
+                        </div> */}
                         <ButtonGroup vertical >
-                            <Button onClick={toggleBasket} className={style.buttonAddToBucket} >{onSavedStatusTextButton()}</Button>
+                            <Button disabled={
+                                !sizeBasketProduct &&
+                                onSavedStatusTextButton() != "удалить из корзины"
+                            }
+                                onClick={toggleBasket}
+                                className={style.buttonAddToBucket}
+                            >
+                                {
+                                    onSavedStatusTextButton()
+                                }
+                            </Button>
                             <Button className={style.buttonBuy} >купить в один клик</Button>
                         </ButtonGroup>
 

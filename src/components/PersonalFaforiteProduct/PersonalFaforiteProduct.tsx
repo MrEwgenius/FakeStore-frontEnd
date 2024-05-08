@@ -33,7 +33,7 @@ const PersonalFaforiteProduct = () => {
             dispatch(deleteBasketProduct(card.id));
             dispatch(getBasketProducts())
         } else {
-            dispatch(addBasketProductFavorite(card.id));
+            // dispatch(addBasketProductFavorite(card.id));
             dispatch(getBasketProducts())
         }
     };

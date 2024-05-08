@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetUserInfo, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, TypeListTypes } from '../../@types';
+import { addBasketProduct, BasketProductsData, BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetUserInfo, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, SizeBasketProduct, SizeBasketProductTypes, TypeListTypes } from '../../@types';
 import { AddBrandPayload, AddPostDataPayload, AddTypePayload, GetProductListPayload, GetProductPayload } from '../@types';
 
 
@@ -23,6 +23,7 @@ type initialState = {
     searchTotalCount: number,
     producrListBasket: ProductListTypes,
     basketProducts: ProductListTypes,
+    sizeBasketProduct: SizeBasketProduct | null,
     message: any | null,
 
 }
@@ -41,6 +42,7 @@ const initialState: initialState = {
     searchTotalCount: 0,
     producrListBasket: [],
     basketProducts: [],
+    sizeBasketProduct: null,
     message: '',
 
 };
@@ -90,18 +92,18 @@ const productSlice = createSlice({
 
 
         },
-        setBasketProduct: (state, action: PayloadAction<{ card: ProductTypes }>) => {
+        // setBasketProduct: (state, action: PayloadAction<{ card: ProductTypes }>) => {
 
-            const { card } = action.payload;
-            state.producrListBasket.push(card)
-        },
-        delBasketProduct: (state, action: PayloadAction<{ card: ProductTypes }>) => {
-            const { card } = action.payload;
-            const delIndex = state.producrListBasket.findIndex(item => item.id === card.id);
-            if (delIndex !== -1) {
-                state.producrListBasket.splice(delIndex, 1);
-            }
-        },
+        //     const { card } = action.payload;
+        //     state.producrListBasket.push(card)
+        // },
+        // delBasketProduct: (state, action: PayloadAction<{ card: ProductTypes }>) => {
+        //     const { card } = action.payload;
+        //     const delIndex = state.producrListBasket.findIndex(item => item.id === card.id);
+        //     if (delIndex !== -1) {
+        //         state.producrListBasket.splice(delIndex, 1);
+        //     }
+        // },
         getTypeProduct: (_, __: PayloadAction<undefined>) => { },
         setTypeProduct: (state, action: PayloadAction<TypeListTypes>) => {
             state.typeProduct = action.payload
@@ -146,15 +148,19 @@ const productSlice = createSlice({
 
         },
         getBasketProducts: (_, __: PayloadAction<undefined>) => { },
+
         setBasketProducts: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
         },
+        // setSizeBasketProducts: (state, action: PayloadAction<SizeBasketProductTypes>) => {
+        //     state.sizeBasketProduct = action.payload
+        // },
         addType: (_, __: PayloadAction<AddTypePayload>) => {
         },
         addBrand: (_, __: PayloadAction<AddBrandPayload>) => {
         },
         deleteBasketProduct: (_, __: PayloadAction<number>) => { },
-        addBasketProductFavorite: (_, __: PayloadAction<number>) => { },
+        addBasketProductFavorite: (_, __: PayloadAction<addBasketProduct>) => { },
         setBasketProductFavorite: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
         },
@@ -171,7 +177,7 @@ const productSlice = createSlice({
 
 
         },
-       
+
 
     },
 
@@ -198,8 +204,8 @@ export const {
     // setTypeProductList,
     getProductLister,
     setProductLister,
-    setBasketProduct,
-    delBasketProduct,
+    // setBasketProduct,
+    // delBasketProduct,
     getBasketProducts,
     setBasketProducts,
     deleteBasketProduct,
@@ -207,6 +213,7 @@ export const {
     setBasketProductFavorite,
     removeProduct,
     responseMessage,
+    // setSizeBasketProducts,
 
     getSearchProductLister,
     setSearchProductLister,
@@ -233,6 +240,7 @@ export const ProductSelectors = {
     getBasketProducts: (state: Rootstate) => state.productReducer.basketProducts,
     getResponseMessage: (state: Rootstate) => state.productReducer.message,
     getSearchProductList: (state: Rootstate) => state.productReducer.searchProducrList,
+    getSizeBasketProduct: (state: Rootstate) => state.productReducer.sizeBasketProduct,
 
 
 

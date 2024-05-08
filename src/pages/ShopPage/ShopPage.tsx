@@ -22,7 +22,6 @@ const ShopPage = () => {
     const totalCount = useSelector(ProductSelectors.getTotalProductCount)
     const allProducts = useSelector(ProductSelectors.getAllProductList)
 
-    console.log(totalCount);
 
     const [show, setShow] = useState(false)
     const [page, setPage] = useState(() => {
