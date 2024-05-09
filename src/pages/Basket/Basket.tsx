@@ -10,7 +10,9 @@ import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice"
 import { useTranslation } from "react-i18next"
-import { jwtDecode } from "jwt-decode"
+import { Modal } from "react-bootstrap"
+import OrderConfirmation from "src/components/OrderConfirmation/OrderConfirmation"
+
 
 
 
@@ -26,7 +28,7 @@ const Basket = () => {
     const basketProducts = useSelector(ProductSelectors.getBasketProducts)
     // const sizeBasketProduct = useSelector(ProductSelectors.getSizeBasketProduct)
 
-    console.log(basketProducts);
+    // console.log(basketProducts);
 
 
 
@@ -95,6 +97,10 @@ const Basket = () => {
     }
 
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div className={style.containerBasket}>
@@ -155,19 +161,26 @@ const Basket = () => {
                                             <label htmlFor="radio2"> {t('basket.uponReceipt')}</label>
                                         </div>
 
-                                        <button className={classNames(style.button,
-                                            {
-                                                [style.disabled]: !isPaymentMethodSelected()
-                                            },
-                                            {
-                                                [style.disabled]: !userInfo?.userNumber
+                                        <button
 
+                                            className={
+                                                classNames(style.button,
+                                                    {
+                                                        [style.disabled]: !isPaymentMethodSelected()
+                                                    },
+                                                    {
+                                                        [style.disabled]: !userInfo?.userNumber
+
+                                                    })
                                             }
-                                        )}
                                             disabled={
                                                 !userInfo?.userNumber ||
                                                 !isPaymentMethodSelected()
-                                            }>{t('basket.order')}</button>
+                                            }
+                                            onClick={handleShow}
+                                        >
+                                            {t('basket.order')}
+                                        </button>
                                     </div>
                                 </div>
 
@@ -220,7 +233,9 @@ const Basket = () => {
             }
 
 
-
+            <Modal show={show} onHide={handleClose} >
+                <OrderConfirmation />
+            </Modal>
         </div >
     )
 }

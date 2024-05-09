@@ -58,7 +58,10 @@ const SingleProduct = () => {
             dispatch(getSingleProduct(id))
         }
 
+
     }, [id, dispatch, sizeBasketProduct])
+
+
 
     useEffect(() => {
         if (accessToken) {
@@ -68,7 +71,17 @@ const SingleProduct = () => {
     }, [accessToken]);
 
 
+    useEffect(() => {
+        if (SingleProduct) {
 
+            dispatch(getProductLister({
+                isOverwrite: true,
+
+                typeName: SingleProduct.typeName || undefined,
+            }))
+            console.log(SingleProduct.typeName);
+        }
+    }, [dispatch, SingleProduct]);
 
     const onSavedStatusTextButton = () => {
         const productInBasket = basketProduct.find(product => product.id === Number(id));
@@ -83,12 +96,12 @@ const SingleProduct = () => {
 
     const toggleBasket = () => {
         if (isLoggedIn) {
-            
+
             if (id) {
                 const productInBasket = basketProduct.find(product =>
                     product.id === Number(id)
                 );
-                
+
                 if (productInBasket) {
                     dispatch(deleteBasketProduct(Number(id)));
                 } else {
@@ -98,7 +111,7 @@ const SingleProduct = () => {
                 }
             }
             dispatch(getBasketProducts())
-            
+
         } else {
             const confirmSignIn = window.confirm('Для начало нужно Войти!');
             if (confirmSignIn) {
@@ -131,9 +144,18 @@ const SingleProduct = () => {
     const itemsPerSlide = 3;
 
     const slides = [];
-    for (let i = 0; i < allProducts.length; i += itemsPerSlide) {
-        slides.push(allProducts.slice(i, i + itemsPerSlide));
+    if (allProducts.length > 1) {
+
+        for (let i = 0; i < allProducts.length; i += itemsPerSlide) {
+            slides.push(allProducts.slice(i, i + itemsPerSlide));
+        }
+    } else {
+
+
     }
+
+    console.log(slides.length);
+
 
 
 
@@ -303,6 +325,10 @@ const SingleProduct = () => {
 
                 </div>
             }
+            {/* {slides.length < 1 && */}
+
+
+
             <div className={style.containerCarousel}>
                 <div className={style.titleCarousel}>Похожие товары</div>
                 <Carousel
@@ -324,8 +350,10 @@ const SingleProduct = () => {
                 </Carousel>
 
             </div>
+            {/* // } */}
 
-        </div>
+
+        </div >
     )
 }
 

@@ -22,6 +22,7 @@ import SearchList from "./SearchList/SearchList";
 import PersonalAdress from "src/components/PersonalAdress/PersonalAdress";
 import TypeProduct from "src/components/TypeProduct/TypeProduct";
 import BrandProduct from "src/components/BrandProduct/BrandProduct";
+import OrderConfirmation from "src/components/OrderConfirmation/OrderConfirmation";
 
 export enum RoutesList {
 
@@ -42,6 +43,7 @@ export enum RoutesList {
     Search = '/product/search/:search',
     Basket = '/basket',
     Adress = '/user/adress/',
+    OrderHistory = '/user/orderhistory /',
 
 
     Cards = '/cards',
@@ -79,11 +81,12 @@ const Router = () => {
                         <Route path={RoutesList.Adress} element={<PersonalAdress />} />
                         <Route path={RoutesList.PersonFavoriteProducts} element={<PersonalFaforiteProduct />} />
                         <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
+                        <Route path={RoutesList.OrderHistory} element={<OrderConfirmation />} />
 
 
-                    <Route path={RoutesList.AddType} element={<TypeProduct />} />
-                    <Route path={RoutesList.AddProduct} element={<AddProduct />} />
-                    <Route path={RoutesList.AddBrand} element={<BrandProduct />} />
+                        <Route path={RoutesList.AddType} element={<TypeProduct />} />
+                        <Route path={RoutesList.AddProduct} element={<AddProduct />} />
+                        <Route path={RoutesList.AddBrand} element={<BrandProduct />} />
                     </Route>
                     {/* <Route path={RoutesList.Registration} element={<SignUp />} /> */}
                     <Route path={RoutesList.SingleProduct} element={<SingleProduct />} />

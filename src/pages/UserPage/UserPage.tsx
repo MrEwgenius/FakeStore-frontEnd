@@ -6,6 +6,8 @@ import user from '../../assets/User.svg';
 import adress from '../../assets/adress.svg';
 import exit from '../../assets/exit.svg';
 import saved from '../../assets/Save.svg';
+import order from '../../assets/order.svg';
+
 import addProduct from '../../assets/medical.svg';
 import { useDispatch } from "react-redux";
 import { logoutUser } from "src/redux/reducers/authSlice";
@@ -40,6 +42,9 @@ const UserPage = () => {
     const clickOnAdress = () => {
         navigate(RoutesList.Adress)
     }
+    const clickOnOrderHistory = () => {
+        navigate(RoutesList.OrderHistory)
+    }
 
     const [userRole, setUserRole] = useState<any>(null);
 
@@ -63,6 +68,8 @@ const UserPage = () => {
                     <li onClick={clickOn}><img src={user} alt="#!" /> Личная информация </li>
 
                     <li onClick={clickOnAdress}> <img src={adress} alt="#!" /> Адрес</li>
+                    <li onClick={clickOnOrderHistory}> <img src={order} alt="#!" /> Мои покупки</li>
+
                     <li onClick={clickFavoriteProduct}><img src={saved} alt="#!" /> Лист пожеланий  </li>
                     {userRole && userRole.role === 'ADMIN' && (
                         <li onClick={clickOnAddProduct}><img src={addProduct} alt="#!" /> Добавить продукт </li>
@@ -74,6 +81,7 @@ const UserPage = () => {
                         <li onClick={clickOnAddBrand}><img src={addProduct} alt="#!" /> Добавить бренд </li>
                     )}
                     <li onClick={logOut} ><img src={exit} alt="#!" /> Выйти  </li>
+
                 </ul>
 
                 <div className={style.outletContainer}>
