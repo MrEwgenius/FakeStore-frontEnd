@@ -43,6 +43,15 @@
     display: flex;
     flex-direction: column;
     margin-top: 40px;
+    position: relative;
+    .alert{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    left: 42%;
+    }
 }
 .basketTitle {
     width: 1440px;

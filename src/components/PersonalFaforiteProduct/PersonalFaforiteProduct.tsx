@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,8 @@ const PersonalFaforiteProduct = () => {
         return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
     };
 
+    const [selectedSizes, setSelectedSizes] = useState<{ [key: number]: string }>({});
+
     const toggleBasket = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
         if (productInBasket) {
@@ -33,9 +35,20 @@ const PersonalFaforiteProduct = () => {
             dispatch(deleteBasketProduct(card.id));
             dispatch(getBasketProducts())
         } else {
-            // dispatch(addBasketProductFavorite(card.id));
-            dispatch(getBasketProducts())
+            const size = selectedSizes[card.id]; // Получаем выбранный размер для этой карточки
+            if (size) {
+                dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct: size }));
+                dispatch(getBasketProducts());
+            }
         }
+    };
+    const toggleSize = (cardId: number, size: string) => {
+        setSelectedSizes((current) => ({
+            ...current,
+            [cardId]: current[cardId] === size ? "" : size, // Обновляем размер для каждой карточки
+
+        }));
+
     };
 
     const RemoveFromFavorites = (card: ProductTypes) => {
@@ -64,6 +77,34 @@ const PersonalFaforiteProduct = () => {
                         <div className={style.cardInfo}>
                             <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
                             <div className={style.typeProduct}>{card.typeName}</div>
+                            <div className={style.sizeTable}>
+
+                                {card.size.map((sizes, idx) =>
+                                    <div className={style.groupLable} key={idx}>
+                                        <input
+                                            checked={selectedSizes[card.id] === sizes}
+                                            value={sizes}
+                                            name="size"
+                                            id={sizes + card.id}
+                                            type="radio"
+                                            onChange={() => { }}
+
+                                        />
+                                        <label
+                                            onClick={() => toggleSize(card.id, sizes)}
+                                            key={idx}
+                                            htmlFor={sizes + card.id}
+                                            className={
+                                                selectedSizes[card.id] === sizes
+                                                    ? style.sizeLabelActive
+                                                    : style.sizeLabel
+                                            }
+                                        >
+                                            {sizes}
+                                        </label>
+                                    </div>
+                                )}
+                            </div >
                             <div className={style.price}>{card.price}$</div>
                             <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
                             <button onClick={() => toggleBasket(card)} className={style.addBucketButton}>{onSavedStatus(card)}</button>

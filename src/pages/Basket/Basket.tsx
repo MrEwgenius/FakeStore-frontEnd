@@ -4,13 +4,13 @@ import basketEmpty from '../../assets/basketEmpty.png'
 import { useNavigate } from "react-router-dom"
 import { RoutesList } from "../Router"
 import { useDispatch, useSelector } from "react-redux"
-import { ProductSelectors, deleteBasketProduct, getBasketProducts } from "src/redux/reducers/productSlice"
+import { ProductSelectors, addUserOrder, deleteBasketProduct, getBasketProducts } from "src/redux/reducers/productSlice"
 import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
 import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice"
 import { useTranslation } from "react-i18next"
-import { Modal } from "react-bootstrap"
+import { Alert, Modal } from "react-bootstrap"
 import OrderConfirmation from "src/components/OrderConfirmation/OrderConfirmation"
 
 
@@ -102,8 +102,41 @@ const Basket = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
+
+    const [idProduct, setIdProduct] = useState<number[]>([])
+
+    const clickOnProductInBasket = () => {
+        const updatedList = basketProducts.map((el) => el.id);
+        setIdProduct(updatedList);
+
+
+
+        dispatch(addUserOrder({
+            data: { productId: updatedList },
+            callback: () => { }
+        }))
+        basketProducts.map((el) => {
+
+
+            dispatch(deleteBasketProduct(el.id));
+
+            dispatch(getBasketProducts())
+
+        })
+        setShowAlert(true)
+    }
+    console.log(idProduct);
+
+    const [showAletrt, setShowAlert] = useState(false);
+
+
     return (
         <div className={style.containerBasket}>
+            {showAletrt &&
+                <Alert className={style.alert} dismissible onClose={() => setShow(false)} variant={'success'}>
+                    Благодарим за заказ.
+                </Alert>}
             {!isLoggedIn ?
                 <div className={style.containerBasketEmpty}>
                     <div className={style.emptyTitle} >{t('basket.signInTitle')}</div>
@@ -177,7 +210,7 @@ const Basket = () => {
                                                 !userInfo?.userNumber ||
                                                 !isPaymentMethodSelected()
                                             }
-                                            onClick={handleShow}
+                                            onClick={clickOnProductInBasket}
                                         >
                                             {t('basket.order')}
                                         </button>

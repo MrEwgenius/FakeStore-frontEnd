@@ -43,7 +43,7 @@ export enum RoutesList {
     Search = '/product/search/:search',
     Basket = '/basket',
     Adress = '/user/adress/',
-    OrderHistory = '/user/orderhistory /',
+    OrderHistory = '/user/orderhistory',
 
 
     Cards = '/cards',

@@ -1,61 +1,67 @@
-import React from "react"
+import React, { useEffect, useMemo } from "react"
 import style from './OrderConfirmation.module.scss'
-import user from '../../assets/User.svg';
-import address from 'src/assets/adress.svg';
-import number from 'src/assets/Save.svg';
-import konvert from 'src/assets/konvert.svg';
-import { Accordion } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { ProductSelectors, getBasketProducts, getUserOrder } from "src/redux/reducers/productSlice";
 
 const OrderConfirmation = () => {
+
+    const dispatch = useDispatch()
+    const orderProducts = useSelector(ProductSelectors.getUserOrderProduct)
+
+    useEffect(() => {
+        dispatch(getBasketProducts())
+        dispatch(getUserOrder())
+    }, [dispatch])
+
+    const reversedOrderProducts = useMemo(() => {
+        console.log(11);
+
+        return orderProducts.slice().reverse();
+    }, [orderProducts]);
+
+    const calculateTotalPrices = useMemo(() => {
+        return reversedOrderProducts
+            .filter(el => el.products.length > 0)
+            .map(order => {
+                return order.products.reduce((total, prod) => total + prod.price, 0);
+            });
+    }, [reversedOrderProducts]);
+
+
     return (
+
         <div className={style.containerOrderConfirmation}>
-
             <div className={style.info}>
-                <div className={style.title}>FakeStore</div>
-                <div className={style.orderNumber}>
-                    <div>Номер Заказа</div>
-                    <div>1215563</div>
+                <div className={style.productContainer}>
+                    {reversedOrderProducts
+                        .filter(el => el.products.length > 0)
+                        .map((el, index) => (
+                            <div key={el.id} className={style.product}>
+                                <div className={style.title}>FakeStore</div>
+                                <div className={style.orderNumber}>
+                                    <div>Номер Заказа</div>
+                                    <div>{el.id}</div>
+                                </div>
+                                <div className={style.containerCardWrapper}>
+                                    {el.products.map((prod) => (
+                                        <div key={prod.id} className={style.card}>
+                                            <img src={process.env.REACT_APP_API_URL + prod.image[0]} alt={prod.name} />
+                                            <div className={style.containerDescription}>
+                                                <div>
+                                                    <div className={style.name}>{prod.name}</div>
+                                                    <div className={style.type}>{prod.typeName}</div>
+                                                </div>
+                                                <div className={style.price}>{prod.price}$</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className={style.totalPrice}>
+                                    Всего: <span>{calculateTotalPrices[index]}$</span>
+                                </div>
+                            </div>
+                        ))}
                 </div>
-                <div>Всего: </div>
-
-                <Accordion>
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>Информация о покупателе</Accordion.Header>
-                        <Accordion.Body>
-                            <ul className={style.infoUser}>
-                                <li >
-                                    <img src={user} alt="#!" /> Дядя женя
-                                </li>
-                                <li >
-                                    <img src={konvert} alt="#!" /> ebolynskii@mail.ru
-                                </li>
-                                <li >
-                                    <img src={number} alt="#!" /> 375333534813
-                                </li>
-                                <li className={style.adress} >
-                                    <img src={address} alt="#!" /> Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»
-                                </li>
-                            </ul>
-                        </Accordion.Body>
-                    </Accordion.Item>
-
-                </Accordion>
-
-                {/* <ul className={style.infoUser}>
-                    <li >
-                        <img src={user} alt="#!" /> Дядя женя
-                    </li>
-                    <li >
-                        <img src={konvert} alt="#!" /> ebolynskii@mail.ru
-                    </li>
-                    <li >
-                        <img src={number} alt="#!" /> 375333534813
-                    </li>
-                    <li className={style.adress} >
-                        <img src={address} alt="#!" /> Одесса, Отделение №1: Киевское шоссе (ран. Ленинградское шоссе), 27 Отделение «Новая Почта»
-                    </li>
-                </ul> */}
-
             </div>
         </div>
     )

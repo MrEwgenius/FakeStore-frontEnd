@@ -24,9 +24,23 @@ export type ProductTypes = {
     product_images: ProductImage[]
     image: string[],
     sizeBasketProduct: string,
+    order_product: {
+
+        quantity: number,
+        price: number,
+        orderId: number,
+        productId: number
+    }
 
 
 }
+
+// export type order_product = {
+//     quantity: number,
+//     price: number,
+//     orderId: number,
+//     productId: number
+// }
 
 export type GetFilterProductsPayload = {
     filter: string,
@@ -51,6 +65,17 @@ export type SizeBasketProduct = {
 
 
 export type ProductListTypes = ProductTypes[];
+
+type OrderProduct = {
+    id: number;
+    orderDate: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    products: ProductTypes[];
+}
+export type OrderProducts = OrderProduct[];
+
 export type SizeBasketProductTypes = SizeBasketProduct[];
 export type TypeListTypes = TypeTypes[];
 export type BrandListTypes = BrandTypes[];

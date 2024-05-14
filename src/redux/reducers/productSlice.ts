@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 
 import { Rootstate } from '../store';
-import { addBasketProduct, BasketProductsData, BrandListTypes, DataBrand, DataType, DeleteProductPayload, GetFilterProductsPayload, GetUserInfo, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, SizeBasketProduct, SizeBasketProductTypes, TypeListTypes } from '../../@types';
-import { AddBrandPayload, AddPostDataPayload, AddTypePayload, GetProductListPayload, GetProductPayload } from '../@types';
+import { addBasketProduct, BasketProductsData, BrandListTypes, DataBrand, DataType, OrderProducts, ProductListTypes, ProductTypes, SaveStatus, SetProductListPayload, SizeBasketProduct, SizeBasketProductTypes, TypeListTypes } from '../../@types';
+import { AddBrandPayload, AddOrderPayload, AddPostDataPayload, AddTypePayload, GetProductListPayload, GetProductPayload } from '../@types';
 
 
 let lokStorGet = localStorage.getItem('SavedProduct')
@@ -25,6 +25,7 @@ type initialState = {
     basketProducts: ProductListTypes,
     sizeBasketProduct: SizeBasketProduct | null,
     message: any | null,
+    orderProduct: OrderProducts 
 
 }
 
@@ -44,6 +45,7 @@ const initialState: initialState = {
     basketProducts: [],
     sizeBasketProduct: null,
     message: '',
+    orderProduct: [],
 
 };
 const productSlice = createSlice({
@@ -177,6 +179,13 @@ const productSlice = createSlice({
 
 
         },
+        getUserOrder: (_, __: PayloadAction<undefined>) => { },
+        setUserOrder: (state, action: PayloadAction<OrderProducts>) => {
+            state.orderProduct = action.payload;
+        },
+        addUserOrder: (_, __: PayloadAction<AddOrderPayload>) => { },
+
+
 
 
     },
@@ -219,6 +228,9 @@ export const {
     setSearchProductLister,
     addType,
     addBrand,
+    getUserOrder,
+    setUserOrder,
+    addUserOrder
 
 
 
@@ -241,6 +253,7 @@ export const ProductSelectors = {
     getResponseMessage: (state: Rootstate) => state.productReducer.message,
     getSearchProductList: (state: Rootstate) => state.productReducer.searchProducrList,
     getSizeBasketProduct: (state: Rootstate) => state.productReducer.sizeBasketProduct,
+    getUserOrderProduct: (state: Rootstate) => state.productReducer.orderProduct,
 
 
 
