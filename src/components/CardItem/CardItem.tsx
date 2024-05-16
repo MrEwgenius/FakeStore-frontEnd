@@ -11,6 +11,8 @@ import { Carousel } from "react-bootstrap";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 
 import { AuthSelectors, logoutUser, signInUser } from "src/redux/reducers/authSlice";
+import { SaveProductIcon } from "src/assets/SaveProductIcon";
+import {SaveProductIconActive} from "src/assets";
 
 
 type CardsListProps = {
@@ -107,10 +109,15 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, clic
             <h3 onClick={clickOnProduct} className={style.name}>{name}</h3>
             <div className={style.priceContainer}>
                 <div className={style.price}> {price}$</div>
-                <img className={style.save} onClick={() => onSavedClick(SaveStatus.Saved)} src=
-                    {saveIndex === -1 ? save : activeSave}
-                    alt="#"
-                />
+                <div className={style.save} onClick={() => onSavedClick(SaveStatus.Saved)} >
+
+                    {saveIndex === -1
+                        ?
+                        <SaveProductIcon />
+                        :
+
+                        <SaveProductIconActive />}
+                </div>
             </div>
 
 

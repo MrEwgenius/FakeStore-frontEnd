@@ -146,9 +146,32 @@
                     // width: 18px;
                     object-fit: cover;
                 }
+                .basktProductCount{
+                    top: 9px;
+                    right:  0;
+                    position: absolute;
+                    color: white;
+                    background-color: $primary-dark;
+                    height: 15px;
+                    width: 15px;
+                    border-radius: 50%;
+                    font-weight: 500;
+                    font-size: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    padding-top: 2px;
+                
+                }
             }
             .checkUser {
                 background-color: #a1dd54;
+                position: relative;
+                // &::after {
+                //     content: "";
+                //     position: absolute;
+                // }
             }
         }
     }

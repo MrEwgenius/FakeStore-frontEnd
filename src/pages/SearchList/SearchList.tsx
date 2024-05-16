@@ -5,6 +5,7 @@ import { ProductSelectors, getSearchProductLister } from "src/redux/reducers/pro
 import { useParams } from "react-router-dom"
 import CardList from "../CardList/CardList"
 import search from 'src/assets/search.svg'
+import { SearchIcon } from "src/assets"
 
 const SearchList = () => {
     const dispatch = useDispatch()
@@ -32,7 +33,7 @@ const SearchList = () => {
                 <div>
                     <div className={style.searchContainer}>
                         <div className={style.titleSearch}>Результаты поиска</div>
-                        <span> <img src={search} alt="" /> {`По запросу «${params.search}» найдены следующие товары:`}</span>
+                        <span> <SearchIcon/> {`По запросу «${params.search}» найдены следующие товары:`}</span>
                     </div>
 
                     <CardList cardsList={searchProduct} />
@@ -43,7 +44,7 @@ const SearchList = () => {
 
                 <div className={style.searchErrorContainer}>
                     <div className={style.titleSearchError}>Результаты поиска</div>
-                    <span> <img src={search} alt="" />  {`По запросу «${params.search}» ничего не найдено.`}</span>
+                    <span> <SearchIcon/>  {`По запросу «${params.search}» ничего не найдено.`}</span>
                 </div>
 
 

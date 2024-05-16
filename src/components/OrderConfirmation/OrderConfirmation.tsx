@@ -2,10 +2,13 @@ import React, { useEffect, useMemo } from "react"
 import style from './OrderConfirmation.module.scss'
 import { useDispatch, useSelector } from "react-redux";
 import { ProductSelectors, getBasketProducts, getUserOrder } from "src/redux/reducers/productSlice";
+import { useNavigate } from "react-router-dom";
+import { RoutesList } from "src/pages/Router";
 
 const OrderConfirmation = () => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const orderProducts = useSelector(ProductSelectors.getUserOrderProduct)
 
     useEffect(() => {
@@ -27,6 +30,11 @@ const OrderConfirmation = () => {
             });
     }, [reversedOrderProducts]);
 
+    const clickOnProduct = (id: number) => {
+
+        navigate(`/product/${id}`)
+
+    }
 
     return (
 
@@ -45,10 +53,10 @@ const OrderConfirmation = () => {
                                 <div className={style.containerCardWrapper}>
                                     {el.products.map((prod) => (
                                         <div key={prod.id} className={style.card}>
-                                            <img src={process.env.REACT_APP_API_URL + prod.image[0]} alt={prod.name} />
+                                            <img onClick={() => clickOnProduct(prod.id)} src={process.env.REACT_APP_API_URL + prod.image[0]} alt={prod.name} />
                                             <div className={style.containerDescription}>
                                                 <div>
-                                                    <div className={style.name}>{prod.name}</div>
+                                                    <div onClick={() => clickOnProduct(prod.id)} className={style.name}>{prod.name}</div>
                                                     <div className={style.type}>{prod.typeName}</div>
                                                 </div>
                                                 <div className={style.price}>{prod.price}$</div>

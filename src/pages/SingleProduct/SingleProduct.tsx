@@ -14,6 +14,8 @@ import prevIcon from '../../assets/LeftArrow.svg'
 import nextIcon from '../../assets/Right-Arrow.svg'
 import CardItem from "src/components/CardItem/CardItem";
 import { AuthSelectors } from "src/redux/reducers/authSlice";
+import { SaveProductIcon } from "src/assets/SaveProductIcon";
+import {SaveProductIconActive} from "src/assets";
 
 
 const SingleProduct = () => {
@@ -79,7 +81,6 @@ const SingleProduct = () => {
 
                 typeName: SingleProduct.typeName || undefined,
             }))
-            console.log(SingleProduct.typeName);
         }
     }, [dispatch, SingleProduct]);
 
@@ -154,7 +155,6 @@ const SingleProduct = () => {
 
     }
 
-    console.log(slides.length);
 
 
 
@@ -171,9 +171,9 @@ const SingleProduct = () => {
                             <div className={style.saveImg} onClick={() => onSavedStatus(SingleProduct, SaveStatus.Saved)} >
                                 {saveIndex === -1
                                     ?
-                                    <img src={save} alt="$" />
+                                    <SaveProductIcon />
                                     :
-                                    <img src={activeSave} alt="$" />
+                                    <SaveProductIconActive />
                                 }
 
                             </div>

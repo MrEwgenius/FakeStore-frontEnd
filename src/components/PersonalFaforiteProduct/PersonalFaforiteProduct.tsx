@@ -107,7 +107,15 @@ const PersonalFaforiteProduct = () => {
                             </div >
                             <div className={style.price}>{card.price}$</div>
                             <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
-                            <button onClick={() => toggleBasket(card)} className={style.addBucketButton}>{onSavedStatus(card)}</button>
+                            <button
+                                disabled={
+                                    !selectedSizes[card.id] && onSavedStatus(card) === t('faboriteProduct.addToBasketProduct')
+                                }
+                                onClick={() => toggleBasket(card)}
+                                className={style.addBucketButton}
+                            >
+                                {onSavedStatus(card)}
+                            </button>
                         </div>
                     </div>
                 ))

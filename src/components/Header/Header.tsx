@@ -11,15 +11,15 @@ import { useNavigate } from "react-router-dom"
 import { RoutesList } from "src/pages/Router"
 import { useDispatch, useSelector } from "react-redux"
 import { AuthSelectors, setAccessToken } from "src/redux/reducers/authSlice"
-import { ACCESS_TOKEN_KEY } from "src/utils/constans"
-import { t } from "i18next"
 import { Trans, useTranslation } from "react-i18next"
 import i18n from "src/i18n/i18n"
 import { Modal } from "react-bootstrap"
-import { ProductSelectors, getProductLister, getSearchProductLister } from "src/redux/reducers/productSlice"
+import { ProductSelectors, getBasketProducts, getProductLister, getSearchProductLister } from "src/redux/reducers/productSlice"
+import { UserIcon, SaveProductIcon, SearchIcon } from "src/assets"
 const Header = () => {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
+    const basketProducts = useSelector(ProductSelectors.getBasketProducts)
 
     const navigate = useNavigate()
 
@@ -72,6 +72,8 @@ const Header = () => {
     const searchProducts = useSelector(ProductSelectors.getSearchProductList)
 
     useEffect(() => {
+        dispatch(getBasketProducts())
+
         if (inpValue) {
 
             dispatch(getSearchProductLister({
@@ -84,6 +86,8 @@ const Header = () => {
 
         }
     }, [inpValue, dispatch]);
+    console.log(basketProducts);
+
 
     const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         // if (!/^[a-zA-Zа-яА-Я0-9]+$/.test(event.key)) {
@@ -174,7 +178,9 @@ const Header = () => {
                             type="text"
                             onKeyDown={onKeyDown}
                         />
-                        <img onClick={clickOnSearch} className={style.searchSVG} src={searchSVG} alt="0-" />
+                        <div onClick={clickOnSearch} className={style.searchSVG}>
+                            <SearchIcon />
+                        </div>
                         {showResults && searchProducts && searchProducts.length && searchProducts.length > 0 ? (
                             <div id="rusultSearch" className={style.rusultSearch}>
                                 {searchProducts.map((el) => (
@@ -239,15 +245,19 @@ const Header = () => {
                     {/* <div onClick={clickOnProducts} className={style.nav}>Products</div> */}
                     {/* <div onClick={clickOnAddProduct} className={style.nav}>Add Product</div> */}
                     <div onClick={clickOnBasket} className={classNames(style.nav, style.image)}>
+                        <div className={style.basktProductCount}>
+                            {basketProducts.length}
+                        </div>
                         <img src={backet} alt="#!" />
                     </div>
                     <div onClick={clickOnUser} className={classNames(style.nav, style.image,
                         { [style.checkUser]: isLoggedIn }
                     )}>
-                        <img src={user} alt="#!" />
+                        <UserIcon />
+                        {/* <img src={user} alt="#!" /> */}
                     </div>
                     <div onClick={clickOnSavedProduct} className={classNames(style.nav, style.image)}>
-                        <img src={save} alt="#!" />
+                        <SaveProductIcon />
                     </div>
 
                 </div>

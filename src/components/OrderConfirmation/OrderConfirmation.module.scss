@@ -95,6 +95,8 @@
                             width: 100px;
                             height: 150px;
                             object-fit: cover;
+                            cursor: pointer;
+
                         }
                         .containerDescription {
                             display: flex;
@@ -105,6 +107,7 @@
                             .name {
                                 font-size: 22px;
                                 font-weight: 500;
+                                cursor: pointer;
                             }
                             .type {
                                 font-size: 14px;
