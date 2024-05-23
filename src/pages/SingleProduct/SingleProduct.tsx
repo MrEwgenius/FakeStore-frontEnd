@@ -4,9 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ProductSelectors, addBasketProductFavorite, deleteBasketProduct, getBasketProducts, getProductLister, getSingleProduct, setSavedStatus } from "src/redux/reducers/productSlice";
 import style from './SingleProduct.module.scss'
 
-import save from '../../assets/Save.svg'
-import activeSave from '../../assets/Save-active.svg'
-import { Button, ButtonGroup, Carousel, Form, Modal } from "react-bootstrap";
+import { Button, ButtonGroup, Carousel, Modal } from "react-bootstrap";
 import { ProductTypes, SaveStatus } from "src/@types";
 import { jwtDecode } from "jwt-decode";
 import { RoutesList } from "../Router";
@@ -15,7 +13,8 @@ import nextIcon from '../../assets/Right-Arrow.svg'
 import CardItem from "src/components/CardItem/CardItem";
 import { AuthSelectors } from "src/redux/reducers/authSlice";
 import { SaveProductIcon } from "src/assets/SaveProductIcon";
-import {SaveProductIconActive} from "src/assets";
+import { SaveProductIconActive } from "src/assets";
+import tableSize from '../../assets/tableSize.png'
 
 
 const SingleProduct = () => {
@@ -35,6 +34,9 @@ const SingleProduct = () => {
     const [mainImage, setMainImage] = useState(0);
     const [userRole, setUserRole] = useState<any>(null);
     const [showDelivery, setShowDelivery] = useState(false);
+    const [showTableSize, setShowTableSize] = useState(false);
+    const handleCloseshowTableSize = () => setShowTableSize(false);
+    const handleShowshowTableSize = () => setShowTableSize(true);
     const handleCloseshowDelivery = () => setShowDelivery(false);
     const handleShowshowDelivery = () => setShowDelivery(true);
     const [showReturns, setShowReturns] = useState(false);
@@ -65,12 +67,12 @@ const SingleProduct = () => {
 
 
 
-    useEffect(() => {
-        if (accessToken) {
-            const decodedToken = jwtDecode(accessToken);
-            setUserRole(decodedToken);
-        }
-    }, [accessToken]);
+    // useEffect(() => {
+    //     if (accessToken) {
+    //         const decodedToken = jwtDecode(accessToken);
+    //         setUserRole(decodedToken);
+    //     }
+    // }, [accessToken]);
 
 
     useEffect(() => {
@@ -105,9 +107,12 @@ const SingleProduct = () => {
 
                 if (productInBasket) {
                     dispatch(deleteBasketProduct(Number(id)));
+                    dispatch(getBasketProducts())
+
                 } else {
                     if (sizeBasketProduct) {
                         dispatch(addBasketProductFavorite({ id: Number(id), sizeBasketProduct: sizeBasketProduct }));
+
                     }
                 }
             }
@@ -222,7 +227,7 @@ const SingleProduct = () => {
                                 )}
                             </div>
                         </div>
-                        <div className={style.sizes} >Таблица размеров</div>
+                        <div onClick={handleShowshowTableSize} className={style.sizes} >Таблица размеров</div>
                         {/* <div className={style.containerColors} >
                             <span>Цвет</span>
                             <div className={style.colorTable}>
@@ -242,7 +247,7 @@ const SingleProduct = () => {
                         <ButtonGroup vertical >
                             <Button disabled={
                                 !sizeBasketProduct &&
-                                onSavedStatusTextButton() != "удалить из корзины"
+                                onSavedStatusTextButton() !== "удалить из корзины"
                             }
                                 onClick={toggleBasket}
                                 className={style.buttonAddToBucket}
@@ -316,6 +321,15 @@ const SingleProduct = () => {
                                     Вы можете осуществить возврат товар непосредственно в наших розничных магазинах, расположенных в Киеве, Харькове, Днепре и Одессе. Для жителей других городов Украины пересылка товара перевозчиком Новой Почтой или любым другим, на склад интернет магазина ALLEGRIA, расположенного в городе Харькове, осуществляется за счет компании.
 
                                 </p>
+                            </Modal.Body>
+                        </Modal>
+                        <Modal size="lg" className={style.modalContentTableSize} show={showTableSize} onHide={handleCloseshowTableSize}>
+                            <Modal.Body className={style.modalContainerTableSize} >
+                                <Modal.Header className={style.modalClose} closeButton>
+                                    {/* <Modal.Title>Modal heading</Modal.Title> */}
+                                </Modal.Header>
+                                <div className={style.imageContainer}> <img src={tableSize} alt="#!" /></div>
+
                             </Modal.Body>
                         </Modal>
                     </div>

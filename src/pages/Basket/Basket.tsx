@@ -105,15 +105,20 @@ const Basket = () => {
 
 
     const [idProduct, setIdProduct] = useState<number[]>([])
+    const [sizeProduct, setSizeProduct] = useState<string[]>([]);
+
 
     const clickOnProductInBasket = () => {
         const updatedList = basketProducts.map((el) => el.id);
+        const sizeProductBasket = basketProducts.map((el) => el.sizeBasketProduct);
         setIdProduct(updatedList);
+        setSizeProduct(sizeProductBasket);
+
 
 
 
         dispatch(addUserOrder({
-            data: { productId: updatedList },
+            data: { productId: updatedList, sizeProduct: sizeProductBasket },
             callback: () => { }
         }))
         basketProducts.map((el) => {

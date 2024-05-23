@@ -88,6 +88,7 @@ export type addUserNameLastNameData = {
 
 export type AddOrderData = {
     productId: number[],
+    sizeProduct:string[],
 }
 
 export type SignInResponseData = {

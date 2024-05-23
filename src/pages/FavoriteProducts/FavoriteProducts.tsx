@@ -23,29 +23,23 @@ const FavoriteProducts = () => {
 
     useEffect(() => {
         dispatch(getBasketProducts())
-    }, [dispatch])
+    }, [dispatch,])
+    
 
-    const onSavedStatus = (card: ProductTypes) => {
-        const productInBasket = basketProduct.find(product => product.id === card.id);
-        return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
-    };
-    console.log();
 
-    const toggleBasket = (card: ProductTypes) => {
+    const toggleBasket =  async(card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
         if (isLoggedIn) {
 
             if (productInBasket) {
 
-                dispatch(deleteBasketProduct(card.id));
-                dispatch(getBasketProducts())
+              await  dispatch(deleteBasketProduct(card.id));
+              await dispatch(getBasketProducts())
             } else {
-                // dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct }));
-                // dispatch(getBasketProducts())
-                const size = selectedSizes[card.id]; // Получаем выбранный размер для этой карточки
+                const size = selectedSizes[card.id];
                 if (size) {
-                    dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct: size }));
-                    dispatch(getBasketProducts());
+                  await  dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct: size }));
+                  await  dispatch(getBasketProducts());
                 }
             }
         } else {
@@ -55,6 +49,11 @@ const FavoriteProducts = () => {
             }
 
         }
+    };
+    const onSavedStatus = (card: ProductTypes) => {
+
+        const productInBasket = basketProduct.find(product => product.id === card.id);
+        return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
     };
 
     const RemoveFromFavorites = (card: ProductTypes) => {
@@ -85,21 +84,7 @@ const FavoriteProducts = () => {
     //         currentSize === size ? "" : size
     //     );
     // };
-    console.log('selectedSizes', selectedSizes);
-    {
 
-        savedProduct.map((card) => {
-
-            // console.log(card.size);
-            card.size.map((el) => {
-                // console.log(el);
-
-
-            })
-
-
-        })
-    }
 
     return (
         <div className={style.containerFavoriteProducts}>
