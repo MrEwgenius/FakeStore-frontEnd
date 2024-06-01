@@ -48,12 +48,12 @@ export type GetFilterProductsPayload = {
 
 
 export type TypeTypes = {
-    id: number,
+    id: string,
     name: string,
 
 }
 export type BrandTypes = {
-    id: number,
+    id: string,
     name: string,
 
 }

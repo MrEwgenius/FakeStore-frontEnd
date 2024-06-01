@@ -1,7 +1,7 @@
 @import "../../styles/solors.scss";
-.containerSizes {
-    display: inline;
 
+.containerPrice {
+    display: inline;
     .dropDownToogle {
         text-transform: capitalize;
         width: 185px;
@@ -11,11 +11,29 @@
         background-color: #fff;
         color: $primary-dark;
         font-size: 14px;
+        .show {
+            background-color: #722121;
+        }
+        // &:hover {
+        //     background: transparent;
+        //     color: $primary-dark;
+        //     border-color: $extra-light;
+        // }
         &:active {
-            background-color: transparent;
+            background: transparent;
             color: $primary-dark;
             border-color: $extra-light;
         }
+        // &:focus-visible {
+        //     background: transparent;
+        //     color: $primary-dark;
+        //     border-color: $extra-light;
+        // }
+        // &:focus {
+        //     background: transparent;
+        //     color: $primary-dark;
+        //     border-color: $extra-light;
+        // }
     }
     .superColor {
         text-transform: capitalize;
@@ -23,39 +41,7 @@
         width: 100%;
         padding: 0;
         padding-top: 10px;
-
-        .groupSizes {
-            width: 80%;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-
-            label {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                width: 35px;
-                height: 35px;
-                color: $primary-dark;
-                font-size: 12px;
-                line-height: 170%;
-                border: 1px solid $extra-light;
-                background: #eeeded;
-                cursor: pointer;
-                text-transform: uppercase;
-            }
-            input {
-                display: none;
-
-                &:checked + label {
-                    background-color: $gray;
-                }
-            }
-        }
+        gap: 15px;
         .buttonChengeSizes {
             display: flex;
             flex-direction: column;
@@ -71,10 +57,17 @@
             text-align: center;
             color: $white;
             text-transform: uppercase;
+            transition: all 0.2s;
             &:hover {
+                transition: all 0.5s;
                 background: #295a70;
             }
         }
-      
+        a {
+            transition: all 0.2s;
+            &:hover {
+                background-color: $extra-light;
+            }
+        }
     }
 }

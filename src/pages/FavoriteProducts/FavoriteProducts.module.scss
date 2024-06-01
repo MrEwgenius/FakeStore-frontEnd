@@ -34,7 +34,7 @@
             left: 50%; /* задаем положение для линии */
             width: 1px;
             height: 100%;
-            background-color: #ccc; /* цвет линии */
+            background-color: $extra-light; /* цвет линии */
         }
     }
 
@@ -87,6 +87,7 @@
             line-height: 19px;
             text-transform: uppercase;
             transition: all 0.2s;
+            cursor: pointer;
             &:hover {
                 background-color: #d4d4d4;
                 transform: scale(1.03);
@@ -130,7 +131,8 @@
         color: $primary-dark;
         font-size: 12px;
         line-height: 170%;
-        border: 1px solid $extra-light;
+        border: 1px solid $gray;
+        border-radius: 5px;
         background: #d3d3d3;
         cursor: pointer;
         text-transform: uppercase;
@@ -138,19 +140,10 @@
     input {
         display: none;
 
-        // &:checked + label {
-        //     background-color: $gray;
-        // }
     }
     .sizeLabelActive{
             background-color: $gray;
     
     }
-    // input[type="radio"] {
-    //     display: none;
-
-    //     &:checked + label {
-    //         background-color: $primary-dark;
-    //     }
-    // }
+    
 }

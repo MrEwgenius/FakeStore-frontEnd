@@ -1,24 +1,25 @@
+@import "../../styles/solors.scss";
 .NameFilter {
     button {
         text-transform: capitalize;
         background-color: #e2e1e1;
     }
 }
-.allCategory {
-    background-color: #f0b1b1;
-    height: 30px;
-    display: flex;
-    align-items: center;
+.customToggle {
+    text-transform: capitalize;
+
+    padding: 17px;
+}
+.allCategory .customToggle {
+    background-color: $gray;
+    padding: 7px;
     text-transform: capitalize;
 }
 .bodyFilter {
     padding: 0;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
     &:hover {
         background-color: #e2e1e1;
     }
-}
-.castomToogle {
-    padding: 17px;
 }

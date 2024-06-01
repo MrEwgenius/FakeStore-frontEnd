@@ -74,16 +74,12 @@ const FavoriteProducts = () => {
     const toggleSize = (cardId: number, size: string) => {
         setSelectedSizes((current) => ({
             ...current,
-            [cardId]: current[cardId] === size ? "" : size, // Обновляем размер для каждой карточки
+            [cardId]: current[cardId] === size ? "" : size, 
 
         }));
 
     };
-    // const toggleSize = (size: string) => {
-    //     setSizeBasketProduct((currentSize) =>
-    //         currentSize === size ? "" : size
-    //     );
-    // };
+   
 
 
     return (
@@ -151,7 +147,6 @@ const FavoriteProducts = () => {
             }
 
 
-            {/* <CardList cardsList={savedProduct} /> */}
 
         </div>
     )

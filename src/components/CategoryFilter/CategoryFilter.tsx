@@ -5,63 +5,77 @@ import { useTranslation } from "react-i18next";
 import { getProductLister } from "src/redux/reducers/productSlice";
 import classNames from "classnames";
 import style from './CategoryFilter.module.scss';
-import { ReactNode } from "react";
+import { FC, ReactNode } from "react";
+
+type TypeProductItem = {
+    id: string;
+    name: string;
+};
 
 type CategoryFilterProps = {
-    typeProduct: any[];
-    selectedCategory: string | undefined;
-    setSelectedCategory: (category: string | undefined) => void;
-    selectedBrand: string | undefined;
-    checked: string[];
-    price: any[];
-    order: string | undefined;
+    typeProducts: TypeProductItem[];
+    selectedCategory?: string;
+    setSelectedCategory: (category?: string) => void;
+    selectedBrand?: string;
+    checkedSizes: string[];
+    priceRange: string[];
+    sortOrder?: string;
     setPage: (page: number) => void;
-    addAllCategory: () => void;
-    className?: string;
+};
 
-}
-
-const CategoryFilter = ({ typeProduct, selectedCategory, setSelectedCategory, selectedBrand, checked, price, order, setPage, addAllCategory, className }: CategoryFilterProps) => {
+const CategoryFilter: FC<CategoryFilterProps> = ({
+    typeProducts,
+    selectedCategory,
+    setSelectedCategory,
+    selectedBrand,
+    checkedSizes,
+    priceRange,
+    sortOrder,
+    setPage,
+}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const onCategoryClick = (category: string) => {
-        setSelectedCategory(category);
-        let newPath = `/products/filter/${category}`;
+    const buildNewPath = (category?: string) => {
+        let newPath = '/products/filter';
+        if (category) newPath += `/${category}`;
         if (selectedBrand) newPath += `/${selectedBrand}`;
-        if (checked.length) newPath += `/${checked}`;
-        if (price.length) newPath += `/${price.join('-')}`;
-        if (order) newPath += `/${order}`;
+        if (checkedSizes.length) newPath += `/${checkedSizes}`;
+        if (priceRange.length) newPath += `/${priceRange.join('-')}`;
+        if (sortOrder) newPath += `/${sortOrder}`;
+        return newPath;
+    };
+
+    const handleCategoryClick = (category?: string) => {
+        setSelectedCategory(category);
+        const newPath = buildNewPath(category);
         setPage(1);
         dispatch(getProductLister({
             isOverwrite: true,
             typeName: category,
             brandName: selectedBrand,
-            size: checked,
-            price: price,
-            order: order
+            size: checkedSizes,
+            price: priceRange,
+            order: sortOrder
         }));
         navigate(newPath, {
-            state: { typeName: category, brandName: selectedBrand, size: checked, price: price, order: order }
+            state: {
+                typeName: category,
+                brandName: selectedBrand,
+                size: checkedSizes,
+                price: priceRange,
+                order: sortOrder
+            }
         });
     };
 
-    const CustomToggle = ({
-        children,
-        eventKey
-    }: {
-        children: ReactNode,
-        eventKey: string
-    }) => {
+
+    const CustomToggle: FC<{ children: ReactNode; eventKey: string }> = ({ children, eventKey }) => {
         const decoratedOnClick = useAccordionButton(eventKey);
 
         return (
-            <div className={style.castomToogle}
-                onClick={(event) => {
-                    decoratedOnClick(event);
-
-                }}>
+            <div className={style.customToggle} onClick={(event) => decoratedOnClick(event)}>
                 {children}
             </div>
         );
@@ -71,15 +85,20 @@ const CategoryFilter = ({ typeProduct, selectedCategory, setSelectedCategory, se
         <Accordion>
             <Accordion.Item eventKey="0">
                 <Accordion.Header className={style.NameFilter}>{t('clothes')}</Accordion.Header>
-                {typeProduct.map((type) => (
-                    <Accordion.Body key={type.id} onClick={() => onCategoryClick(type.name)} className={style.bodyFilter}>
+                {typeProducts.map((type) => (
+                    <Accordion.Body key={type.id} onClick={() => handleCategoryClick(type.name)} className={style.bodyFilter}>
                         <CustomToggle eventKey="0" >
-                            <div  >{type.name}</div>
+                            <div>{type.name}</div>
                         </CustomToggle>
                     </Accordion.Body>
                 ))}
-                <Accordion.Body onClick={addAllCategory} className={classNames(style.bodyFilter, style.allCategory)}>
-                    <div>{t('showAll')}</div>
+                <Accordion.Body
+                    onClick={() => handleCategoryClick()}
+                    className={classNames(style.bodyFilter, style.allCategory)}
+                >
+                    <CustomToggle eventKey="1">
+                        <div>{t('showAll')}</div>
+                    </CustomToggle>
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>

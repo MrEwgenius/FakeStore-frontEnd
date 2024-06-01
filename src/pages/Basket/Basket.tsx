@@ -24,34 +24,30 @@ const Basket = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { t } = useTranslation()
+
+    const [showAletrt, setShowAlert] = useState(false);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+    const [show, setShow] = useState(false);
+
+
 
     const basketProducts = useSelector(ProductSelectors.getBasketProducts)
-    // const sizeBasketProduct = useSelector(ProductSelectors.getSizeBasketProduct)
-
-    // console.log(basketProducts);
-
-
-
-
+    const userInfo = useSelector(AuthSelectors.getUserInfo)
+    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
 
     const navigateToCatalog = () => {
         navigate(RoutesList.Filter)
-
     }
     const navigateSignIn = () => {
         navigate(RoutesList.Login)
-
     }
-
-    const userInfo = useSelector(AuthSelectors.getUserInfo)
     useEffect(() => {
 
         dispatch(getUserInfo())
     }, [dispatch])
 
-    // console.log(userInfo);
 
-    const { t } = useTranslation()
 
     const calculateTotalPrice = () => {
         let totalPrice = 0;
@@ -79,12 +75,8 @@ const Basket = () => {
         navigate(`/product/${id}`)
 
     }
-    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
 
 
-
-
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const handlePaymentMethodChange = (event: any) => {
         setSelectedPaymentMethod(event.target.value);
     };
@@ -97,10 +89,9 @@ const Basket = () => {
     }
 
 
-    const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    // const handleShow = () => setShow(true);
 
 
 
@@ -109,6 +100,7 @@ const Basket = () => {
 
 
     const clickOnProductInBasket = () => {
+        
         const updatedList = basketProducts.map((el) => el.id);
         const sizeProductBasket = basketProducts.map((el) => el.sizeBasketProduct);
         setIdProduct(updatedList);
@@ -131,9 +123,6 @@ const Basket = () => {
         })
         setShowAlert(true)
     }
-    console.log(idProduct);
-
-    const [showAletrt, setShowAlert] = useState(false);
 
 
     return (
@@ -161,8 +150,7 @@ const Basket = () => {
                 <>
 
                     {!!basketProducts.length
-                        ?
-                        <>
+                        ? <>
                             <div className={style.basketTitle}>{t('basket.title')} </div><div className={style.basketList}>
                                 <div className={style.basketForm}>
                                     {userInfo ?
@@ -208,7 +196,6 @@ const Basket = () => {
                                                     },
                                                     {
                                                         [style.disabled]: !userInfo?.userNumber
-
                                                     })
                                             }
                                             disabled={
@@ -221,13 +208,9 @@ const Basket = () => {
                                         </button>
                                     </div>
                                 </div>
-
-
                                 <div className={style.basketProductList}>
-
                                     {basketProducts && basketProducts.map((card) => (
                                         <div key={card.id} className={style.containerProduct}>
-
                                             <img className={style.productImage} src={process.env.REACT_APP_API_URL + card.image[0]} alt="" />
                                             <div className={style.cardInfo}>
                                                 <div onClick={() => clickOnProduct(card.id)} className={style.name}>{card.name}</div>
@@ -247,7 +230,6 @@ const Basket = () => {
                                 </div>
                             </div>
                         </>
-
                         :
                         <div className={style.containerBasketEmpty}>
                             <div className={style.emptyTitle} >{t('basket.basketEmpty')} </div>

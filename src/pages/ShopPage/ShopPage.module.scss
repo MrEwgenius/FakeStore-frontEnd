@@ -16,7 +16,6 @@
     .containerFilter {
         min-width: 220px;
         .NameFilter {
-            
             button {
                 text-transform: capitalize;
                 background-color: #e2e1e1;
@@ -30,14 +29,7 @@
             align-items: center;
             text-transform: capitalize;
         }
-        .bodyFilter {
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.3s;
-            &:hover {
-                background-color: #e2e1e1;
-            }
-        }
+
         .castomToogle {
             padding: 17px;
             // background-color: #ac3737;
@@ -69,14 +61,18 @@
         }
         .sortProducts {
             margin-bottom: 30px;
+            .filterSizePriceBrand {
+                display: flex;
+                gap: 10px;
+            }
             .orderContainer {
                 margin-top: 10px;
                 display: flex;
                 // flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
-                .countProducts{
-                color: $gray;
+                .countProducts {
+                    color: $gray;
                 }
             }
             .orderProduct {
@@ -154,26 +150,45 @@
                 }
             }
 
-            .dropDownToogle {
-                text-transform: capitalize;
-                width: 185px;
-                height: 40px;
-                border-radius: 0;
-                border: 1px solid $extra-light;
-                background-color: #fff;
-                color: $primary-dark;
-                font-size: 14px;
-            }
+            // .dropDownToogle {
+            //     text-transform: capitalize;
+            //     width: 185px;
+            //     height: 40px;
+            //     border-radius: 0;
+            //     border: 1px solid $extra-light;
+            //     background-color: #fff;
+            //     // background-color: #e96363;
+            //     color: $primary-dark;
+            //     font-size: 14px;
+            // }
             .superColor {
                 text-transform: capitalize;
-                background-color: #f1eded;
+                background-color: #ffffff;
                 width: 100%;
                 padding: 0;
                 padding-top: 10px;
                 gap: 15px;
 
                 .showAllBrand {
-                    background-color: #ffcbcb;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    border: none;
+                    background: $primary-dark;
+                    width: 100%;
+                    height: 34px;
+                    font-size: 14px;
+                    line-height: 19px;
+                    letter-spacing: 0em;
+                    text-align: center;
+                    color: $white;
+                    text-transform: uppercase;
+                    transition: all 0.2s;
+                    &:hover {
+                        transition: all 0.5s;
+                        background: #295a70;
+                    }
                 }
                 .buttonChengeSizes {
                     display: flex;
@@ -235,18 +250,16 @@
 }
 
 .navigationHistory {
-    span {
-        cursor: pointer;
-        text-transform: capitalize;
-    }
     li {
+        cursor: pointer;
+
         text-transform: capitalize;
     }
     li:last-child {
         color: $gray;
+        cursor: default;
     }
     li:nth-child(2) {
-        // color: red;
         cursor: pointer;
     }
     display: flex;

@@ -1,0 +1,97 @@
+@import "../../styles/solors.scss";
+
+.dropDownToogle {
+    text-transform: capitalize;
+    width: 185px;
+    height: 40px;
+    border-radius: 0;
+    border: 1px solid $extra-light;
+    background-color: #fff;
+    // background-color: #e96363;
+    color: $primary-dark;
+    font-size: 14px;
+}
+.superColor {
+    text-transform: capitalize;
+    background-color: #ffffff;
+    width: 100%;
+    padding: 0;
+    padding-top: 10px;
+    gap: 15px;
+
+    .showAllBrand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: $primary-dark;
+        width: 100%;
+        height: 34px;
+        font-size: 14px;
+        line-height: 19px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: $white;
+        text-transform: uppercase;
+        transition: all 0.2s;
+        &:hover {
+            transition: all 0.5s;
+            background: #295a70;
+        }
+    }
+    .buttonChengeSizes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: $primary-dark;
+        width: 100%;
+        height: 34px;
+        font-size: 14px;
+        line-height: 19px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: $white;
+        text-transform: uppercase;
+    }
+    .groupSizes {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            color: $primary-dark;
+            font-size: 12px;
+            line-height: 170%;
+            border: 1px solid $extra-light;
+            background: #fff;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        input {
+            display: none;
+
+            &:checked + label {
+                background-color: $extra-light;
+            }
+        }
+    }
+    // a {
+    //     transition: all 0.1s;
+    //     &:hover {
+    //         background-color: #d38b8b;
+    //     }
+    // }
+}
