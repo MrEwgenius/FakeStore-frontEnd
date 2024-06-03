@@ -50,7 +50,7 @@
     "signInButton": "Sign In",
     "signInTitle": "YOU NEED TO LOG IN FIRST"
   },
-  "faboriteProduct":{
+  "favoriteProduct":{
     "listEmpty":"Saved products list is empty",
     "removeBasketProduct":"remove from basket",
     "addToBasketProduct":"add to basket"

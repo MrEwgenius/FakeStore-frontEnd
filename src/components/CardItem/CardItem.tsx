@@ -12,7 +12,7 @@ import { JwtPayload, jwtDecode } from "jwt-decode";
 
 import { AuthSelectors, logoutUser, signInUser } from "src/redux/reducers/authSlice";
 import { SaveProductIcon } from "src/assets/SaveProductIcon";
-import {SaveProductIconActive} from "src/assets";
+import { SaveProductIconActive } from "src/assets";
 
 
 type CardsListProps = {
@@ -82,7 +82,16 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, clic
 
 
     return (
-        <div className={style.containerCardItem}>
+        <div  className={style.containerCardItem}>
+            <div className={style.save} onClick={() => onSavedClick(SaveStatus.Saved)} >
+
+                {saveIndex === -1
+                    ?
+                    <SaveProductIcon />
+                    :
+
+                    <SaveProductIconActive />}
+            </div>
             {userRole && userRole.role === 'ADMIN' && (
                 <img onClick={clickRemoveProduct} className={style.removeProduct} src={deleteProduct} alt="#!" />
             )}
@@ -98,8 +107,8 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, clic
                 >
                     {img.map((slide, index) => (
                         <Carousel.Item key={index}>
-                            <div className={style.containerWrapper}>
-                                <img src={process.env.REACT_APP_API_URL + slide} alt="=(" />
+                            <div  className={style.containerWrapper}>
+                                <img onClick={clickOnProduct} src={process.env.REACT_APP_API_URL + slide} alt="=(" />
                             </div>
                         </Carousel.Item>
                     ))}
@@ -109,15 +118,7 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, clic
             <h3 onClick={clickOnProduct} className={style.name}>{name}</h3>
             <div className={style.priceContainer}>
                 <div className={style.price}> {price}$</div>
-                <div className={style.save} onClick={() => onSavedClick(SaveStatus.Saved)} >
 
-                    {saveIndex === -1
-                        ?
-                        <SaveProductIcon />
-                        :
-
-                        <SaveProductIconActive />}
-                </div>
             </div>
 
 

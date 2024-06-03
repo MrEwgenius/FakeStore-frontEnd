@@ -54,20 +54,7 @@ const Header = () => {
     };
 
     const [inpValue, setinpValue] = useState('')
-    // const [showDelivery, setShowDelivery] = useState(false);
-
-
-    // const handleCloseshowDelivery = () => {
-    //     setShowDelivery(false);
-    //     setinpValue('')
-
-
-    // }
-    // const handleShowshowDelivery = () => {
-    //     setShowDelivery(true);
-    //     setinpValue('')
-
-    // }
+    
 
     const searchProducts = useSelector(ProductSelectors.getSearchProductList)
 
@@ -86,7 +73,6 @@ const Header = () => {
 
         }
     }, [inpValue, dispatch]);
-    console.log(basketProducts);
 
 
     const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -98,7 +84,6 @@ const Header = () => {
         if (event.key === 'Enter' && inpValue) {
 
 
-            // handleCloseshowDelivery()
             setShowResults(false);
             navigate(`/product/search/${inpValue}`)
             setinpValue('')
@@ -112,14 +97,12 @@ const Header = () => {
 
             navigate(`/product/search/${inpValue}`)
             setShowResults(false);
-            // handleCloseshowDelivery()
 
             setinpValue('')
         }
 
     }
     const handleFocus = () => {
-        // setShowResults(true);
         setinpValue('')
         console.log('handlFocus');
 
@@ -133,7 +116,6 @@ const Header = () => {
     const clickOnProduct = (id: number) => {
         setShowResults(false);
         navigate(`/product/${id}/`)
-        // navigate(RoutesList.SingleProduct)
         setinpValue('')
 
 
@@ -145,9 +127,6 @@ const Header = () => {
         if (resultList && !resultList.contains(event.target as Node) && (!searchInput || !searchInput.contains(event.target as Node))) {
             setShowResults(false);
             setinpValue('')
-            // handleCloseshowDelivery()
-
-            // dispatch(getSearchProductLister({ isOverwrite: true, search: undefined }));
         }
     };
 
@@ -169,7 +148,6 @@ const Header = () => {
                     <div className={style.label}>
 
                         <input
-                            // onClick={handleShowshowDelivery}
                             className={'searchInput'}
                             onFocus={handleFocus}
                             placeholder='Search...'
@@ -198,52 +176,20 @@ const Header = () => {
                         )}
 
                     </div>
-                    {/* <Modal dialogClassName={style.dialog} contentClassName={style.modals} className={style.modal} show={showDelivery} onHide={handleCloseshowDelivery}>
-
-                            <div>
-                                {searchProducts.map((el) =>
-                                (
-                                    <div className={style.searchContainer} key={el.id}>
-                                        <img src={`${process.env.REACT_APP_API_URL}${el.image}`} alt="=(" />
-                                        <div>
-                                            <div>{el.name}</div>
-                                            <div>{el.price}$</div>
-                                        </div>
-                                    </div>)
-
-                                )}
-
-
-                            </div>
-
-                        </Modal> */}
 
                 </div>
                 <div className={style.language}>
                     <select value={i18n.resolvedLanguage} onChange={(e) => changeLanguage(e.target.value)} name="languages" id="language">
                         <option
 
-                            // selected={i18n.resolvedLanguage === 'ru'}
                             value="ru">RU</option>
                         <option
-                            // selected={i18n.resolvedLanguage === 'en'}
                             value="en">EN</option>
                     </select>
-                    {/* <div
-                        className={i18n.resolvedLanguage === 'ru' ? style.bold : null}
-                        onClick={() => changeLanguage('ru')}>
-                        RU
-                    </div>
-                    <div
-                        className={i18n.resolvedLanguage === 'en' ? style.bold : null}
-                        onClick={() => changeLanguage('en')}>
-                        EN
-                    </div> */}
+                   
                 </div>
                 <div className={style.wrapContainer}>
-                    {/* <div onClick={clickOnHome} className={style.nav}>Home</div> */}
-                    {/* <div onClick={clickOnProducts} className={style.nav}>Products</div> */}
-                    {/* <div onClick={clickOnAddProduct} className={style.nav}>Add Product</div> */}
+                    
                     <div onClick={clickOnBasket} className={classNames(style.nav, style.image)}>
                         <div className={style.basktProductCount}>
                             {basketProducts.length}
@@ -254,7 +200,6 @@ const Header = () => {
                         { [style.checkUser]: isLoggedIn }
                     )}>
                         <UserIcon />
-                        {/* <img src={user} alt="#!" /> */}
                     </div>
                     <div onClick={clickOnSavedProduct} className={classNames(style.nav, style.image)}>
                         <SaveProductIcon />

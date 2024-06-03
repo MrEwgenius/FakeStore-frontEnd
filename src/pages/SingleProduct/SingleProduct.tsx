@@ -45,7 +45,6 @@ const SingleProduct = () => {
     const [sizeBasketProduct, setSizeBasketProduct] = useState('')
 
 
-    const accessToken = localStorage.getItem('AccessTokenFE45'); // Получите токен из локального хранилища
     const saveIndex = savedProduct.findIndex(item => item.id === SingleProduct?.id)
 
 
@@ -63,28 +62,19 @@ const SingleProduct = () => {
         }
 
 
-    }, [id, dispatch, sizeBasketProduct])
-
+    }, [id, dispatch,])
 
 
     // useEffect(() => {
-    //     if (accessToken) {
-    //         const decodedToken = jwtDecode(accessToken);
-    //         setUserRole(decodedToken);
+    //     if (SingleProduct) {
+
+    //         dispatch(getProductLister({
+    //             isOverwrite: true,
+
+    //             typeName: SingleProduct.typeName || undefined,
+    //         }))
     //     }
-    // }, [accessToken]);
-
-
-    useEffect(() => {
-        if (SingleProduct) {
-
-            dispatch(getProductLister({
-                isOverwrite: true,
-
-                typeName: SingleProduct.typeName || undefined,
-            }))
-        }
-    }, [dispatch, SingleProduct]);
+    // }, [dispatch, SingleProduct]);
 
     const onSavedStatusTextButton = () => {
         const productInBasket = basketProduct.find(product => product.id === Number(id));
@@ -161,9 +151,13 @@ const SingleProduct = () => {
     }
 
 
+    {
+        console.log(SingleProduct?.size);
 
+    }
 
-
+    const sizeOrder = ['xs', 's', 'm', 'l', 'xl', 'xxl'];
+    const sortedSizes = SingleProduct?.size ? [...SingleProduct.size].sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b)) : [];
 
 
     return (
@@ -200,7 +194,7 @@ const SingleProduct = () => {
                         <div className={style.size}>
                             <span>Размер</span>
                             <div className={style.sizeTable}>
-                                {SingleProduct.size && SingleProduct.size.map((sizes, idx) =>
+                            {sortedSizes.map((sizes, idx) =>
                                     <div className={style.groupLable} key={idx}>
                                         <input
                                             checked={sizeBasketProduct === sizes}
@@ -228,27 +222,13 @@ const SingleProduct = () => {
                             </div>
                         </div>
                         <div onClick={handleShowshowTableSize} className={style.sizes} >Таблица размеров</div>
-                        {/* <div className={style.containerColors} >
-                            <span>Цвет</span>
-                            <div className={style.colorTable}>
-                                <input name="color" id="color1" type="radio" />
-                                <label htmlFor="color1"></label>
 
-                                <input name="color" id="color2" type="radio" />
-                                <label htmlFor="color2"></label>
-
-                                <input name="color" id="color3" type="radio" />
-                                <label htmlFor="color3"></label>
-
-                                <input name="color" id="color4" type="radio" />
-                                <label htmlFor="color4"></label>
-                            </div>
-                        </div> */}
-                        <ButtonGroup vertical >
-                            <Button disabled={
-                                !sizeBasketProduct &&
-                                onSavedStatusTextButton() !== "удалить из корзины"
-                            }
+                        <ButtonGroup className={style.buttonGroup} vertical >
+                            <Button
+                                disabled={
+                                    !sizeBasketProduct &&
+                                    onSavedStatusTextButton() !== "удалить из корзины"
+                                }
                                 onClick={toggleBasket}
                                 className={style.buttonAddToBucket}
                             >
@@ -270,7 +250,6 @@ const SingleProduct = () => {
                                 <div className={style.modalHeader} >
                                     <div className={style.titleModal}>Оплата</div>
                                     <Modal.Header className={style.modalClose} closeButton>
-                                        {/* <Modal.Title>Modal heading</Modal.Title> */}
                                     </Modal.Header>
                                 </div>
                                 <div className={style.subtitleModal} >Наличными при получении</div>
@@ -339,7 +318,6 @@ const SingleProduct = () => {
 
                 </div>
             }
-            {/* {slides.length < 1 && */}
 
 
 
@@ -364,7 +342,6 @@ const SingleProduct = () => {
                 </Carousel>
 
             </div>
-            {/* // } */}
 
 
         </div >

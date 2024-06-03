@@ -21,27 +21,26 @@ const FavoriteProducts = () => {
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
 
 
-    useEffect(() => {
-        dispatch(getBasketProducts())
-    }, [dispatch,])
-    
 
 
-    const toggleBasket =  async(card: ProductTypes) => {
+
+
+    const toggleBasket = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
         if (isLoggedIn) {
 
             if (productInBasket) {
 
-              await  dispatch(deleteBasketProduct(card.id));
-              await dispatch(getBasketProducts())
+                dispatch(deleteBasketProduct(card.id));
+                dispatch(getBasketProducts())
+
             } else {
                 const size = selectedSizes[card.id];
                 if (size) {
-                  await  dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct: size }));
-                  await  dispatch(getBasketProducts());
+                    dispatch(addBasketProductFavorite({ id: card.id, sizeBasketProduct: size }));
                 }
             }
+
         } else {
             const confirmSignIn = window.confirm('Для начало нужно Войти!');
             if (confirmSignIn) {
@@ -49,11 +48,18 @@ const FavoriteProducts = () => {
             }
 
         }
+        dispatch(getBasketProducts())
+
     };
+    useEffect(() => {
+        dispatch(getBasketProducts())
+
+    }, [dispatch,])
     const onSavedStatus = (card: ProductTypes) => {
 
         const productInBasket = basketProduct.find(product => product.id === card.id);
-        return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
+
+        return productInBasket ? t('favoriteProduct.removeBasketProduct') : t('favoriteProduct.addToBasketProduct');
     };
 
     const RemoveFromFavorites = (card: ProductTypes) => {
@@ -68,18 +74,18 @@ const FavoriteProducts = () => {
 
     const { t } = useTranslation()
 
-    // const [sizeBasketProduct, setSizeBasketProduct] = useState('')
     const [selectedSizes, setSelectedSizes] = useState<{ [key: number]: string }>({});
 
     const toggleSize = (cardId: number, size: string) => {
         setSelectedSizes((current) => ({
             ...current,
-            [cardId]: current[cardId] === size ? "" : size, 
+            [cardId]: current[cardId] === size ? "" : size,
 
         }));
 
     };
-   
+
+    const [disabaleButton, setDisableButton] = useState(false)
 
 
     return (
@@ -129,8 +135,10 @@ const FavoriteProducts = () => {
                                 <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
                                 <button
                                     disabled={
-                                        !selectedSizes[card.id] && onSavedStatus(card) === t('faboriteProduct.addToBasketProduct')
+                                        !selectedSizes[card.id] && onSavedStatus(card) === t('favoriteProduct.addToBasketProduct')
+                                        
                                     }
+
                                     onClick={() => toggleBasket(card)}
                                     className={style.addBucketButton}
                                 >
@@ -142,7 +150,7 @@ const FavoriteProducts = () => {
                 </div>
                 :
                 <div>
-                    {t('faboriteProduct.listEmpty')}
+                    {t('favoriteProduct.listEmpty')}
                 </div>
             }
 

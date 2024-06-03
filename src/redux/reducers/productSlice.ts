@@ -66,7 +66,7 @@ const productSlice = createSlice({
             state.singleProduct = action.payload;
         },
         addNewProduct: (_, __: PayloadAction<AddPostDataPayload>) => { },
-        responseMessage: (state, action: PayloadAction<any | null>) => {
+        responseMessage: (state, action: PayloadAction<string | null>) => {
             state.message = action.payload
             console.log(state.message);
 
@@ -154,6 +154,7 @@ const productSlice = createSlice({
         setBasketProducts: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload
         },
+        deleteBasketProduct: (_, __: PayloadAction<number>) => { },
         // setSizeBasketProducts: (state, action: PayloadAction<SizeBasketProductTypes>) => {
         //     state.sizeBasketProduct = action.payload
         // },
@@ -161,7 +162,6 @@ const productSlice = createSlice({
         },
         addBrand: (_, __: PayloadAction<AddBrandPayload>) => {
         },
-        deleteBasketProduct: (_, __: PayloadAction<number>) => { },
         addBasketProductFavorite: (_, __: PayloadAction<addBasketProduct>) => { },
         setBasketProductFavorite: (state, action: PayloadAction<ProductListTypes>) => {
             state.basketProducts = action.payload

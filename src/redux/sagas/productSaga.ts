@@ -72,7 +72,7 @@ function* addProductWorker(action: PayloadAction<AddPostDataPayload>) {
             accessToken,
         )
         if (response.data && response.ok) {
-            console.log(response.data);
+            console.log(response.data.message);
             yield put(responseMessage(response.data.message))
 
 
@@ -216,6 +216,7 @@ function* removeBasketProduct(action: PayloadAction<number>) {
         )
 
         if (response.data) {
+            console.log(response.data);
 
 
         } else {

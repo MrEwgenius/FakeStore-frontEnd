@@ -36,8 +36,9 @@ const ShopPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<string | undefined>(location.state?.typeName);
     const [selectedBrand, setSelectedBrand] = useState<string | undefined>(location.state?.brandName);
     const [checkedSizes, setСheckedSizes] = useState<string[]>(location.state?.size || [])
-    const [priceRange, setPriceRange] = useState<string[]>(location.state?.price || '')
-    const [sortOrder, setsortOrder] = useState<string | undefined>(location.state?.sortOrder);
+    const [priceRange, setPriceRange] = useState<string[]>(location.state?.price || undefined)
+    const [sortOrder, setsortOrder] = useState<string | undefined>(location.state?.order);
+
 
 
     useEffect(() => {
@@ -56,6 +57,7 @@ const ShopPage = () => {
 
 
     }, [dispatch,]);
+
 
     useEffect(() => {
         localStorage.setItem('PageNumber', JSON.stringify(page));
@@ -152,28 +154,31 @@ const ShopPage = () => {
                     <div className={style.sortProducts}>
                         <div className={style.filterSizePriceBrand}>
                             <SizeFilter
-                                setChecked={setСheckedSizes}
-                                checkedSizes={checkedSizes}
-                                priceRange={priceRange}
-                                setPage={setPage} />
-                            <PriceFilter
-                                priceRange={priceRange}
-                                typeProduct={typeProduct}
                                 selectedCategory={selectedCategory}
                                 selectedBrand={selectedBrand}
+                                priceRange={priceRange}
                                 checkedSizes={checkedSizes}
                                 sortOrder={sortOrder}
+                                setChecked={setСheckedSizes}
+                                setPage={setPage} />
+                            <PriceFilter
+                                selectedCategory={selectedCategory}
+                                selectedBrand={selectedBrand}
+                                priceRange={priceRange}
+                                checkedSizes={checkedSizes}
+                                sortOrder={sortOrder}
+                                typeProduct={typeProduct}
                                 setPrice={setPriceRange}
                                 setPage={setPage}
                             />
                             <BrandFilter
-                                brands={brandProducts}
                                 selectedCategory={selectedCategory}
-                                checkedSizes={checkedSizes}
-                                priceRange={priceRange}
-                                sortOrder={sortOrder}
-                                setPage={setPage}
                                 selectedBrand={selectedBrand}
+                                priceRange={priceRange}
+                                checkedSizes={checkedSizes}
+                                sortOrder={sortOrder}
+                                brands={brandProducts}
+                                setPage={setPage}
                                 setSelectedBrand={setSelectedBrand}
                             />
                         </div>
@@ -181,11 +186,11 @@ const ShopPage = () => {
                             <div className={style.countProducts}>{totalCount} товаров</div>
                             <SortFilter
                                 selectedCategory={selectedCategory}
-                                checkedSizes={checkedSizes}
+                                selectedBrand={selectedBrand}
                                 priceRange={priceRange}
+                                checkedSizes={checkedSizes}
                                 sortOrder={sortOrder}
                                 setPage={setPage}
-                                selectedBrand={selectedBrand}
                                 setOrder={setsortOrder}
                             />
                         </div>

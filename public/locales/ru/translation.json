@@ -51,7 +51,7 @@
     "signInTitle": "Для начала нужно войти"
   },
 
-  "faboriteProduct": {
+  "favoriteProduct": {
     "listEmpty": "Нет сохранённых товаров",
     "removeBasketProduct": "удалить из корзины",
     "addToBasketProduct": "добавить в Корзину"

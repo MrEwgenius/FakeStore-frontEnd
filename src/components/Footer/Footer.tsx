@@ -2,6 +2,7 @@ import React from "react"
 import style from './Footer.module.scss'
 import bucket from '../../assets/bucket.png'
 import classNames from "classnames"
+import SubscribeInner from "../SubscribeInner/SubscribeInner"
 
 const Footer = () => {
     return (

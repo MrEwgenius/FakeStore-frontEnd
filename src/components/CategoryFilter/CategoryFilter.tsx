@@ -39,10 +39,10 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
 
     const buildNewPath = (category?: string) => {
         let newPath = '/products/filter';
-        if (category) newPath += `/${category}`;
-        if (selectedBrand) newPath += `/${selectedBrand}`;
+        if (category) newPath += `/${category.toLowerCase()}`;
+        if (selectedBrand) newPath += `/${selectedBrand.toLowerCase()}`;
         if (checkedSizes.length) newPath += `/${checkedSizes}`;
-        if (priceRange.length) newPath += `/${priceRange.join('-')}`;
+        if (priceRange &&  priceRange.length) newPath += `/${priceRange.join('-')}`;
         if (sortOrder) newPath += `/${sortOrder}`;
         return newPath;
     };

@@ -35,10 +35,10 @@ const SizeFilter = ({
 
     const buildNewPath = (size: string[]) => {
         let newPath = '/products/filter';
-        if (selectedCategory) newPath += `/${selectedCategory}`;
-        if (selectedBrand) newPath += `/${selectedBrand}`;
+        if (selectedCategory) newPath += `/${selectedCategory.toLowerCase()}`;
+        if (selectedBrand) newPath += `/${selectedBrand.toLowerCase()}`;
         if (size.length) newPath += `/${size}`;
-        if (priceRange.length) newPath += `/${priceRange.join('-')}`;
+        if (priceRange && priceRange.length) newPath += `/${priceRange.join('-')}`;
         if (sortOrder) newPath += `/${sortOrder}`;
         return newPath;
     };
@@ -79,6 +79,7 @@ const SizeFilter = ({
         }
         setChecked(updatedList);
     };
+   
 
     return (
         <div className={style.containerSizes}>

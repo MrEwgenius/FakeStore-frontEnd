@@ -52,8 +52,8 @@ const PriceFilter = ({
 
     const buildNewPath = (price: string[]) => {
         let newPath = '/products/filter';
-        if (selectedCategory) newPath += `/${selectedCategory}`;
-        if (selectedBrand) newPath += `/${selectedBrand}`;
+        if (selectedCategory) newPath += `/${selectedCategory.toLowerCase()}`;
+        if (selectedBrand) newPath += `/${selectedBrand.toLowerCase()}`;
         if (checkedSizes.length) newPath += `/${checkedSizes}`;
         if (price.length) newPath += `/${price.join('-')}`;
         if (sortOrder) newPath += `/${sortOrder}`;
@@ -89,7 +89,7 @@ const PriceFilter = ({
         <div className={style.containerPrice}>
             <Dropdown as={ButtonGroup}>
                 <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">
-                    {priceRange.length
+                    {priceRange && priceRange.length
                         ? ` от ${priceRange[0]} до ${priceRange[1]}$`
                         : t('price')
                     }

@@ -95,13 +95,18 @@
         gap: 9px;
         .addBucketButton {
             width: 200px;
-            height: 50px;
+            height: 50px; 
             border: 1px solid $primary-dark;
             font-size: 16px;
             font-weight: 400;
             line-height: 19px;
             text-transform: uppercase;
             transition: all 0.2s;
+            &:disabled {
+                border: 1px solid $gray;
+                pointer-events: none;
+                opacity: 0.5;
+            }
             &:hover {
                 background-color: #d4d4d4;
                 transform: scale(1.03);

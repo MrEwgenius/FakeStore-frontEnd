@@ -44,10 +44,10 @@ const SortFilter: React.FC<SortFilterProps> = ({
 
     const buildNewPath = (order?: string) => {
         let newPath = '/products/filter';
-        if (selectedCategory) newPath += `/${selectedCategory}`;
-        if (selectedBrand) newPath += `/${selectedBrand}`;
+        if (selectedCategory) newPath += `/${selectedCategory.toLowerCase()}`;
+        if (selectedBrand) newPath += `/${selectedBrand.toLowerCase()}`;
         if (checkedSizes.length) newPath += `/${checkedSizes}`;
-        if (priceRange.length) newPath += `/${priceRange.join('-')}`;
+        if (priceRange &&  priceRange.length) newPath += `/${priceRange.join('-')}`;
         if (order) newPath += `/${order}`;
         return newPath;
     };

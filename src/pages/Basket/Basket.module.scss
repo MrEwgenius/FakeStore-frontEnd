@@ -44,13 +44,13 @@
     flex-direction: column;
     margin-top: 40px;
     position: relative;
-    .alert{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    left: 42%;
+    .alert {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        left: 42%;
     }
 }
 .basketTitle {
@@ -121,7 +121,7 @@
             text-transform: uppercase;
             font-size: 16px;
             font-weight: 500;
-            margin-bottom: 10px;
+            // margin-bottom: 10px;
             color: $primary-light;
         }
         .deliveryAddress {
@@ -183,7 +183,7 @@
     gap: 25px;
     align-items: center;
     position: relative;
-    background-color: #bdb3b3;
+    background-color: $extra-light;
     border-radius: 10px;
     padding: 5px;
 
@@ -301,4 +301,38 @@
 
     //     background-color: red;
     // }
+}
+
+.containerSelectedAddress {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    margin-bottom: 10px;
+    .addDeliveryAddress{
+    color: $error;
+    }
+    select {
+        margin-bottom: 5px;
+        transition: all 0.3s;
+    }
+    .nameAdress {
+        margin-bottom: 5px;
+    }
+    .buttonEddAndSaveitUserAddress {
+        margin-bottom: 5px;
+        max-width: 150px;
+        background-color: $extra-light;
+        text-transform: capitalize;
+        padding: 2px 2px;
+        outline: none;
+        border-radius: 20px;
+        border: 1px solid $medium;
+        color: $error;
+        transition: all 0.3s;
+        &:hover {
+            transition: all 0.3s;
+
+            background-color: $light;
+        }
+    }
 }

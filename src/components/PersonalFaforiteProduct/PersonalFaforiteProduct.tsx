@@ -23,7 +23,7 @@ const PersonalFaforiteProduct = () => {
 
     const onSavedStatus = (card: ProductTypes) => {
         const productInBasket = basketProduct.find(product => product.id === card.id);
-        return productInBasket ? t('faboriteProduct.removeBasketProduct') : t('faboriteProduct.addToBasketProduct');
+        return productInBasket ? t('favoriteProduct.removeBasketProduct') : t('favoriteProduct.addToBasketProduct');
     };
 
     const [selectedSizes, setSelectedSizes] = useState<{ [key: number]: string }>({});
@@ -109,7 +109,7 @@ const PersonalFaforiteProduct = () => {
                             <img onClick={() => RemoveFromFavorites(card)} className={style.close} src={close} alt="#!" />
                             <button
                                 disabled={
-                                    !selectedSizes[card.id] && onSavedStatus(card) === t('faboriteProduct.addToBasketProduct')
+                                    !selectedSizes[card.id] && onSavedStatus(card) === t('favoriteProduct.addToBasketProduct')
                                 }
                                 onClick={() => toggleBasket(card)}
                                 className={style.addBucketButton}
@@ -121,7 +121,7 @@ const PersonalFaforiteProduct = () => {
                 ))
                 :
                 <div>
-                    {t('faboriteProduct.listEmpty')}
+                    {t('favoriteProduct.listEmpty')}
                 </div>
             }
 

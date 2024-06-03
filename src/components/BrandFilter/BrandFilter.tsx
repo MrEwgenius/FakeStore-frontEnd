@@ -42,10 +42,10 @@ const BrandFilter: FC<BrandFilterProps> = ({
 
     const buildNewPath = (brand?: string) => {
         let newPath = '/products/filter';
-        if (selectedCategory) newPath += `/${selectedCategory}`;
-        if (brand) newPath += `/${brand}`;
+        if (selectedCategory) newPath += `/${selectedCategory.toLowerCase()}`;
+        if (brand) newPath += `/${brand.toLowerCase()}`;
         if (checkedSizes.length) newPath += `/${checkedSizes}`;
-        if (priceRange.length) newPath += `/${priceRange.join('-')}`;
+        if (priceRange && priceRange.length) newPath += `/${priceRange.join('-')}`;
         if (sortOrder) newPath += `/${sortOrder}`;
         return newPath;
     };

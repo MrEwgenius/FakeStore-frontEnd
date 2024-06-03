@@ -23,28 +23,51 @@
 .mainImageWrap {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10px;
+    padding: 5px;
     // height: 678px;
+    overflow: hidden;
+    // max-height: 600px;
+    .saveImg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        width: 30px;
+        background-color: #fff;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 10px;
+        right: 8px;
+        cursor: pointer;
+    }
+    .allImages {
+        width: 85px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 600px;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            width: 0; /* Ширина полосы прокрутки */
+            height: 0; /* Высота полосы прокрутки */
+        }
+        img {
+            width: 85px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+    }
 }
 .mainImg {
-    width: 452px;
+    max-width: 452px;
+    // height: 500px;
     object-fit: contain;
+    height: 100%;
 }
-.saveImg {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    width: 30px;
-    background-color: #fff;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 10px;
-    right: 8px;
-    cursor: pointer;
-}
+
 .containerCarousel {
     max-width: 822px;
     .titleCarousel {
@@ -61,6 +84,9 @@
     gap: 36px;
 
     .containerDescription {
+        .buttonGroup{
+            
+        }
         .productName {
             color: $primary-dark;
             font-size: 25px;
@@ -88,11 +114,14 @@
         }
         .sizes {
             color: $primary-dark;
+            max-width: 120px;
             font-size: 12px;
             line-height: 170%;
             text-decoration-line: underline;
             cursor: pointer;
             margin-bottom: 20px;
+            margin-top: 5px;
+            padding: 0 5px;
         }
         .size {
             span {
@@ -195,6 +224,7 @@
         .paymentReturnContainer {
             margin-top: 10px;
             display: flex;
+            max-width: 280px;
 
             justify-content: space-between;
 
@@ -317,20 +347,4 @@
         background-color: #b45a30;
     }
 }
-.allImages {
-    width: 85px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 680px;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 0; /* Ширина полосы прокрутки */
-        height: 0; /* Высота полосы прокрутки */
-    }
-    img {
-        width: 85px;
-        object-fit: contain;
-        cursor: pointer;
-    }
-}
+

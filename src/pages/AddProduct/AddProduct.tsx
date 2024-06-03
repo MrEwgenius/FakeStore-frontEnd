@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from "react"
 import style from './AddProduct.module.scss'
 import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { ProductSelectors, addNewProduct, getBrandProduct, getTypeProduct } from "src/redux/reducers/productSlice"
+import { ProductSelectors, addNewProduct, addNewProductFailure, getBrandProduct, getTypeProduct, responseMessage } from "src/redux/reducers/productSlice"
 import ReactImageUploading, { ImageListType } from "react-images-uploading"
 import { ACCESS_TOKEN_KEY } from "src/utils/constans"
 import classNames from "classnames"
@@ -14,15 +14,22 @@ import { RoutesList } from "../Router"
 const AddProduct: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    const { t } = useTranslation()
+
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
     const brandProducts = useSelector(ProductSelectors.getBrandProducts)
     const userInfo = useSelector(AuthSelectors.getUserInfo)
 
-  
-    
+
+
     const [name, setName] = useState('')
     const [gender, setGender] = useState('man')
-    
+    const [clothingType, setClothingType] = useState('bike')
+    const [price, setPrice] = useState(100)
+    const [brandName, setBrandName] = useState('');
+    const [typeName, setTypeName] = useState('')
+    const [images, setImages] = useState<ImageListType>([]);
+
     useEffect(() => {
         if (!userInfo) {
             navigate(RoutesList.Home);
@@ -31,20 +38,26 @@ const AddProduct: React.FC = () => {
             dispatch(getBrandProduct());
         }
     }, [dispatch, navigate, userInfo]);
-    console.log(userInfo);
 
 
 
 
-    const [clothingType, setClothingType] = useState('bike')
-    const [price, setPrice] = useState(100)
-    const [brandName, setBrandName] = useState('');
-    const [typeName, setTypeName] = useState('')
-    const [images, setImages] = useState<ImageListType>([]);
+
     const maxNumber = 6;
 
-    const { t } = useTranslation()
+    useEffect(() => {
+        dispatch(addNewProductFailure(''))
+        // dispatch(responseMessage(''))
 
+    }, [
+        name,
+        gender,
+        clothingType,
+        price,
+        brandName,
+        typeName,
+        images,
+    ])
 
 
     const handleSubmit = (e: FormEvent) => {
@@ -53,16 +66,16 @@ const AddProduct: React.FC = () => {
         onSubmit()
         // console.log("Form submitted:", formData);
     };
-    const responseMessage = useSelector(ProductSelectors.getResponseMessage)
+    const successresponseMessage = useSelector(ProductSelectors.getResponseMessage)
     const error = useSelector(ProductSelectors.getError);
-    // console.log(responseMessage);
+    console.log(successresponseMessage);
 
     useEffect(() => {
         if (error) {
             // Обработка ошибки, например, вывод сообщения пользователю
             console.log('Error:', error.message);
         }
-    }, [error, dispatch]);
+    }, [error, dispatch, name]);
 
 
     const [checked, setChecked] = useState<any>([])
@@ -86,10 +99,7 @@ const AddProduct: React.FC = () => {
     const onChange = (
         imageList: ImageListType,
     ) => {
-        console.log(1);
-
         if (images.length !== imageList.length) {
-            // Вызываем обновление состояния только если изменился список изображений
             setImages(imageList as never[]);
         }
     };
@@ -97,41 +107,61 @@ const AddProduct: React.FC = () => {
 
 
     const onSubmit = () => {
-
-        const formData = new FormData()
-        formData.append('name', name);
-        formData.append('gender', gender);
-        formData.append('clothingType', clothingType);
-        formData.append('price', `${price}`);
-        formData.append('brandName', brandName || brandProducts[0]?.name)
-        formData.append('typeName', typeName || typeProduct[0]?.name)
-        images.forEach((image) => {
-            if (image.file) {
-                formData.append(`image`, image.file as Blob);
-            }
-        });
-        if (Array.isArray(checked)) {
-            checked.forEach(size => {
-                formData.append('size', size);
+        try {
+            const formData = new FormData()
+            formData.append('name', name);
+            formData.append('gender', gender);
+            formData.append('clothingType', clothingType);
+            formData.append('price', `${price}`);
+            formData.append('brandName', brandName || brandProducts[0]?.name)
+            formData.append('typeName', typeName || typeProduct[0]?.name)
+            images.forEach((image) => {
+                if (image.file) {
+                    formData.append(`image`, image.file as Blob);
+                }
             });
-        } else {
-            formData.append('size', checked);
+            if (Array.isArray(checked)) {
+                checked.forEach(size => {
+                    formData.append('size', size);
+                });
+            } else {
+                formData.append('size', checked);
+            }
+            if (!!formData) {
+                console.log(1);
+
+            } else {
+
+                console.log(2);
+
+            }
+            dispatch(addNewProduct({
+                data: formData, callback: () => {
+                    setName('')
+                    setGender('man')
+                    setClothingType('bike')
+                    setPrice(100)
+                    setImages([])
+                    setChecked([])
+
+                },
+            }
+            ))
+
+
+
+        } catch (error) {
+            console.log('error', error);
+
         }
-        // if (file) {
-        //     formData.append('image', file);
-        // }
 
 
 
-        dispatch(addNewProduct({
-            data: formData, callback: () => { },
-        }
-        ))
-        console.log(formData);
 
 
 
     }
+
 
 
     return (
@@ -283,7 +313,7 @@ const AddProduct: React.FC = () => {
             </div >
 
             {error && <div className={style.error}>{`${error.message}`}</div>}
-            {responseMessage && <div className={style.success}>{`${responseMessage}`}</div>}
+            {successresponseMessage && <div className={style.success}>{`${successresponseMessage}`}</div>}
             <button className={style.button} type="submit">  {t('addProduct.buttonAddProduct')}</button>
         </form >
 

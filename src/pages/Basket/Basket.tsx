@@ -8,19 +8,14 @@ import { ProductSelectors, addUserOrder, deleteBasketProduct, getBasketProducts 
 import classNames from "classnames"
 import close from '../../assets/close.svg'
 import { ProductTypes } from "src/@types"
-import { AuthSelectors, getUserInfo } from "src/redux/reducers/authSlice"
+import { AuthSelectors, addUserAddress, getUserInfo } from "src/redux/reducers/authSlice"
 import { useTranslation } from "react-i18next"
 import { Alert, Modal } from "react-bootstrap"
 import OrderConfirmation from "src/components/OrderConfirmation/OrderConfirmation"
 
 
 
-
-
-
 const Basket = () => {
-
-
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -29,7 +24,6 @@ const Basket = () => {
     const [showAletrt, setShowAlert] = useState(false);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const [show, setShow] = useState(false);
-
 
 
     const basketProducts = useSelector(ProductSelectors.getBasketProducts)
@@ -42,8 +36,8 @@ const Basket = () => {
     const navigateSignIn = () => {
         navigate(RoutesList.Login)
     }
-    useEffect(() => {
 
+    useEffect(() => {
         dispatch(getUserInfo())
     }, [dispatch])
 
@@ -100,7 +94,7 @@ const Basket = () => {
 
 
     const clickOnProductInBasket = () => {
-        
+
         const updatedList = basketProducts.map((el) => el.id);
         const sizeProductBasket = basketProducts.map((el) => el.sizeBasketProduct);
         setIdProduct(updatedList);
@@ -123,7 +117,30 @@ const Basket = () => {
         })
         setShowAlert(true)
     }
+    const [showAddress, setShowAddress] = useState(false);
+    const [selectedStreet, setSelectedStreet] = useState("");
 
+    const onSubmit = () => {
+
+
+        if (selectedStreet) {
+
+            dispatch(addUserAddress({
+                data: { address: selectedStreet },
+                callback: () => {
+
+                    dispatch(getUserInfo())
+                }
+            }))
+            setShowAddress(false)
+        }
+    }
+    const clickOnEdditAddress = () => {
+        setShowAddress(!showAddress)
+    }
+    const handleStreetChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedStreet(event.target.value);
+    };
 
     return (
         <div className={style.containerBasket}>
@@ -169,11 +186,104 @@ const Basket = () => {
                                         <div>Для начала нужно войти</div>
                                     }
                                     <div className={style.deliveryTitle}>{t('basket.delivery')}</div>
-                                    {userInfo && userInfo?.adress &&
+                                    {userInfo && userInfo?.adress
+                                        ?
+                                        <div className={style.containerSelectedAddress}>
+                                            <div className={style.nameAdress}>{!showAddress && userInfo.adress}</div>
+                                            {showAddress &&
+                                                <>
+                                                    <select name="street" id="street" value={selectedStreet} onChange={handleStreetChange}>
+                                                        <option value="">Выберите улицу</option>
+                                                        <option value="г. Минск, ул. Ангарская, 62а">г. Минск, ул. Ангарская, 62а</option>
+                                                        <option value="г. Минск, ул. Могилевская, 14">г. Минск, ул. Могилевская, 14</option>
+                                                        <option value="г. Минск, пр-т Дзержинского, 125А-212">г. Минск, пр-т Дзержинского, 125А-212</option>
 
-                                        <div className={style.deliveryAddress}>
-                                            {userInfo.adress}
+                                                        <option value="г. Минск, ул. Туровского, 24-219">г. Минск, ул. Туровского, 24-219</option>
+                                                        <option value="г. Минск, пр-т Дзержинского, 11">г. Минск, пр-т Дзержинского, 11</option>
+                                                        <option value="г. Минск, пр-т Дзержинского, 23">г. Минск, пр-т Дзержинского, 23</option>
+                                                        <option value="г. Минск, ул. Матусевича, 35">г. Минск, ул. Матусевича, 35</option>
+                                                        <option value="г. Минск, ул. Бурдейного, 6">г. Минск, ул. Бурдейного, 6</option>
+                                                        <option value="г. Минск, ул. Жилуновича, 45-19">г. Минск, ул. Жилуновича, 45-19</option>
+                                                        <option value="г. Минск, ул. Багратиона, 55Б">г. Минск, ул. Багратиона, 55Б</option>
+                                                        <option value="г. Минск, ул. Гамарника, 2">г. Минск, ул. Гамарника, 2</option>
+                                                        <option value="г. Минск, ул. Калиновского, 66А">г. Минск, ул. Калиновского, 66А</option>
+                                                        <option value="г. Минск, ул. Калиновского, 101">г. Минск, ул. Калиновского, 101</option>
+                                                        <option value="г. Минск, ул. Калиновского, 81">г. Минск, ул. Калиновского, 81</option>
+                                                        <option value="г. Минск, ул. Казимировская, 6">г. Минск, ул. Казимировская, 6</option>
+                                                        <option value="г. Минск, ул. Каменногорская, 6-203">г. Минск, ул. Каменногорская, 6-203</option>
+                                                        <option value="г. Минск, ул. Налибокская, 12-39">г. Минск, ул. Налибокская, 12-39</option>
+                                                        <option value="г. Минск, ул. Неманская, 24">г. Минск, ул. Неманская, 24</option>
+                                                        <option value="г. Минск, ул. Неманская, 85)">г. Минск, ул. Неманская, 85</option>
+                                                        <option value="г. Минск, ул. Кульман, 5Б-72, пав.315">г. Минск, ул. Кульман, 5Б-72, пав.315</option>
+                                                        <option value="г. Минск, ул. Академика Жебрака, 35">г. Минск, ул. Академика Жебрака, 35</option>
+                                                        <option value="г. Минск, ул. Казинца, 52а">г. Минск, ул. Казинца, 52а</option>
+                                                        <option value="г. Минск, ул. Николы Теслы, 6-1">г. Минск, ул. Николы Теслы, 6-1</option>
+                                                        <option value="г. Минск, ул. Ильянская, 4-130">г. Минск, ул. Ильянская, 4-130</option>
+                                                        <option value="г. Минск, ул. Асаналиева, 42">г. Минск, ул. Асаналиева, 42</option>
+                                                        <option value="г. Минск, ул. Гошкевича 3-2">г. Минск, ул. Гошкевича 3-2</option>
+                                                        <option value="г. Минск, ул. Прушинских, 2">г. Минск, ул. Прушинских, 2</option>
+                                                        <option value="г. Минск, пр-т Пушкина, 29б">г. Минск, пр-т Пушкина, 29б</option>
+                                                        <option value="г. Минск, ул. Шпилевского, 54">г. Минск, ул. Шпилевского, 54</option>
+                                                        <option value="г. Минск, ул. Есенина, 76">г. Минск, ул. Есенина, 76</option>
+
+                                                    </select>
+                                                </>
+                                            }
+                                            {showAddress &&
+                                                <button className={style.buttonEddAndSaveitUserAddress} onClick={onSubmit}>Сохранить</button>
+                                            }
+
+                                            <button className={style.buttonEddAndSaveitUserAddress} onClick={clickOnEdditAddress}>{showAddress ? 'отменить' : 'редактировать'}</button>
                                         </div>
+                                        :
+                                        <div className={style.containerSelectedAddress}>
+                                            <div className={style.addDeliveryAddress}>Укажите адресс доставки</div>
+                                            {showAddress &&
+                                                <>
+                                                    <select name="street" id="street" value={selectedStreet} onChange={handleStreetChange}>
+                                                        <option value="">Выберите улицу</option>
+                                                        <option value="г. Минск, ул. Ангарская, 62а">г. Минск, ул. Ангарская, 62а</option>
+                                                        <option value="г. Минск, ул. Могилевская, 14">г. Минск, ул. Могилевская, 14</option>
+                                                        <option value="г. Минск, пр-т Дзержинского, 125А-212">г. Минск, пр-т Дзержинского, 125А-212</option>
+
+                                                        <option value="г. Минск, ул. Туровского, 24-219">г. Минск, ул. Туровского, 24-219</option>
+                                                        <option value="г. Минск, пр-т Дзержинского, 11">г. Минск, пр-т Дзержинского, 11</option>
+                                                        <option value="г. Минск, пр-т Дзержинского, 23">г. Минск, пр-т Дзержинского, 23</option>
+                                                        <option value="г. Минск, ул. Матусевича, 35">г. Минск, ул. Матусевича, 35</option>
+                                                        <option value="г. Минск, ул. Бурдейного, 6">г. Минск, ул. Бурдейного, 6</option>
+                                                        <option value="г. Минск, ул. Жилуновича, 45-19">г. Минск, ул. Жилуновича, 45-19</option>
+                                                        <option value="г. Минск, ул. Багратиона, 55Б">г. Минск, ул. Багратиона, 55Б</option>
+                                                        <option value="г. Минск, ул. Гамарника, 2">г. Минск, ул. Гамарника, 2</option>
+                                                        <option value="г. Минск, ул. Калиновского, 66А">г. Минск, ул. Калиновского, 66А</option>
+                                                        <option value="г. Минск, ул. Калиновского, 101">г. Минск, ул. Калиновского, 101</option>
+                                                        <option value="г. Минск, ул. Калиновского, 81">г. Минск, ул. Калиновского, 81</option>
+                                                        <option value="г. Минск, ул. Казимировская, 6">г. Минск, ул. Казимировская, 6</option>
+                                                        <option value="г. Минск, ул. Каменногорская, 6-203">г. Минск, ул. Каменногорская, 6-203</option>
+                                                        <option value="г. Минск, ул. Налибокская, 12-39">г. Минск, ул. Налибокская, 12-39</option>
+                                                        <option value="г. Минск, ул. Неманская, 24">г. Минск, ул. Неманская, 24</option>
+                                                        <option value="г. Минск, ул. Неманская, 85)">г. Минск, ул. Неманская, 85</option>
+                                                        <option value="г. Минск, ул. Кульман, 5Б-72, пав.315">г. Минск, ул. Кульман, 5Б-72, пав.315</option>
+                                                        <option value="г. Минск, ул. Академика Жебрака, 35">г. Минск, ул. Академика Жебрака, 35</option>
+                                                        <option value="г. Минск, ул. Казинца, 52а">г. Минск, ул. Казинца, 52а</option>
+                                                        <option value="г. Минск, ул. Николы Теслы, 6-1">г. Минск, ул. Николы Теслы, 6-1</option>
+                                                        <option value="г. Минск, ул. Ильянская, 4-130">г. Минск, ул. Ильянская, 4-130</option>
+                                                        <option value="г. Минск, ул. Асаналиева, 42">г. Минск, ул. Асаналиева, 42</option>
+                                                        <option value="г. Минск, ул. Гошкевича 3-2">г. Минск, ул. Гошкевича 3-2</option>
+                                                        <option value="г. Минск, ул. Прушинских, 2">г. Минск, ул. Прушинских, 2</option>
+                                                        <option value="г. Минск, пр-т Пушкина, 29б">г. Минск, пр-т Пушкина, 29б</option>
+                                                        <option value="г. Минск, ул. Шпилевского, 54">г. Минск, ул. Шпилевского, 54</option>
+                                                        <option value="г. Минск, ул. Есенина, 76">г. Минск, ул. Есенина, 76</option>
+
+                                                    </select>
+                                                </>
+                                            }
+                                            {showAddress &&
+                                                <button className={style.buttonEddAndSaveitUserAddress} onClick={onSubmit}>Сохранить</button>
+                                            }
+
+                                            <button className={style.buttonEddAndSaveitUserAddress} onClick={clickOnEdditAddress}>{showAddress ? 'отменить' : 'указать'}</button>
+                                        </div>
+
                                     }
                                     <div className={style.paymentMethods}>
                                         <div className={style.paymentMethodTitle}>{t('basket.paymentMethod')}</div>
@@ -196,11 +306,20 @@ const Basket = () => {
                                                     },
                                                     {
                                                         [style.disabled]: !userInfo?.userNumber
-                                                    })
+                                                    },
+                                                    {
+                                                        [style.disabled]: showAddress
+                                                    },
+                                                    {
+                                                        [style.disabled]: !userInfo?.adress
+                                                    },
+                                                )
                                             }
                                             disabled={
                                                 !userInfo?.userNumber ||
-                                                !isPaymentMethodSelected()
+                                                !isPaymentMethodSelected() ||
+                                                showAddress||
+                                                !userInfo?.adress
                                             }
                                             onClick={clickOnProductInBasket}
                                         >
