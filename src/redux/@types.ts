@@ -85,6 +85,9 @@ export type addUserNameLastNameData = {
     userLastName?: string,
     userNumber?:string,
 }
+export type addSubscribeUser= {
+    email: string,
+}
 
 export type AddOrderData = {
     productId: number[],
@@ -119,6 +122,7 @@ export type GetProductListPayload = {
 
 export type SignInUserPayload = PayloadWithDataAndCallback<SignInData>
 export type AddTypePayload = PayloadWithDataAndCallback<AddTypeData>
+export type AddSunscribePayload = PayloadWithDataAndCallback<addSubscribeUser>
 export type AddBrandPayload = PayloadWithDataAndCallback<AddBrandData>
 export type AddOrderPayload = PayloadWithDataAndCallback<AddOrderData>
 export type addUserAddressPayload = PayloadWithDataAndCallback<addUserAddressData>

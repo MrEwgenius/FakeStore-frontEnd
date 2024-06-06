@@ -65,16 +65,17 @@ const SingleProduct = () => {
     }, [id, dispatch,])
 
 
-    // useEffect(() => {
-    //     if (SingleProduct) {
+    useEffect(() => {
+        // отвечает за похожие товары на singlProduct
+        if (SingleProduct) {
 
-    //         dispatch(getProductLister({
-    //             isOverwrite: true,
+            dispatch(getProductLister({
+                isOverwrite: true,
 
-    //             typeName: SingleProduct.typeName || undefined,
-    //         }))
-    //     }
-    // }, [dispatch, SingleProduct]);
+                typeName: SingleProduct.typeName || undefined,
+            }))
+        }
+    }, [dispatch, SingleProduct]);
 
     const onSavedStatusTextButton = () => {
         const productInBasket = basketProduct.find(product => product.id === Number(id));
@@ -194,7 +195,7 @@ const SingleProduct = () => {
                         <div className={style.size}>
                             <span>Размер</span>
                             <div className={style.sizeTable}>
-                            {sortedSizes.map((sizes, idx) =>
+                                {sortedSizes.map((sizes, idx) =>
                                     <div className={style.groupLable} key={idx}>
                                         <input
                                             checked={sizeBasketProduct === sizes}

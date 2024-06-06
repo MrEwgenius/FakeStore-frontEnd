@@ -24,7 +24,7 @@ type initialState = {
     producrListBasket: ProductListTypes,
     basketProducts: ProductListTypes,
     sizeBasketProduct: SizeBasketProduct | null,
-    message: any | null,
+    message: string ,
     orderProduct: OrderProducts 
 
 }
@@ -66,7 +66,7 @@ const productSlice = createSlice({
             state.singleProduct = action.payload;
         },
         addNewProduct: (_, __: PayloadAction<AddPostDataPayload>) => { },
-        responseMessage: (state, action: PayloadAction<string | null>) => {
+        responseMessage: (state, action: PayloadAction<string | ''>) => {
             state.message = action.payload
             console.log(state.message);
 

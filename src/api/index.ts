@@ -1,6 +1,6 @@
 import { create } from "apisauce";
 import { DataBrand } from "src/@types";
-import { AddOrderData, AddTypeData, SignInData, SignUpUserData, addUserAddressData, addUserNameLastNameData } from "src/redux/@types";
+import { AddOrderData, AddTypeData, SignInData, SignUpUserData, addSubscribeUser, addUserAddressData, addUserNameLastNameData } from "src/redux/@types";
 import { PER_PAGE } from "src/utils/constans";
 
 
@@ -197,19 +197,18 @@ const addUserNameLastName = (data: addUserNameLastNameData, token: string) => {
 
 }
 
-// import axios from 'axios';
+const addSubscribeInner = (data: addSubscribeUser, token: string) => {
+    return API.post(`/user/usersubscribe`,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }
 
-// const API_BASE_URL = 'https://api.escuelajs.co/';
+    )
 
-// const getProducts = async () => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}api/v1/products`);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//     throw error; // Можно обработать ошибку здесь или передать наверх для дальнейшей обработки
-//   }
-// };
+}
 
 
 export default {
@@ -232,7 +231,9 @@ export default {
     addType,
     addBrand,
     getOrder,
-    addOrder
+    addOrder,
+    addSubscribeInner
+
 
 
 

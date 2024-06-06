@@ -4,9 +4,10 @@ import { ApiResponse } from 'apisauce'
 
 import API from "src/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "src/utils/constans";
-import { SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, addUserAddressPayload, addUserNameLastNamePayload, signUpResponseData } from "../@types";
-import { addUserAddress, addUserNameLastName, getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser } from "../reducers/authSlice";
+import { AddSunscribePayload, SignInResponseData, SignInUserPayload, SignUpUserPayload, UserInfoData, addSubscribeUser, addUserAddressPayload, addUserNameLastNamePayload, signUpResponseData } from "../@types";
+import { addUserAddress, addUserNameLastName, getUserInfo, logoutUser, setAccessToken, setUserInfo, setUserRole, signInUser, signUpUser, subscribeUser } from "../reducers/authSlice";
 import { GetUserInfo } from "src/@types";
+import { responseMessage } from "../reducers/productSlice";
 
 
 
@@ -22,11 +23,7 @@ function* signUpUserWorker(action: PayloadAction<SignUpUserPayload>) {
     if (response.data && response.ok) {
         console.log(response.data)
 
-
-
-        // localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
         callback();
-
 
     } else {
         console.error('sign Up User Error', response.problem);
@@ -67,22 +64,15 @@ function* userAuthWorker() {
         const response: ApiResponse<UserInfoData> = yield call(
             API.userAuth,
             accessToken,
-
-
         )
-
         if (response.data && response.ok) {
 
             yield put(setUserInfo(response.data))
-
-
         } else {
             if (response.data) {
                 console.log('Add Post Error', response.data);
                 localStorage.removeItem(ACCESS_TOKEN_KEY)
                 yield put(setAccessToken(''))
-
-
             }
 
         }
@@ -95,13 +85,11 @@ function* addUserAddressWorker(action: PayloadAction<addUserAddressPayload>) {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     const { data, callback } = action.payload
 
-
     if (accessToken) {
         const response: ApiResponse<UserInfoData> = yield call(
             API.addUserAddress,
             data,
             accessToken
-
         )
 
         if (response.data) {
@@ -113,9 +101,6 @@ function* addUserAddressWorker(action: PayloadAction<addUserAddressPayload>) {
         } else {
             if (response.data) {
                 console.log('add User Address Error', response.data);
-
-
-
             }
 
         }
@@ -125,7 +110,6 @@ function* addUserAddressWorker(action: PayloadAction<addUserAddressPayload>) {
 function* addUserNameLastNameWorker(action: PayloadAction<addUserNameLastNamePayload>) {
     const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
     const { data, callback } = action.payload
-
 
     if (accessToken) {
         const response: ApiResponse<UserInfoData> = yield call(
@@ -137,7 +121,7 @@ function* addUserNameLastNameWorker(action: PayloadAction<addUserNameLastNamePay
 
         if (response.data) {
             yield put(setAccessToken(response.data.token))
-            
+
             localStorage.setItem(ACCESS_TOKEN_KEY, response.data.token)
 
 
@@ -155,70 +139,40 @@ function* addUserNameLastNameWorker(action: PayloadAction<addUserNameLastNamePay
 
 }
 
-// function* activateUserWorker(action: PayloadAction<ActivateUserPayload>) {
-//     const { data, callback } = action.payload
-
-//     const response: ApiResponse<undefined> = yield call(
-//         API.activateUser,
-//         data
-//     )
-//     if (response.ok) {
-//         callback()
-//     } else {
-//         console.error('Activate User Error', response.problem);
-//     }
-
-// }
-
-// function* getUserInfoWorker() {
-//     const response: ApiResponse<UserInfoData> | undefined = yield callCheckingAuth(
-//         API.getUserInfo,
-//     )
-//     if (response && response?.ok && response?.data) {
-//         yield put(setUserInfo(response.data))
-//     } else {
-//         console.error('Get User Error', response?.problem);
-//     }
-// }
-
 function* logoutWorker() {
     localStorage.removeItem(ACCESS_TOKEN_KEY)
+
+
+
     yield put(setAccessToken(''))
 }
 
 
-// function* resetPassswordWorker(action: PayloadAction<ResetPasswordPayload>) {
-
-//     const { data, callback } = action.payload
-
-//     const response: ApiResponse<undefined> = yield call(
-//         API.resetPassword,
-//         data
-//     )
-//     if (response.ok) {
-//         callback();
-
-//     } else {
-//         console.error('Reset Password Error', response.problem);
-
-//     }
-// }
 
 
-// function* resetPasswordConfirmationWorker(action: PayloadAction<ResetPasswordConfirmationDataPayload>) {
-//     const { data, callback } = action.payload
+function* subscribeUserWorker(action: PayloadAction<AddSunscribePayload>) {
 
-//     const response: ApiResponse<undefined> = yield call(
-//         API.resetPasswordConformation,
-//         data
-//     )
-//     if (response.ok) {
-//         callback()
-//     } else {
-//         console.error('Reset Password Error', response.problem);
-//     }
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+    const { data, callback } = action.payload
+    if (accessToken) {
 
-// }
+        const response: ApiResponse<{message:string}> = yield call(
+            API.addSubscribeInner,
+            data,
+            accessToken,
+        )
+        if (response.ok && response.data) {
+            console.log(response.data.message);
+
+            yield put(responseMessage(response.data.message))
+
+        } else {
+            console.error('Activate User Error', response.problem);
+        }
+    }
+
+
+}
 
 
 export default function* authSagaWatcher() {
@@ -231,6 +185,7 @@ export default function* authSagaWatcher() {
         takeLatest(getUserInfo, userAuthWorker),
         takeLatest(addUserAddress, addUserAddressWorker),
         takeLatest(addUserNameLastName, addUserNameLastNameWorker),
+        takeLatest(subscribeUser, subscribeUserWorker),
 
         // takeLatest(resetPassword, resetPassswordWorker),
         // takeLatest(resetPasswordConfirmation, resetPasswordConfirmationWorker),

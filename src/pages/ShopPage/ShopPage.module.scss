@@ -1,17 +1,19 @@
 @import "../../styles/solors.scss";
 .containerMain {
-    max-width: 1440px;
+    max-width: 1100px;
     // margin: 0 auto;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
+    padding: 0 15px;
+    margin-left: 35px;
 }
 .containerShopPage {
     margin-top: 20px;
     // padding: 0 15px;
     display: flex;
-    justify-content: space-between;
-    gap: 55px;
+    // justify-content: space-between;
+    gap: 25px;
     margin-bottom: 40px;
     .containerFilter {
         min-width: 220px;
@@ -40,6 +42,7 @@
         // width: 1000px;
         // height: calc(100vh - 80px);
         width: 100%;
+        width: 840px;
         // background-color: #584e4e;
         .paginate {
             margin-top: 40px;
