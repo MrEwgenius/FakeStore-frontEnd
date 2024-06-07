@@ -78,27 +78,29 @@ const BrandFilter: FC<BrandFilterProps> = ({
 
 
     return (
-        <Dropdown as={ButtonGroup}>
-            <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : t('brand')}</Dropdown.Toggle>
-            <Dropdown.Menu className={style.superColor}>
-                {brands.map((brand) =>
+       <div className={style.containerBrandFilter}>
+            <Dropdown as={ButtonGroup}>
+                <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : t('brand')}</Dropdown.Toggle>
+                <Dropdown.Menu className={style.superColor}>
+                    {brands.map((brand) =>
+                        <Dropdown.Item
+                            onClick={() => handleBrandClick(brand.name)}
+                            key={brand.id}
+                            eventKey={brand.id}
+                        >
+                            {brand.name}
+                        </Dropdown.Item>
+                    )}
                     <Dropdown.Item
-                        onClick={() => handleBrandClick(brand.name)}
-                        key={brand.id}
-                        eventKey={brand.id}
+                        onClick={() => handleBrandClick()}
+                        className={style.showAllBrand}
                     >
-                        {brand.name}
+                        {t('showAllBrand')}
                     </Dropdown.Item>
-                )}
-                <Dropdown.Item
-                    onClick={() => handleBrandClick()}
-                    className={style.showAllBrand}
-                >
-                    {t('showAllBrand')}
-                </Dropdown.Item>
-            </Dropdown.Menu>
-
-        </Dropdown>
+                </Dropdown.Menu>
+    
+            </Dropdown>
+       </div>
     )
 }
 

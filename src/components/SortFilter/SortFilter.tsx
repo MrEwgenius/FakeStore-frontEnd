@@ -34,7 +34,7 @@ const SortFilter: React.FC<SortFilterProps> = ({
         { id: "createdAt", name: "По новинкам" },
         { id: "ASC", name: "По возрастанию цены" },
         { id: "DESC", name: "По убыванию цены" },
-        { id: undefined, name: "Cбросить" }
+        // { id: undefined, name: "Cбросить" }
     ];
 
     const getLabelByOrder = (order?: string) => {
@@ -101,6 +101,12 @@ const SortFilter: React.FC<SortFilterProps> = ({
                             {option.name}
                         </Dropdown.Item>
                     ))}
+                    <Dropdown.Item
+                    className={style.buttonResertSort}
+                            onClick={() => handleSortOrderClick()}
+                        >
+                            {'Сбросить'}
+                        </Dropdown.Item>
 
                 </Dropdown.Menu>
             </Dropdown>{'   '}

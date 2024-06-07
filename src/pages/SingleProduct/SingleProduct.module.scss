@@ -30,6 +30,7 @@
     overflow: hidden;
     // max-height: 600px;
     .saveImg {
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -46,6 +47,8 @@
     .allImages {
         width: 85px;
         display: flex;
+        
+        
         flex-direction: column;
         gap: 10px;
         max-height: 600px;
@@ -63,6 +66,7 @@
 }
 .mainImg {
     max-width: 452px;
+
     // height: 500px;
     object-fit: contain;
     height: 100%;

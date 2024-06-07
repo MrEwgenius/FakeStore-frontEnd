@@ -10,7 +10,6 @@ import User from "src/components/User/User";
 import { useSelector } from "react-redux";
 import AddProduct from "./AddProduct/AddProduct";
 import Banner from "src/components/Banner/Banner";
-import Abaut from "src/components/Abaut/Abaut";
 import Popular from "src/components/Popular/Popular";
 import ShopPage from "./ShopPage/ShopPage";
 import FavoriteProducts from "./FavoriteProducts/FavoriteProducts";
@@ -23,6 +22,9 @@ import PersonalAdress from "src/components/PersonalAdress/PersonalAdress";
 import TypeProduct from "src/components/TypeProduct/TypeProduct";
 import BrandProduct from "src/components/BrandProduct/BrandProduct";
 import OrderConfirmation from "src/components/OrderConfirmation/OrderConfirmation";
+import AboutUs from "src/components/AboutUs/AboutUs";
+import SectionAboutUs from "src/components/SectionAboutUs/SectionAboutUs";
+import BrandInfo from "src/components/BrandInfo/BrandInfo";
 
 export enum RoutesList {
 
@@ -44,6 +46,8 @@ export enum RoutesList {
     Basket = '/basket',
     Adress = '/user/adress/',
     OrderHistory = '/user/orderhistory',
+    AboutUs = '/about',
+    BrandInfo = '/brandinfo',
 
 
     Cards = '/cards',
@@ -61,12 +65,13 @@ const Router = () => {
             <Routes >
                 <Route path={RoutesList.Home} element={<Home />} >
 
-                    {/* <Route path={RoutesList.Trend} element={<ShopPage />} /> */}
+                    <Route path={RoutesList.AboutUs} element={<AboutUs />} />
+                    <Route path={RoutesList.BrandInfo} element={<BrandInfo />} />
                     <Route path={RoutesList.Filter} element={<ShopPage />} />
                     <Route path={RoutesList.Home} element={<>
                         <Banner />
                         <Popular />
-                        <Abaut />
+                        <SectionAboutUs />
                     </>} />
                     <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts />} />
                     <Route path={RoutesList.Basket} element={<Basket />} />

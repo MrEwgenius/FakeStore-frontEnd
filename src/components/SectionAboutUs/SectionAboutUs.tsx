@@ -1,9 +1,9 @@
 import React from "react"
-import style from './Abaut.module.scss'
+import style from './SectionAboutUs.module.scss'
 
-import abautImg from '../../img/abaut.png'
+import abautImg from '../../assets/img/abaut.png'
 
-const Abaut = () => {
+const SectionAboutUs = () => {
     return (
         <div className={style.containerAbaut}>
             <div className={style.containerText}>
@@ -19,4 +19,4 @@ const Abaut = () => {
     )
 }
 
-export default Abaut;
+export default SectionAboutUs;

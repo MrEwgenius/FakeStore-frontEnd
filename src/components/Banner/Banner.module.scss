@@ -1,7 +1,7 @@
 @import "../../styles/solors.scss";
 .containerBanner1 {
     height: 585px;
-    background: url("../../img/banner-1.png") no-repeat center center;
+    background: url("../../assets/img/banner-1.png") no-repeat center center;
     position: relative;
     &::after {
         content: "";
@@ -101,16 +101,16 @@
 }
 .containerBanner2 {
     height: 585px;
-    background: url("../../img/banner-3.png") no-repeat center right;
+    background: url("../../assets/img/banner-3.png") no-repeat center right;
 }
 .containerBanner3 {
     height: 585px;
-    background: url("../../img/banner-2.png") no-repeat center right;
+    background: url("../../assets/img/banner-2.png") no-repeat center right;
     background-color: $extra-light;
 }
 .containerBanner4 {
     height: 585px;
-    background: url("../../img/banner-4.png") no-repeat center right;
+    background: url("../../assets/img/banner-4.png") no-repeat center right;
 }
 .indicators {
     button {
