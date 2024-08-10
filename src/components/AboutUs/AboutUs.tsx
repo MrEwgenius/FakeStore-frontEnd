@@ -6,17 +6,31 @@ import image3 from 'src/assets/img/AboutUsImage/image 61.png'
 import image4 from 'src/assets/img/AboutUsImage/image 62.png'
 import figure from 'src/assets/img/AboutUsImage/figure.png'
 import figureLine from 'src/assets/img/AboutUsImage/figureLine.png'
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
+import { t } from "i18next"
 
 const AboutUs = () => {
     const { pathname } = useLocation();
+    const navigate = useNavigate()
+
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, [pathname]);
+    }, [pathname]);
 
+    const clickOnHome = () => {
+        navigate(`/`)
+    }
     return (
         <div className={style.containerAboutUs}>
             <div className={style.banner}>
+            <ul className={style.navigationHistory}>
+                        <li onClick={clickOnHome}>
+                            {t('home')}
+                        </li>
+                        <li>о нас</li>
+
+
+                    </ul>
                 <div className={style.textBanner}>
                     <h3>о нас</h3>
                     <p> Бутик Allegria специализируется на продаже комфортной и современной одежды для свободного времени в стиле кэжуал . Мы считаем, что одежда - это источник радости, что и отражено в названии нашего бутика.</p>
@@ -52,7 +66,7 @@ const AboutUs = () => {
 
                 <p>
                     Для всех представленных в бутике брендов важным приоритетом является экологическая безопасность одежды и производства.
-    
+
                 </p>
             </div>
         </div>

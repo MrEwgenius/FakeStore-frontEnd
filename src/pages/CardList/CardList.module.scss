@@ -6,4 +6,12 @@
     row-gap: 20px;
     flex-wrap: wrap;
     justify-content: space-between;
+    @media (max-width: 1200px) {
+        // row-gap: 10px;
+        gap: 10px;
+    }
+    @media (max-width: 830px) {
+        // row-gap: 10px;
+        // display: none;
+    }
 }

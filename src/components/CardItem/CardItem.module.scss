@@ -6,29 +6,27 @@
     display: flex;
     flex-direction: column;
     position: relative;
-
-    .removeProduct {
-        display: none;
-    }
-    .save {
-        display: none;
-        cursor: pointer;
-    }
     transition: all 0.3s;
+    @media (max-width: 1200px) {
+        width: 220px;
+    }
+    @media (max-width: 1000px) {
+        width: 300px;
+    }
+    @media (max-width: 925px) {
+        width: 270px;
+    }
+    @media (max-width: 830px) {
+        width: 230px;
+    }
+    @media (max-width: 750px) {
+        width: 48%;
+    }
+
     &:hover {
         transition: all 0.2s;
-
         background-color: #f4f4f4;
 
-        .save {
-            position: absolute;
-            display: block;
-            cursor: pointer;
-            top: 25px;
-            right: 35px;
-            width: 20px;
-            z-index: 100;
-        }
         .removeProduct {
             position: absolute;
 
@@ -39,26 +37,58 @@
             z-index: 100;
             cursor: pointer;
         }
+        .save {
+            display: block;
+        }
+    }
+    .save {
+        position: absolute;
+        cursor: pointer;
+        top: 25px;
+        right: 35px;
+        width: 20px;
+        z-index: 100;
+        display: none;
+    }
+
+    .removeProduct {
+        display: none;
     }
 
     .image {
         img {
-            // border-radius: 10px;
             cursor: pointer;
             width: 100%;
             object-fit: contain;
-            // height: 270px;
+        }
+        .carousel {
+            [data-bs-target] {
+                // background-color: #ff0000;
+                width: 6px;
+                height: 6px;
+                top: 10px;
+                border-radius: 50%;
+                margin-left: 5px;
+            }
         }
     }
-
     .name {
         cursor: pointer;
         font-size: 16px;
+        margin-top: 10px;
     }
-    .price {
-        font-weight: 500;
-        color: $primary-dark;
+
+    .priceContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        align-items: center;
+        .price {
+            font-weight: 500;
+            color: $primary-dark;
+        }
     }
+
     .button {
         height: 40px;
         border-radius: 10px;
@@ -69,21 +99,5 @@
         &:hover {
             background-color: #444343;
         }
-    }
-}
-.priceContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    align-items: center;
-}
-.carousel {
-    [data-bs-target] {
-        // background-color: #ff0000;
-        width: 6px;
-        height: 6px;
-        top: 10px;
-        border-radius: 50%;
-        margin-left: 5px;
     }
 }

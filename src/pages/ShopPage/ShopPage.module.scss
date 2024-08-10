@@ -1,57 +1,22 @@
 @import "../../styles/solors.scss";
 .containerMain {
-    // max-width: 1100px;
-    // margin: 0 auto;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     padding: 0 50px;
-    // margin-left: 10px;
-}
-.containerShopPage {
-    margin-top: 20px;
-    // padding: 0 15px;
-    display: flex;
-    // justify-content: space-between;
-    gap: 25px;
-    margin-bottom: 40px;
-    .containerFilter {
-        min-width: 220px;
-        .NameFilter {
-            button {
-                text-transform: capitalize;
-                background-color: #e2e1e1;
-                // background-color: #757;
-            }
-        }
-        .allCategory {
-            background-color: #f0b1b1;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            text-transform: capitalize;
-        }
-
-        .castomToogle {
-            padding: 17px;
-            // background-color: #ac3737;
-        }
+    transition: all 0.2s;
+    @media (max-width: 900px) {
+        padding: 0 20px;
     }
-    .containerProducts {
-        // background-color: #53a9d1;
-        // width: 1000px;
-        // height: calc(100vh - 80px);
-        // width: 100%;
-        width: 840px;
-        .paginate {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-        }
-        .products {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+    .containerShopPage {
+        margin-top: 20px;
+        display: flex;
+        gap: 25px;
+        margin-bottom: 40px;
+        @media (max-width: 830px) {
+            flex-direction: column;
+            gap: 15px;
         }
         .title {
             color: $primary-dark;
@@ -60,210 +25,316 @@
             line-height: 100%; /* 25px */
             text-transform: uppercase;
             margin-bottom: 20px;
+            display: none;
+            @media (max-width: 830px) {
+                display: block;
+            }
         }
-        .sortProducts {
-            margin-bottom: 30px;
-            .filterSizePriceBrand {
-                display: flex;
-                gap: 10px;
+        .containerFilter {
+            min-width: 220px;
+            transition: all 0.2s;
+            // display: none;
+            @media (max-width: 1070px) {
+                min-width: 180px;
             }
-            .orderContainer {
-                margin-top: 10px;
+            @media (max-width: 830px) {
+                display: none;
+            }
+        }
+        .containerProducts {
+            max-width: 840px;
+            .paginate {
+                margin-top: 40px;
                 display: flex;
-                // flex-direction: column;
-                justify-content: space-between;
+                justify-content: center;
+            }
+            .products {
+                display: flex;
+                justify-content: center;
                 align-items: center;
-                .countProducts {
-                    color: $gray;
-                }
             }
-            .orderProduct {
-                width: 260px;
-                display: flex;
-                justify-content: start;
-                border: none;
-                background-color: $white;
+            .title {
                 color: $primary-dark;
-                padding: 0;
-                span {
-                    color: $gray;
-                }
-                .superColor {
-                    text-transform: capitalize;
-                    background-color: #ffffff;
-                    width: 100%;
-                    padding: 0;
-                    padding-top: 10px;
-                    gap: 15px;
-
-                    .showAllBrand {
-                        background-color: #ffcbcb;
-                    }
-                    .buttonChengeSizes {
-                        border: none;
-                        background: $primary-dark;
-                        width: 100%;
-                        height: 34px;
-                        font-size: 14px;
-                        line-height: 19px;
-                        letter-spacing: 0em;
-                        text-align: center;
-                        color: $white;
-                        text-transform: uppercase;
-                    }
-                    .groupSizes {
-                        width: 80%;
-                        margin: auto;
-                        display: flex;
-                        justify-content: center;
-                        gap: 5px;
-                        flex-wrap: wrap;
-                        margin-bottom: 15px;
-
-                        label {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
-                            width: 35px;
-                            height: 35px;
-                            color: $primary-dark;
-                            font-size: 12px;
-                            line-height: 170%;
-                            border: 1px solid $extra-light;
-                            background: #fff;
-                            cursor: pointer;
-                            text-transform: uppercase;
-                        }
-                        input {
-                            display: none;
-
-                            &:checked + label {
-                                background-color: $extra-light;
-                            }
-                        }
-                    }
-                    // a {
-                    //     transition: all 0.1s;
-                    //     &:hover {
-                    //         background-color: #d38b8b;
-                    //     }
-                    // }
+                font-size: 25px;
+                font-weight: 500;
+                line-height: 100%; /* 25px */
+                text-transform: uppercase;
+                margin-bottom: 20px;
+                display: block;
+                @media (max-width: 830px) {
+                    display: none;
                 }
             }
-
-            // .dropDownToogle {
-            //     text-transform: capitalize;
-            //     width: 185px;
-            //     height: 40px;
-            //     border-radius: 0;
-            //     border: 1px solid $extra-light;
-            //     background-color: #fff;
-            //     // background-color: #e96363;
-            //     color: $primary-dark;
-            //     font-size: 14px;
-            // }
-            .superColor {
-                text-transform: capitalize;
-                background-color: #ffffff;
-                width: 100%;
-                padding: 0;
-                padding-top: 10px;
-                gap: 15px;
-
-                .showAllBrand {
+            .sortProducts {
+                margin-bottom: 30px;
+                @media (max-width: 830px) {
+                    // display: none;
                     display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     justify-content: center;
-                    border: none;
-                    background: $primary-dark;
+                    gap: 20px;
+
+                    // display: flex;
+                }
+                .filterButton {
                     width: 100%;
-                    height: 34px;
-                    font-size: 14px;
-                    line-height: 19px;
-                    letter-spacing: 0em;
-                    text-align: center;
-                    color: $white;
-                    text-transform: uppercase;
-                    transition: all 0.2s;
-                    &:hover {
-                        transition: all 0.5s;
-                        background: #295a70;
+                    background-color: $white;
+                    height: 40px;
+                    font-size: 16px;
+                    border: 1px solid $line-grey;
+                    display: none;
+                    @media (max-width: 830px) {
+                        display: block;
                     }
                 }
-                .buttonChengeSizes {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    border: none;
-                    background: $primary-dark;
+                .sortButton {
                     width: 100%;
-                    height: 34px;
-                    font-size: 14px;
-                    line-height: 19px;
-                    letter-spacing: 0em;
-                    text-align: center;
-                    color: $white;
-                    text-transform: uppercase;
-                }
-                .groupSizes {
-                    width: 80%;
-                    margin: auto;
-                    display: flex;
-                    justify-content: center;
-                    gap: 5px;
-                    flex-wrap: wrap;
-                    margin-bottom: 15px;
+                    background-color: $white;
 
-                    label {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        width: 35px;
-                        height: 35px;
-                        color: $primary-dark;
-                        font-size: 12px;
-                        line-height: 170%;
-                        border: 1px solid $extra-light;
-                        background: #fff;
-                        cursor: pointer;
-                        text-transform: uppercase;
+                    border: 1px solid $line-grey;
+                    height: 40px;
+
+                    display: none;
+                    @media (max-width: 830px) {
+                        display: block;
                     }
-                    input {
+                }
+                .filterSizePriceBrand {
+                    display: flex;
+                    gap: 10px;
+                    @media (max-width: 830px) {
                         display: none;
-
-                        &:checked + label {
-                            background-color: $extra-light;
+                    }
+                }
+                .orderContainer {
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    @media (max-width: 830px) {
+                        display: none;
+                    }
+                    .countProducts {
+                        color: $gray;
+                        @media (max-width: 830px) {
+                            display: none;
                         }
                     }
                 }
-                // a {
-                //     transition: all 0.1s;
-                //     &:hover {
-                //         background-color: #d38b8b;
+                // .orderProduct {
+                //     width: 260px;
+                //     display: flex;
+                //     justify-content: start;
+                //     border: none;
+                //     background-color: $white;
+                //     background-color: blue;
+                //     color: $primary-dark;
+                //     padding: 0;
+                //     span {
+                //         color: $gray;
+                //     }
+                //     .superColor {
+                //         text-transform: capitalize;
+                //         background-color: #ffffff;
+                //         width: 100%;
+                //         padding: 0;
+                //         padding-top: 10px;
+                //         gap: 15px;
+
+                //         .showAllBrand {
+                //             background-color: #ffcbcb;
+                //         }
+                //         .buttonChengeSizes {
+                //             border: none;
+                //             background: $primary-dark;
+                //             width: 100%;
+                //             height: 34px;
+                //             font-size: 14px;
+                //             line-height: 19px;
+                //             letter-spacing: 0em;
+                //             text-align: center;
+                //             color: $white;
+                //             text-transform: uppercase;
+                //         }
+                //         .groupSizes {
+                //             width: 80%;
+                //             margin: auto;
+                //             display: flex;
+                //             justify-content: center;
+                //             gap: 5px;
+                //             flex-wrap: wrap;
+                //             margin-bottom: 15px;
+
+                //             label {
+                //                 display: flex;
+                //                 flex-direction: column;
+                //                 align-items: center;
+                //                 justify-content: center;
+                //                 width: 35px;
+                //                 height: 35px;
+                //                 color: $primary-dark;
+                //                 font-size: 12px;
+                //                 line-height: 170%;
+                //                 border: 1px solid $extra-light;
+                //                 background: #fff;
+                //                 cursor: pointer;
+                //                 text-transform: uppercase;
+                //             }
+                //             input {
+                //                 display: none;
+
+                //                 &:checked + label {
+                //                     background-color: $extra-light;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+
+                // .superColor {
+                //     text-transform: capitalize;
+                //     background-color: #ffffff;
+                //     width: 100%;
+                //     padding: 0;
+                //     padding-top: 10px;
+                //     gap: 15px;
+
+                //     .showAllBrand {
+                //         display: flex;
+                //         flex-direction: column;
+                //         align-items: center;
+                //         justify-content: center;
+                //         border: none;
+                //         background: $primary-dark;
+                //         width: 100%;
+                //         height: 34px;
+                //         font-size: 14px;
+                //         line-height: 19px;
+                //         letter-spacing: 0em;
+                //         text-align: center;
+                //         color: $white;
+                //         text-transform: uppercase;
+                //         transition: all 0.2s;
+                //         &:hover {
+                //             transition: all 0.5s;
+                //             background: #295a70;
+                //         }
+                //     }
+                //     .buttonChengeSizes {
+                //         display: flex;
+                //         flex-direction: column;
+                //         align-items: center;
+                //         justify-content: center;
+                //         border: none;
+                //         background: $primary-dark;
+                //         width: 100%;
+                //         height: 34px;
+                //         font-size: 14px;
+                //         line-height: 19px;
+                //         letter-spacing: 0em;
+                //         text-align: center;
+                //         color: $white;
+                //         text-transform: uppercase;
+                //     }
+                //     .groupSizes {
+                //         width: 80%;
+                //         margin: auto;
+                //         display: flex;
+                //         justify-content: center;
+                //         gap: 5px;
+                //         flex-wrap: wrap;
+                //         margin-bottom: 15px;
+
+                //         label {
+                //             display: flex;
+                //             flex-direction: column;
+                //             align-items: center;
+                //             justify-content: center;
+                //             width: 35px;
+                //             height: 35px;
+                //             color: $primary-dark;
+                //             font-size: 12px;
+                //             line-height: 170%;
+                //             border: 1px solid $extra-light;
+                //             background: #fff;
+                //             cursor: pointer;
+                //             text-transform: uppercase;
+                //         }
+                //         input {
+                //             display: none;
+
+                //             &:checked + label {
+                //                 background-color: $extra-light;
+                //             }
+                //         }
                 //     }
                 // }
             }
         }
     }
+
+    .navigationHistory {
+        li {
+            cursor: pointer;
+
+            text-transform: capitalize;
+        }
+        li:last-child {
+            color: $gray;
+            cursor: default;
+        }
+        li:nth-child(2) {
+            cursor: pointer;
+        }
+        display: flex;
+        gap: 30px;
+    }
 }
+.offcanvasSort {
+    height: 300px !important;
+    width: 100%;
+    .headerOffcanvasSort {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: 30px 0;
+    }
 
-.navigationHistory {
-    li {
-        cursor: pointer;
+    .headerContainer {
+        flex: 1;
+        position: relative;
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: $line-grey;
+        }
+        .headerTitle {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 18px;
+            text-align: center;
+            color: $primary-dark;
+        }
+    }
 
-        text-transform: capitalize;
+    button {
+        position: absolute;
+        right: 30px;
     }
-    li:last-child {
-        color: $gray;
-        cursor: default;
+    .offcanvasBody {
+        width: 100%;
+        margin-top: 40px;
+        margin-bottom: 60px;
+        text-align: center;
+        div {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 28px;
+            cursor: pointer;
+        }
     }
-    li:nth-child(2) {
-        cursor: pointer;
-    }
-    display: flex;
-    gap: 30px;
 }

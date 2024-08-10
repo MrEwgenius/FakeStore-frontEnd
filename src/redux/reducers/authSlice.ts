@@ -1,85 +1,74 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Rootstate } from '../store';
-import { ACCESS_TOKEN_KEY } from 'src/utils/constans';
-import { AddSunscribePayload, addUserAddressPayload, addUserNameLastNamePayload, SignInUserPayload, SignUpUserPayload, UserInfoData } from '../@types';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Rootstate } from "../store";
+import { ACCESS_TOKEN_KEY } from "src/utils/constans";
+import {
+    AddSunscribePayload,
+    addUserAddressPayload,
+    addUserNameLastNamePayload,
+    SignInUserPayload,
+    SignUpUserPayload,
+    UserInfoData,
+} from "../@types";
 
 type initialState = {
     userRole: string;
-    accessToken: string,
-    userInfo: UserInfoData | null,
-
-}
+    accessToken: string;
+    userInfo: UserInfoData | null;
+};
 
 const initialState: initialState = {
-    accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || '',
+    accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || "",
     userInfo: null,
-    userRole: ''
-
+    userRole: "",
 };
 const authSlice = createSlice({
-    name: 'authReducer',
+    name: "authReducer",
     initialState,
     reducers: {
+        signUpUser: (_, __: PayloadAction<SignUpUserPayload>) => {},
 
-        signUpUser: (_, __: PayloadAction<SignUpUserPayload>) => {
-        },
-
-        subscribeUser: (_, __: PayloadAction<AddSunscribePayload>) => { },
-        signInUser: (_, __: PayloadAction<SignInUserPayload>) => { },
-        addUserAddress: (_, __: PayloadAction<addUserAddressPayload>) => { },
-        addUserNameLastName: (_, __: PayloadAction<addUserNameLastNamePayload>) => { },
+        subscribeUser: (_, __: PayloadAction<AddSunscribePayload>) => {},
+        signInUser: (_, __: PayloadAction<SignInUserPayload>) => {},
+        addUserAddress: (_, __: PayloadAction<addUserAddressPayload>) => {},
+        addUserNameLastName: (
+            _,
+            __: PayloadAction<addUserNameLastNamePayload>
+        ) => {},
 
         setAccessToken: (state, action: PayloadAction<string>) => {
-            state.accessToken = action.payload
+            state.accessToken = action.payload;
         },
         setUserRole: (state, action: PayloadAction<string>) => {
             state.userRole = action.payload;
-            console.log('userrole', state.userRole);
-
+            console.log("userrole", state.userRole);
         },
-        // activateUser: (_, __: PayloadAction<ActivateUserPayload>) => { },
 
-        // getUserInfo: (_, __: PayloadAction<undefined>) => { },
-        // setUserInfo: (state, action: PayloadAction<UserInfoData | null>) => {
-        //     state.userInfo = action.payload
-        // },
-        getUserInfo: (_, __: PayloadAction<undefined>) => { },
+        getUserInfo: (_, __: PayloadAction<undefined>) => {},
         setUserInfo: (state, action: PayloadAction<UserInfoData | null>) => {
-            state.userInfo = action.payload
-
-
+            state.userInfo = action.payload;
         },
 
-        logoutUser: (_, __: PayloadAction<undefined>) => { },
-        // resetPassword: (_, __: PayloadAction<ResetPasswordPayload>) => { },
-        // resetPasswordConfirmation: (_, __: PayloadAction<ResetPasswordConfirmationDataPayload>) => { },
-
+        logoutUser: (_, __: PayloadAction<undefined>) => {},
     },
-})
+});
 
 export const {
     signUpUser,
     signInUser,
     setAccessToken,
     setUserRole,
-    // activateUser,
-    // setUserInfo,
-    // getUserInfo,
     logoutUser,
     getUserInfo,
     setUserInfo,
     addUserAddress,
     addUserNameLastName,
     subscribeUser,
-
-    // resetPassword,
-    // resetPasswordConfirmation,
-} = authSlice.actions
+} = authSlice.actions;
 
 export const AuthSelectors = {
     getLoggedIn: (state: Rootstate) => !!state.authReducer.accessToken,
     getUserRole: (state: Rootstate) => state.authReducer.userRole,
     getUserInfo: (state: Rootstate) => state.authReducer.userInfo,
-}
+};
 
-export default authSlice.reducer
+export default authSlice.reducer;

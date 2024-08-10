@@ -120,8 +120,6 @@ const CardItem: FC<CardsListProps> = ({ id, name, img, price, onSavedClick, clic
                 <div className={style.price}> {price}$</div>
 
             </div>
-
-
         </div>
     )
 }

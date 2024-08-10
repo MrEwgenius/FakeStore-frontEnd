@@ -5,7 +5,7 @@ import { subscribeUser } from "src/redux/reducers/authSlice";
 import { ProductSelectors } from "src/redux/reducers/productSlice";
 import check from '../../assets/check-user.svg'
 import { CheckBox } from "src/assets/CheckBox";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
 
 const SubscribeInner = () => {
@@ -20,7 +20,6 @@ const SubscribeInner = () => {
         );
     };
     const location = useLocation();
-    console.log(location);
 
     const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && inpValue) {
@@ -60,6 +59,16 @@ const SubscribeInner = () => {
         }
 
     }
+    const clickOnPopularQuestions = () => {
+
+        if (location.pathname === RoutesList.PopularQuestions) {
+            window.scrollTo(0, 0);
+        } else {
+
+            navigate(RoutesList.PopularQuestions)
+        }
+
+    }
 
     return (
         <div
@@ -86,7 +95,7 @@ const SubscribeInner = () => {
             </div>
             <div className={style.infoFakeStore}>
                 <div onClick={clickOnAboutUs}>О нас</div>
-                <div>Распространенные вопросы</div>
+                <div onClick={clickOnPopularQuestions}>Распространенные вопросы</div>
                 <div onClick={clickOnBrand}>Бренды</div>
             </div>
         </div>

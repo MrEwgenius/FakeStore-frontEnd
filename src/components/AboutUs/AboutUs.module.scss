@@ -1,4 +1,32 @@
 @import "../../styles/solors.scss";
+.navigationHistory {
+    display: flex;
+    gap: 20px;
+    margin-left: 50px;
+    align-items: center;
+    margin-top: 5px;
+    li {
+        position: relative;
+        cursor: pointer;
+        text-transform: capitalize;
+        &:first-child::before {
+            pointer-events: none;
+            position: absolute;
+            content: "";
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            right: -12px;
+            top: 10px;
+            background-color: $primary-dark;
+        }
+    }
+    li:last-child {
+        color: $extra-light;
+        font-size: 15px;
+        cursor: default;
+    }
+}
 .containerAboutUs {
     max-width: 1440px;
     display: flex;

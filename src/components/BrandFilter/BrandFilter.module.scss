@@ -1,6 +1,18 @@
 @import "../../styles/solors.scss";
 
 .containerBrandFilter {
+    @media (max-width: 830px) {
+        display: block;
+        div {
+            width: 100%;
+        }
+    }
+    .dropdown {
+        @media (max-width: 830px) {
+            display: flex;
+            flex-direction: column;
+        }
+    }
     .dropDownToogle {
         text-transform: capitalize;
         width: 185px;
@@ -8,14 +20,49 @@
         border-radius: 0;
         border: 1px solid $extra-light;
         background-color: #fff;
-        // background-color: #e96363;
         color: $primary-dark;
         font-size: 14px;
+        img {
+            display: none;
+        }
 
         &:active {
             background-color: transparent;
             color: $primary-dark;
             border-color: $extra-light;
+        }
+        @media (max-width: 830px) {
+            background-color: $extra-light;
+            border-radius: 10px;
+            font-size: 16px;
+            height: 52px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            img {
+                object-fit: cover;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-self: center;
+                width: 20px;
+                height: 20px;
+                transition: all 0.4s;
+                display: block;
+            }
+            .showIcon {
+                transform: rotate(-180deg);
+            }
+            .closeIcon {
+            }
+
+            &::after {
+                content: "";
+                display: none;
+            }
         }
     }
     .superColor {
@@ -25,13 +72,18 @@
         padding: 0;
         padding-top: 10px;
         gap: 15px;
+        // max-height: 250px;
+        // overflow-y: scroll;
         a {
             &:hover {
                 background-color: $extra-light;
             }
-            
         }
-        // background-color: red;
+        @media (max-width: 830px) {
+            margin-top: 10px;
+            position: relative !important;
+            transform: translate(0 ) !important;
+        }
 
         .showAllBrand {
             display: flex;

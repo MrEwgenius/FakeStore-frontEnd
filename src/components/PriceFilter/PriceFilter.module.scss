@@ -2,6 +2,19 @@
 
 .containerPrice {
     display: inline;
+    @media (max-width: 830px) {
+        display: block;
+        div {
+            width: 100%;
+        }
+    }
+
+    .dropdown {
+        @media (max-width: 830px) {
+            display: flex;
+            flex-direction: column;
+        }
+    }
     .dropDownToogle {
         text-transform: capitalize;
         width: 185px;
@@ -14,6 +27,9 @@
         .show {
             background-color: #722121;
         }
+        img {
+            display: none;
+        }
         // &:hover {
         //     background: transparent;
         //     color: $primary-dark;
@@ -23,6 +39,39 @@
             background: transparent;
             color: $primary-dark;
             border-color: $extra-light;
+        }
+        @media (max-width: 830px) {
+            background-color: $extra-light;
+            border-radius: 10px;
+            font-size: 16px;
+            height: 52px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            img {
+                object-fit: cover;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-self: center;
+                width: 20px;
+                height: 20px;
+                transition: all 0.4s;
+                display: block;
+            }
+            .showIcon {
+                transform: rotate(-180deg);
+            }
+            .closeIcon {
+            }
+
+            &::after {
+                content: "";
+                display: none;
+            }
         }
         // &:focus-visible {
         //     background: transparent;
@@ -42,6 +91,12 @@
         padding: 0;
         padding-top: 10px;
         gap: 15px;
+        @media (max-width: 830px) {
+            margin-top: 10px;
+            // display: block;
+            position: relative !important;
+            transform: translate(0) !important;
+        }
         .buttonChengeSizes {
             display: flex;
             flex-direction: column;

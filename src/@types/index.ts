@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export type ProductImage = {
     id: number;
@@ -6,34 +6,31 @@ export type ProductImage = {
     imageUrl: string;
     createdAt: string;
     updatedAt: string;
-}
+};
 
 export type ProductTypes = {
-    id: number,
-    name: string,
-    price: number,
-    img: string,
-    ratting: number,
+    id: number;
+    name: string;
+    price: number;
+    img: string;
+    ratting: number;
     // brandId: string,
     // typeId: string,
-    gender: string,
-    clothingType: string,
-    brandName: string,
-    typeName: string,
-    size: string[],
-    product_images: ProductImage[]
-    image: string[],
-    sizeBasketProduct: string,
+    gender: string;
+    clothingType: string;
+    brandName: string;
+    typeName: string;
+    size: string[];
+    product_images: ProductImage[];
+    image: string[];
+    sizeBasketProduct: string;
     order_product: {
-
-        quantity: number,
-        price: number,
-        orderId: number,
-        productId: number
-    }
-
-
-}
+        quantity: number;
+        price: number;
+        orderId: number;
+        productId: number;
+    };
+};
 
 // export type order_product = {
 //     quantity: number,
@@ -43,26 +40,22 @@ export type ProductTypes = {
 // }
 
 export type GetFilterProductsPayload = {
-    filter: string,
-}
-
+    filter: string;
+};
 
 export type TypeTypes = {
-    id: string,
-    name: string,
-
-}
+    id: string;
+    name: string;
+};
 export type BrandTypes = {
-    id: string,
-    name: string,
-
-}
+    id: string;
+    name: string;
+};
 export type SizeBasketProduct = {
-    productId: number,
+    productId: number;
 
-    sizeBasketProduct: string
-}
-
+    sizeBasketProduct: string;
+};
 
 export type ProductListTypes = ProductTypes[];
 
@@ -73,7 +66,7 @@ type OrderProduct = {
     createdAt: string;
     updatedAt: string;
     products: ProductTypes[];
-}
+};
 export type OrderProducts = OrderProduct[];
 
 export type SizeBasketProductTypes = SizeBasketProduct[];
@@ -81,66 +74,51 @@ export type TypeListTypes = TypeTypes[];
 export type BrandListTypes = BrandTypes[];
 
 export type BasketProductsData = {
-
-    products: ProductListTypes,
-    basketItems: SizeBasketProductTypes
-
-}
+    products: ProductListTypes;
+    basketItems: SizeBasketProductTypes;
+};
 
 export type addBasketProduct = {
-
-    id: number,
-    sizeBasketProduct: string,
-
-}
+    id: number;
+    sizeBasketProduct: string;
+};
 
 export type GetUserInfo = {
-
-    token: string,
-    role: string,
-    email: string,
-    userName: string,
-    userLastName: string,
-    adress: string,
-
-}
-
+    token: string;
+    role: string;
+    email: string;
+    userName: string;
+    userLastName: string;
+    adress: string;
+};
 
 export type SetProductListPayload = {
-    total: number
-    product: ProductListTypes,
+    total: number;
+    product: ProductListTypes;
     isOverwrite?: boolean;
-    message?: string
+    message?: string;
+};
 
-}
-
-export type SetSearchedPostsPayload = SetProductListPayload
-export type addBasketProductPayload = addBasketProduct
+export type SetSearchedPostsPayload = SetProductListPayload;
+export type addBasketProductPayload = addBasketProduct;
 
 export type GetProductResponsData = {
-    results: ProductListTypes,
-
-}
+    results: ProductListTypes;
+};
 
 export enum SaveStatus {
-
-    Saved = 'saved',
-    NotSaved = 'notSaved',
-
+    Saved = "saved",
+    NotSaved = "notSaved",
 }
 
 export type DataBrand = {
-
-    brandName: string
-
-}
+    brandName: string;
+};
 
 export type DataType = {
-
-    typeName: string
-
-}
+    typeName: string;
+};
 export type PayloadWithDataAndCallback<Data> = {
-    data: Data,
-}
-export type DeleteProductPayload = PayloadWithDataAndCallback<number>
+    data: Data;
+};
+export type DeleteProductPayload = PayloadWithDataAndCallback<number>;

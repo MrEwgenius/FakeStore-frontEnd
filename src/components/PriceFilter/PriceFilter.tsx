@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import style from './PriceFilter.module.scss'
 import { ButtonGroup, Dropdown } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { getProductLister } from "src/redux/reducers/productSlice";
 import { useNavigate } from "react-router-dom";
+import OpenIcon from '../../assets/open.svg';
+
 
 
 type PriceFilterProps = {
@@ -62,6 +64,7 @@ const PriceFilter = ({
 
     const handlePriceClick = (price: string[],) => {
         setPrice(price)
+        setShow(!show);
         const newPath = buildNewPath(price);
         setPage(1)
         dispatch(getProductLister({
@@ -85,14 +88,25 @@ const PriceFilter = ({
 
     };
 
+    const [show, setShow] = useState(false)
+
+
     return (
         <div className={style.containerPrice}>
-            <Dropdown as={ButtonGroup}>
+            <Dropdown
+                className={style.dropdown}
+                show={show}
+                onToggle={() => {
+                    setShow(!show)
+                }}
+                as={ButtonGroup}
+            >
                 <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-3">
                     {priceRange && priceRange.length
                         ? ` от ${priceRange[0]} до ${priceRange[1]}$`
                         : t('price')
                     }
+                    <img className={`${show ? style.showIcon : style.closeIcon}`} src={OpenIcon} alt="toggle-icon" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu className={style.superColor}>
 

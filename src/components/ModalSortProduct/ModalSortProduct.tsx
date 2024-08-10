@@ -1,12 +1,15 @@
-import React, { FC } from "react";
-import style from './SortFilter.module.scss'
-import { ButtonGroup, Dropdown } from "react-bootstrap";
+import React, { FC, useEffect, useState } from "react"
+import style from './ModalSortProduct.module.scss';
+import { Offcanvas } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getProductLister } from "src/redux/reducers/productSlice";
 
-type SortFilterProps = {
+
+type ModalSortProductProps = {
+    show: boolean;
+    handleClose: () => void;
     selectedCategory?: string;
     selectedBrand?: string;
     checkedSizes: string[];
@@ -16,7 +19,9 @@ type SortFilterProps = {
     setOrder: (order?: string) => void;
 }
 
-const SortFilter: FC<SortFilterProps> = ({
+const ModalSortProduct: FC<ModalSortProductProps> = ({
+    show,
+    handleClose,
     selectedCategory,
     selectedBrand,
     checkedSizes,
@@ -25,6 +30,7 @@ const SortFilter: FC<SortFilterProps> = ({
     setPage,
     setOrder,
 }) => {
+
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -40,6 +46,7 @@ const SortFilter: FC<SortFilterProps> = ({
         const option = sortOptions.find(opt => opt.id === order);
         return option ? option.name : '';
     };
+    
 
     const buildNewPath = (order?: string) => {
         let newPath = '/products/filter';
@@ -80,37 +87,29 @@ const SortFilter: FC<SortFilterProps> = ({
     };
 
 
+
     return (
-        <div className={style.containerSort}>
-            <Dropdown className={style.orderProduct} as={ButtonGroup}>
-                <Dropdown.Toggle
-                    className={(style.dropDownToogle, style.orderProduct)}
-                    id="dropdown-custom-4"
-                >
-                    <span>Cортировать:</span>{sortOrder ? getLabelByOrder(sortOrder) : ' '}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className={style.superColor}>
+        <Offcanvas className={style.offcanvasSort} placement={'bottom'} name={'bottom'} show={show} onHide={handleClose} >
+            <Offcanvas.Header className={style.headerOffcanvasSort} closeButton>
+                <div className={style.headerContainer}>
+                    <div className={style.headerTitle}>Сортировка</div>
+                </div>
+            </Offcanvas.Header>
+            <Offcanvas.Body className={style.offcanvasBody}>
+                {sortOptions.map(option => (
+                    <div
+                        key={option.id + option.name}
+                        className={`${style.sortOption} ${sortOrder === option.id ? style.selected : ''}`}
 
-                    {sortOptions.map(option => (
-                        <Dropdown.Item
-                            key={option.id + option.name}
-                            onClick={() => handleSortOrderClick(option.id)}
-                            eventKey={option.id}
-                        >
-                            {option.name}
-                        </Dropdown.Item>
-                    ))}
-                    <Dropdown.Item
-                        className={style.buttonResertSort}
-                        onClick={() => handleSortOrderClick()}
+                        onClick={() => handleSortOrderClick(option.id)}
                     >
-                        {'Сбросить'}
-                    </Dropdown.Item>
+                        {option.name}
+                    </div>
+                ))}
+                
+            </Offcanvas.Body>
+        </Offcanvas>
+    )
+}
 
-                </Dropdown.Menu>
-            </Dropdown>{'   '}
-        </div>
-    );
-};
-
-export default SortFilter;
+export default ModalSortProduct;

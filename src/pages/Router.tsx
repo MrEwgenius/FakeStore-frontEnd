@@ -25,6 +25,7 @@ import OrderConfirmation from "src/components/OrderConfirmation/OrderConfirmatio
 import AboutUs from "src/components/AboutUs/AboutUs";
 import SectionAboutUs from "src/components/SectionAboutUs/SectionAboutUs";
 import BrandInfo from "src/components/BrandInfo/BrandInfo";
+import PopularQuestions from "src/components/PopularQuestions/PopularQuestions";
 
 export enum RoutesList {
 
@@ -48,6 +49,7 @@ export enum RoutesList {
     OrderHistory = '/user/orderhistory',
     AboutUs = '/about',
     BrandInfo = '/brandinfo',
+    PopularQuestions = '/popularquestions',
 
 
     Cards = '/cards',
@@ -67,6 +69,7 @@ const Router = () => {
 
                     <Route path={RoutesList.AboutUs} element={<AboutUs />} />
                     <Route path={RoutesList.BrandInfo} element={<BrandInfo />} />
+                    <Route path={RoutesList.PopularQuestions} element={<PopularQuestions />} />
                     <Route path={RoutesList.Filter} element={<ShopPage />} />
                     <Route path={RoutesList.Home} element={<>
                         <Banner />

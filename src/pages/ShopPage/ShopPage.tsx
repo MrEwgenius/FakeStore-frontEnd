@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Pagination, } from "react-bootstrap";
+import { Offcanvas, Pagination, } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,8 @@ import SizeFilter from "src/components/SizeFilter/SizeFilter";
 import PriceFilter from "src/components/PriceFilter/PriceFilter";
 import SortFilter from "src/components/SortFilter/SortFilter";
 import BrandFilter from "src/components/BrandFilter/BrandFilter";
+import ModalSortProduct from "src/components/ModalSortProduct/ModalSortProduct";
+import ModalFilterProducts from "src/components/ModalFilterProducts/ModalFilterProducts";
 
 const ShopPage = () => {
 
@@ -56,7 +58,7 @@ const ShopPage = () => {
         }))
 
 
-    }, [dispatch,]);
+    }, [dispatch]);
 
 
     useEffect(() => {
@@ -116,6 +118,28 @@ const ShopPage = () => {
         );
     }
 
+    const [showSort, setShowSort] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
+
+    const handleCloseSort = () => setShowSort(false);
+    const handleCloseFilter = () => setShowFilter(false);
+    const handleShow = () => setShowSort(true);
+
+    const clickOnSortButton = () => {
+
+        setShowSort(!showSort)
+
+    }
+    const clickOnFilterButton = () => {
+
+        setShowFilter(!showFilter)
+
+    }
+
+    useEffect(() => {
+        setShowSort(false)
+    }, [location])
+
     return (
         <div className={style.containerMain}>
             <ul className={style.navigationHistory}>
@@ -134,11 +158,12 @@ const ShopPage = () => {
                 }
             </ul>
             <div className={style.containerShopPage}>
+                <div className={style.title}>
+                    {selectedCategory ? selectedCategory : 'Одежда'}
+                </div>
                 <div className={style.containerFilter}>
-
                     <CategoryFilter
                         typeProducts={typeProduct}
-                        selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
                         selectedBrand={selectedBrand}
                         checkedSizes={checkedSizes}
@@ -152,6 +177,8 @@ const ShopPage = () => {
                         {selectedCategory ? selectedCategory : 'Одежда'}
                     </div>
                     <div className={style.sortProducts}>
+                        <button onClick={clickOnFilterButton} className={style.filterButton} >Фильтр</button>
+                        <button onClick={clickOnSortButton} className={style.sortButton} >Сортировать</button>
                         <div className={style.filterSizePriceBrand}>
                             <SizeFilter
                                 selectedCategory={selectedCategory}
@@ -208,6 +235,37 @@ const ShopPage = () => {
                     </Pagination>
                 </div>
             </div >
+
+            <ModalSortProduct
+                selectedCategory={selectedCategory}
+                selectedBrand={selectedBrand}
+                priceRange={priceRange}
+                checkedSizes={checkedSizes}
+                sortOrder={sortOrder}
+                setPage={setPage}
+                setOrder={setsortOrder}
+                show={showSort}
+                handleClose={handleCloseSort}
+            />
+
+            <ModalFilterProducts
+                setSelectedBrand={setSelectedBrand}
+                setPrice={setPriceRange}
+                typeProducts={typeProduct}
+                setSelectedCategory={setSelectedCategory}
+                show={showFilter}
+                handleClose={handleCloseFilter}
+                selectedCategory={selectedCategory}
+                selectedBrand={selectedBrand}
+                priceRange={priceRange}
+                checkedSizes={checkedSizes}
+                sortOrder={sortOrder}
+                setChecked={setСheckedSizes}
+                setPage={setPage}
+                setOrder={setsortOrder}
+
+            />
+
         </div>
     )
 }

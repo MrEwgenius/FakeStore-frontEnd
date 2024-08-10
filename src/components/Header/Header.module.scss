@@ -1,51 +1,47 @@
 @import "../../styles/solors.scss";
 .containerHeader {
-    // background-color: #8f97e6;
     max-width: 1440px;
-    padding: 20px 15px;
+    padding: 20px 50px;
     margin: auto;
-    // flex: 1;
-
-    // height: 120px;
     border-bottom: 1px solid $extra-light;
+    transition: all 0.2s;
+
+    @media (max-width: 900px) {
+        padding: 20px;
+    }
     .containerMain {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
         .sexsave {
-            .katalog {
-                cursor: pointer;
-            }
             display: flex;
             align-items: center;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             gap: 65px;
             color: $primary-dark;
+            @media (max-width: 900px) {
+                display: none;
+            }
+            .katalog {
+                cursor: pointer;
+            }
             .label {
                 display: flex;
                 align-items: center;
-                height: 35px;
+                height: 30px;
                 position: relative;
-                label {
-                    cursor: pointer;
-                }
                 input {
                     position: relative;
                     width: 300px;
-                    // background-color: #8f97e6;
-                    // padding: 10px 5px;
                     padding: 0 5px;
-                    // height: 30px;
                     height: 100%;
-                    border-radius: 25px;
                     border: none;
-                    border: 1px solid $gray;
-                    // border-bottom: 1px solid $primary-dark;
+                    border-bottom: 1px solid $primary-dark;
                     outline: none;
                     &:focus-visible {
-                        background-color: rgb(233, 233, 233);
+                        background-color: $line-grey;
                     }
                 }
                 .searchSVG {
@@ -59,13 +55,12 @@
                     padding: 10px;
                     max-height: 400px;
                     z-index: 1002;
-                    // overflow: scroll;
                     overflow-y: scroll;
-                    background-color: #ecebeb;
-                    width: 300px;
+                    background-color: $extra-light;
+                    width: 350px;
                     position: absolute;
                     top: 55px;
-                    left: 7px;
+                    left: 0px;
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
@@ -100,9 +95,6 @@
             }
         }
         .language {
-            .bold {
-                background-color: #8b5959;
-            }
             div {
                 cursor: pointer;
             }
@@ -112,8 +104,12 @@
             font-weight: 400;
             line-height: 22px;
             letter-spacing: 0.1em;
+            height: 30px;
             text-align: center;
             color: $primary-dark;
+            @media (max-width: 900px) {
+                display: none;
+            }
         }
         .logo {
             font-size: 20px;
@@ -125,6 +121,12 @@
             display: flex;
             gap: 40px;
             align-items: center;
+            @media (max-width: 430px) {
+                gap: 20px;
+            }
+            @media (max-width: 350px) {
+                gap: 10px;
+            }
             .image {
                 width: 30px;
                 height: 30px;
@@ -143,12 +145,11 @@
                 cursor: pointer;
 
                 img {
-                    // width: 18px;
                     object-fit: cover;
                 }
-                .basktProductCount{
+                .basktProductCount {
                     top: 9px;
-                    right:  0;
+                    right: 0;
                     position: absolute;
                     color: white;
                     background-color: $primary-dark;
@@ -162,67 +163,170 @@
                     justify-content: center;
                     align-items: center;
                     padding-top: 2px;
-                
                 }
             }
             .checkUser {
                 background-color: #a1dd54;
                 position: relative;
-                // &::after {
-                //     content: "";
-                //     position: absolute;
-                // }
+            }
+            .burgerMenu {
+                display: none;
+                cursor: pointer;
+                margin-left: 10px;
+                @media (max-width: 900px) {
+                    display: block;
+                }
             }
         }
     }
 }
-// .modal {
-//     border-radius: 10px;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
-// }
-// .modals {
-//     // width: 50px;
-//     position: relative;
-//     border-radius: 10px;
-// }
-// .dialog {
-//     position: absolute;
-//     left: 550px;
-//     top: 42px;
-//     // background-color: red;
+.offcanvas {
+    margin-top: 71px;
+    height: 100% !important;
+    @media (min-width: 900px) {
+        display: none;
+    }
+    .containerWrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 65px;
+        margin-top: 40px;
+        justify-content: center;
+        @media (max-width: 660px) {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .sexsave {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: start;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            gap: 65px;
+            color: $primary-dark;
+            @media (max-width: 660px) {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .katalog {
+                cursor: pointer;
+                border-bottom: 1px solid transparent;
+                line-height: 16px;
+            }
+            .label {
+                height: 24px;
+                position: relative;
+                input {
+                    position: relative;
+                    width: 350px;
+                    padding: 0 5px;
+                    height: 100%;
+                    border: none;
+                    border-bottom: 1px solid $primary-dark;
+                    outline: none;
+                    &:focus-visible {
+                        background-color: $line-grey;
+                    }
+                }
+                .searchSVG {
+                    cursor: pointer;
+                    position: absolute;
+                    right: 10px;
+                    top: -5px;
+                    width: 30px;
+                }
+                .rusultSearch {
+                    padding: 10px;
+                    max-height: 400px;
+                    z-index: 1002;
+                    overflow-y: scroll;
+                    background-color: $extra-light;
+                    width: 350px;
+                    position: absolute;
+                    top: 55px;
+                    left: 0px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    @media (max-width: 660px) {
+                        padding: 15px;
+                        // margin-bottom: 50px;
+                    }
+                    .searchContainer {
+                        cursor: pointer;
+                        padding: 10px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        gap: 20px;
+                        background-color: #e0e0e0;
+                        border: 1px solid transparent;
+                        transition: all 0.4s;
+                        img {
+                            width: 60px;
+                            height: 80px;
+                            object-fit: cover;
+                        }
+                        &:hover {
+                            border: 1px solid $gray;
+                        }
+                        
+                    }
+                    .descriptionProductSearch {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        span {
+                            text-transform: capitalize;
+                        }
+                    }
+                }
+            }
+        }
+        .language {
+            select {
+                height: 24px;
+            }
+            div {
+                cursor: pointer;
+            }
+            display: flex;
+            gap: 24px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+            letter-spacing: 0.1em;
+            text-align: center;
+            color: $primary-dark;
+            @media (max-width: 900px) {
+            }
+        }
+    }
+    .containerFilter {
+        max-width: 400px;
+        margin: 40px auto 0px;
+        padding-bottom: 40px;
 
-//     input {
-//         border: 1px solid black;
-//         outline: none;
-//         width: 900px;
+        .NameFilter {
+            button {
+                text-transform: capitalize;
+                background-color: #e2e1e1;
+                // background-color: #757;
+            }
+        }
+        .allCategory {
+            background-color: #f0b1b1;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            text-transform: capitalize;
+        }
 
-//         height: 40px;
-//         border-radius: 10px;
-//     }
-// }
-
-.modals {
-    padding: 20px;
-    min-width: 400px;
-    // width: 100%; /* Задайте ширину модального окна по вашему усмотрению */
-    // padding: 20px; /* Добавьте отступы для контента модального окна */
-    // background-color: white; /* Добавьте фоновый цвет для контейнера модального окна */
-    border-radius: 10px; /* Задайте скругление углов для контейнера модального окна */
-}
-
-.dialog {
-    // background-color: #fff;
-    max-width: 400px;
-}
-
-.dialog input {
-    width: 100%; /* Сделайте ширину поискового поля равной 100% ширины контейнера */
-    padding: 10px; /* Добавьте отступы вокруг текста внутри поля */
-    border: 1px solid #ccc; /* Добавьте границу вокруг поля */
-    border-radius: 5px; /* Скруглите углы поля */
-    outline: none; /* Уберите стандартное выделение поля */
-    box-sizing: border-box; /* Установите box-sizing: border-box для корректного учета внутренних отступов и границ */
+        .castomToogle {
+            padding: 17px;
+            // background-color: #ac3737;
+        }
+    }
 }

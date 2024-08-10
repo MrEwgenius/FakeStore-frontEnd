@@ -21,6 +21,7 @@ type CategoryFilterProps = {
     priceRange: string[];
     sortOrder?: string;
     setPage: (page: number) => void;
+    showAllProductsBitton?: boolean;
 };
 
 const CategoryFilter: FC<CategoryFilterProps> = ({
@@ -32,6 +33,7 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
     priceRange,
     sortOrder,
     setPage,
+    showAllProductsBitton,
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -42,7 +44,7 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
         if (category) newPath += `/${category.toLowerCase()}`;
         if (selectedBrand) newPath += `/${selectedBrand.toLowerCase()}`;
         if (checkedSizes.length) newPath += `/${checkedSizes}`;
-        if (priceRange &&  priceRange.length) newPath += `/${priceRange.join('-')}`;
+        if (priceRange && priceRange.length) newPath += `/${priceRange.join('-')}`;
         if (sortOrder) newPath += `/${sortOrder}`;
         return newPath;
     };
@@ -75,16 +77,18 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
         const decoratedOnClick = useAccordionButton(eventKey);
 
         return (
-            <div className={style.customToggle} onClick={(event) => decoratedOnClick(event)}>
+            <div className={classNames(style.customToggle,
+            )} onClick={(event) => decoratedOnClick(event)}>
                 {children}
             </div>
         );
     };
 
+
     return (
-        <Accordion>
+        <Accordion >
             <Accordion.Item eventKey="0">
-                <Accordion.Header className={style.NameFilter}>{t('clothes')}</Accordion.Header>
+                <Accordion.Header className={style.NameFilter}>{selectedCategory ? selectedCategory : t('clothes')}</Accordion.Header>
                 {typeProducts.map((type) => (
                     <Accordion.Body key={type.id} onClick={() => handleCategoryClick(type.name)} className={style.bodyFilter}>
                         <CustomToggle eventKey="0" >
@@ -94,7 +98,11 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
                 ))}
                 <Accordion.Body
                     onClick={() => handleCategoryClick()}
-                    className={classNames(style.bodyFilter, style.allCategory)}
+                    className={classNames(style.bodyFilter, style.allCategory,
+
+                        { [style.disabled]: !!showAllProductsBitton }
+
+                    )}
                 >
                     <CustomToggle eventKey="1">
                         <div>{t('showAll')}</div>

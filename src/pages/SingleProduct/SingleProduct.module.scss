@@ -7,270 +7,400 @@
     margin-top: 40px;
     gap: 100px;
     margin-bottom: 100px;
-}
-.carousel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    a {
-        width: 60px;
-        height: 60px;
-        top: 150px;
-    }
-}
-.mainImageWrap {
-    position: relative;
-    display: flex;
-    align-items: start;
-    gap: 10px;
-    padding: 5px;
-    // height: 678px;
-    overflow: hidden;
-    // max-height: 600px;
-    .saveImg {
-        
+    .containerWrapper {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 30px;
-        width: 30px;
-        background-color: #fff;
-        border-radius: 50%;
-        position: absolute;
-        bottom: 10px;
-        right: 8px;
-        cursor: pointer;
-    }
-    .allImages {
-        width: 85px;
-        display: flex;
-        
-        
-        flex-direction: column;
-        gap: 10px;
-        max-height: 600px;
-        overflow-y: auto;
-        &::-webkit-scrollbar {
-            width: 0; /* Ширина полосы прокрутки */
-            height: 0; /* Высота полосы прокрутки */
+        gap: 36px;
+        @media (max-width: 900px) {
+            flex-direction: column;
+            width: 100%;
+            padding: 0 20px;
+            gap: 20px;
         }
-        img {
-            width: 85px;
-            object-fit: contain;
-            cursor: pointer;
-        }
-    }
-}
-.mainImg {
-    max-width: 452px;
-
-    // height: 500px;
-    object-fit: contain;
-    height: 100%;
-}
-
-.containerCarousel {
-    max-width: 822px;
-    .titleCarousel {
-        font-size: 25px;
-        font-weight: 500;
-        line-height: 25px;
-        text-align: center;
-        text-transform: uppercase;
-        margin-bottom: 45px;
-    }
-}
-.containerWrapper {
-    display: flex;
-    gap: 36px;
-
-    .containerDescription {
-        .buttonGroup{
-            
-        }
-        .productName {
-            color: $primary-dark;
-            font-size: 25px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-            text-transform: uppercase;
-        }
-        .productType {
-            font-size: 18px;
-            font-weight: 300;
-            line-height: 21.86px;
-            color: $primary-dark;
-            opacity: 0.5;
-        }
-        .price {
-            color: $primary-dark;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-            letter-spacing: 0.81px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-        .sizes {
-            color: $primary-dark;
-            max-width: 120px;
-            font-size: 12px;
-            line-height: 170%;
-            text-decoration-line: underline;
-            cursor: pointer;
-            margin-bottom: 20px;
-            margin-top: 5px;
-            padding: 0 5px;
-        }
-        .size {
-            span {
-                color: $primary-dark;
-                font-size: 12px;
-                font-weight: 400;
-                line-height: 170%;
-                display: block;
-            }
-            .sizeTable {
-                display: inline-flex;
-                gap: 10px;
-                .groupLable {
-                    display: inline-block;
+        .containerFromImage {
+            .adaptiveScreenTitle {
+                @media (max-width: 900px) {
+                    text-align: center;
+                    .productName {
+                        color: $primary-dark;
+                        font-size: 25px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        text-transform: uppercase;
+                    }
+                    .productType {
+                        font-size: 18px;
+                        font-weight: 300;
+                        line-height: 21.86px;
+                        color: $primary-dark;
+                        opacity: 0.5;
+                    }
+                    .price {
+                        color: $primary-dark;
+                        font-size: 18px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: normal;
+                        letter-spacing: 0.81px;
+                        text-transform: uppercase;
+                        margin-bottom: 5px;
+                    }
                 }
-                label {
+                @media (min-width: 900px) {
+                    // width: 700px;
+                    display: none;
+                }
+            }
+            .mainImageWrap {
+                position: relative;
+                display: flex;
+                align-items: start;
+                gap: 10px;
+                padding: 5px;
+                // height: 678px;
+                overflow: hidden;
+                // max-height: 600px;
+                @media (max-width: 900px) {
+                    // width: 700px;
+                }
+                .saveImg {
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
                     justify-content: center;
-                    width: 35px;
-                    height: 35px;
+                    align-items: center;
+                    height: 30px;
+                    width: 30px;
+                    background-color: #fff;
+                    border-radius: 50%;
+                    position: absolute;
+                    bottom: 10px;
+                    right: 8px;
+                    cursor: pointer;
+                    @media (max-width: 900px) {
+                        display: none;
+                    }
+                }
+                .allImages {
+                    width: 85px;
+                    display: flex;
+
+                    flex-direction: column;
+                    position: relative;
+                    gap: 10px;
+                    max-height: 600px;
+                    overflow-y: auto;
+                    &::-webkit-scrollbar {
+                        width: 0;
+                        height: 0;
+                    }
+                    .imageContainer {
+                        position: relative;
+                        .saveImg {
+                            @media (min-width: 900px) {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    @media (max-width: 900px) {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+
+                        overflow-x: scroll;
+                        overflow-y: scroll;
+                        .saveImg {
+                            display: flex;
+                            z-index: 190;
+                        }
+                    }
+
+                    img {
+                        max-width: 85px;
+                        object-fit: contain;
+                        cursor: pointer;
+                        transition: all 0.3s;
+
+                        @media (max-width: 900px) {
+                            object-fit: cover;
+                            max-height: 500px;
+                            max-width: 427px;
+                        }
+                        @media (max-width: 700px) {
+                            object-fit: cover;
+                            max-height: 400px;
+                            max-width: 327px;
+                        }
+                        @media (max-width: 500px) {
+                            object-fit: cover;
+                            max-height: 300px;
+
+                            max-width: 300px;
+                        }
+                    }
+                }
+
+                .mainImg {
+                    max-width: 452px;
+
+                    // height: 500px;
+                    object-fit: contain;
+                    height: 100%;
+                    @media (max-width: 900px) {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .containerDescription {
+            @media (max-width: 900px) {
+                // display: none;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .buttonGroup {
+                @media (max-width: 900px) {
+                    width: 100%;
+                }
+                .buttonAddToBucket {
+                    border-radius: 0;
+                    width: 280px;
+                    height: 50px;
+                    color: $primary-dark;
+                    font-size: 16px;
+                    line-height: normal;
+                    text-transform: uppercase;
+                    border: 1px solid $primary-dark;
+                    background-color: #fff;
+                    transition: all 0.2s;
+                    &:hover {
+                        font-size: 17px;
+                    }
+                    @media (max-width: 900px) {
+                        margin: 0 auto;
+                        width: 80%;
+                    }
+                    @media (max-width: 500px) {
+                        margin: 0 auto;
+                        width: 100%;
+                    }
+                }
+                .buttonBuy {
+                    background-color: $primary-dark;
+                    border-radius: 0;
+                    color: $extra-light;
+                    font-size: 16px;
+                    line-height: normal;
+                    text-transform: uppercase;
+                    border: 1px solid $primary-dark;
+                    width: 280px;
+                    height: 50px;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        font-size: 17px;
+                        // transform: scale(1.01);
+                    }
+                    @media (max-width: 900px) {
+                        margin: 0 auto;
+                        width: 80%;
+                    }
+                    @media (max-width: 500px) {
+                        margin: 0 auto;
+                        width: 100%;
+                    }
+                }
+            }
+            .productName {
+                color: $primary-dark;
+                font-size: 25px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                text-transform: uppercase;
+                @media (max-width: 900px) {
+                    display: none;
+                }
+            }
+            .productType {
+                font-size: 18px;
+                font-weight: 300;
+                line-height: 21.86px;
+                color: $primary-dark;
+                opacity: 0.5;
+                @media (max-width: 900px) {
+                    display: none;
+                }
+            }
+            .price {
+                color: $primary-dark;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                letter-spacing: 0.81px;
+                text-transform: uppercase;
+                margin-bottom: 20px;
+                @media (max-width: 900px) {
+                    display: none;
+                }
+            }
+            .sizes {
+                color: $primary-dark;
+                max-width: 120px;
+                font-size: 12px;
+                line-height: 170%;
+                text-decoration-line: underline;
+                cursor: pointer;
+                margin-bottom: 20px;
+                margin-top: 5px;
+                padding: 0 5px;
+            }
+            .size {
+                span {
+                    color: $primary-dark;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 170%;
+                    display: block;
+                    @media (max-width: 900px) {
+                        text-align: center;
+                    }
+                }
+                .sizeTable {
+                    display: inline-flex;
+                    gap: 10px;
+                    .groupLable {
+                        display: inline-block;
+                    }
+                    label {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        width: 35px;
+                        height: 35px;
+                        color: $primary-dark;
+                        font-size: 12px;
+                        line-height: 170%;
+                        border: 1px solid $extra-light;
+                        background: #fff;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                    }
+                    input {
+                        display: none;
+                    }
+                    .sizeLabelActive {
+                        background-color: $gray;
+                    }
+                    .sizeLabel {
+                    }
+                }
+            }
+            .containerColors {
+                margin-bottom: 20px;
+                span {
                     color: $primary-dark;
                     font-size: 12px;
                     line-height: 170%;
-                    border: 1px solid $extra-light;
-                    background: #fff;
-                    cursor: pointer;
-                    text-transform: uppercase;
                 }
-                input {
-                    display: none;
+                .colorTable {
+                    display: flex;
+                    gap: 15px;
+                    button {
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        border: 1px solid $extra-light;
+                        background-color: #fff;
+                    }
+                    label {
+                        width: 20px;
+                        height: 20px;
+                        border: 1px solid $extra-light;
 
-                    // &:checked + label {
-                    //     background-color: $gray;
-                    // }
-                }
-                .sizeLabelActive {
-                    background-color: $gray;
-                }
-                // input[type="radio"] {
-                //     display: none;
+                        border-radius: 50%;
+                        cursor: pointer;
 
-                //     &:checked + label {
-                //         background-color: $primary-dark;
-                //     }
-                // }
+                        &:nth-child(2) {
+                            background-color: rgb(90, 201, 47);
+                        }
+
+                        &:nth-child(4) {
+                            background-color: $red;
+                        }
+
+                        &:nth-child(6) {
+                            background-color: $primary;
+                        }
+
+                        &:nth-child(8) {
+                            background-color: black;
+                        }
+                    }
+                    input[type="radio"] {
+                        display: none;
+
+                        &:checked + label {
+                            border: 3px solid rgb(138, 133, 133);
+                        }
+                    }
+                }
             }
-        }
-        .containerColors {
-            margin-bottom: 20px;
-            span {
-                color: $primary-dark;
-                font-size: 12px;
-                line-height: 170%;
-            }
-            .colorTable {
+            .paymentReturnContainer {
+                margin-top: 10px;
                 display: flex;
-                gap: 15px;
-                button {
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                    border: 1px solid $extra-light;
-                    background-color: #fff;
-                }
-                label {
-                    width: 20px;
-                    height: 20px;
-                    border: 1px solid $extra-light;
+                max-width: 280px;
 
-                    border-radius: 50%;
+                justify-content: space-between;
+                @media (max-width: 900px) {
+                    gap: 30px;
+                }
+                @media (max-width: 400px) {
+                    gap: 10px;
+                }
+
+                div {
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 23.8px;
+                    color: $primary-dark;
+                    opacity: 0.6;
                     cursor: pointer;
-
-                    &:nth-child(2) {
-                        background-color: rgb(90, 201, 47);
-                    }
-
-                    &:nth-child(4) {
-                        background-color: $red;
-                    }
-
-                    &:nth-child(6) {
-                        background-color: $primary;
-                    }
-
-                    &:nth-child(8) {
-                        background-color: black;
-                    }
-                }
-                input[type="radio"] {
-                    display: none;
-
-                    &:checked + label {
-                        border: 3px solid rgb(138, 133, 133);
-                    }
                 }
             }
         }
-        .paymentReturnContainer {
-            margin-top: 10px;
+    }
+
+    .containerCarousel {
+        display: none;
+        max-width: 822px;
+        .titleCarousel {
+            font-size: 25px;
+            font-weight: 500;
+            line-height: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 45px;
+        }
+        .carousel {
             display: flex;
-            max-width: 280px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
-            justify-content: space-between;
-
-            div {
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 23.8px;
-                color: $primary-dark;
-                opacity: 0.6;
-                cursor: pointer;
+            a {
+                width: 60px;
+                height: 60px;
+                top: 150px;
             }
-        }
-        .buttonAddToBucket {
-            border-radius: 0;
-            width: 280px;
-            height: 50px;
-            color: $primary-dark;
-            font-size: 16px;
-            line-height: normal;
-            text-transform: uppercase;
-            border: 1px solid $primary-dark;
-            background-color: #fff;
-            transition: all 0.2s;
-            &:hover {
-                font-size: 17px;
-            }
-        }
-        .buttonBuy {
-            background-color: $primary-dark;
-            border-radius: 0;
-            color: $extra-light;
-            font-size: 16px;
-            line-height: normal;
-            text-transform: uppercase;
-            border: 1px solid $primary-dark;
-            width: 280px;
-            height: 50px;
-            transition: all 0.2s;
-
-            &:hover {
-                font-size: 17px;
-                // transform: scale(1.01);
+            .containerWrapperCarousel {
+                display: flex;
+                gap: 35px;
             }
         }
     }
@@ -278,6 +408,10 @@
 
 .modalContentTableSize {
     .modalContainerTableSize {
+        @media (max-width: 400px) {
+            // max-width: 310px;
+            padding: 5px;
+        }
         .modalClose {
             border: none;
             margin-bottom: 10px;
@@ -288,11 +422,15 @@
             flex-direction: column;
             align-items: center;
             max-width: 710px;
-            margin: 0 auto  ;
+            margin: 0 auto;
             padding-bottom: 20px;
+            @media (max-width: 400px) {
+                // max-width: 310px;
+            }
             img {
-                object-fit: cover;
+                object-fit: contain;
                 border-radius: 5px;
+                width: 100%;
             }
         }
     }
@@ -351,4 +489,3 @@
         background-color: #b45a30;
     }
 }
-

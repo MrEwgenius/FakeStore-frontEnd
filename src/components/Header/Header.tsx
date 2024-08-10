@@ -5,17 +5,19 @@ import user from '../../assets/User.svg'
 import save from 'src/assets/Save.svg'
 import searchSVG from 'src/assets/search.svg'
 
-// import save from '../../assets/Save.svg'
 import classNames from "classnames"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { RoutesList } from "src/pages/Router"
 import { useDispatch, useSelector } from "react-redux"
 import { AuthSelectors, setAccessToken } from "src/redux/reducers/authSlice"
 import { Trans, useTranslation } from "react-i18next"
 import i18n from "src/i18n/i18n"
-import { Modal } from "react-bootstrap"
-import { ProductSelectors, getBasketProducts, getProductLister, getSearchProductLister } from "src/redux/reducers/productSlice"
+import { Modal, Offcanvas } from "react-bootstrap"
+import { ProductSelectors, getBasketProducts, getBrandProduct, getProductLister, getSearchProductLister, getTypeProduct } from "src/redux/reducers/productSlice"
 import { UserIcon, SaveProductIcon, SearchIcon } from "src/assets"
+import burgerMenu from '../../assets/img/burger.png'
+import { BurgerMenu } from "src/assets/BurgerMenu"
+import CategoryFilter from "../CategoryFilter/CategoryFilter"
 const Header = () => {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
@@ -30,7 +32,6 @@ const Header = () => {
         navigate('/products/filter')
 
     }
-
 
     const clickOnHome = () => {
         navigate(`/`)
@@ -54,7 +55,6 @@ const Header = () => {
     };
 
     const [inpValue, setinpValue] = useState('')
-    
 
     const searchProducts = useSelector(ProductSelectors.getSearchProductList)
 
@@ -68,8 +68,6 @@ const Header = () => {
                 search: inpValue
             }));
         } else {
-
-
 
         }
     }, [inpValue, dispatch]);
@@ -104,7 +102,6 @@ const Header = () => {
     }
     const handleFocus = () => {
         setinpValue('')
-        console.log('handlFocus');
 
 
     };
@@ -137,6 +134,55 @@ const Header = () => {
         };
     }, []);
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const clickOnBurger = () => {
+
+        setShow(!show)
+
+    }
+
+    const location = useLocation()
+
+    const typeProduct = useSelector(ProductSelectors.getTypeProducts);
+    const brandProducts = useSelector(ProductSelectors.getBrandProducts)
+    const totalCount = useSelector(ProductSelectors.getTotalProductCount)
+
+    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(location.state?.typeName);
+    const [selectedBrand, setSelectedBrand] = useState<string | undefined>(location.state?.brandName);
+    const [checkedSizes, setСheckedSizes] = useState<string[]>(location.state?.size || [])
+    const [priceRange, setPriceRange] = useState<string[]>(location.state?.price || undefined)
+    const [sortOrder, setsortOrder] = useState<string | undefined>(location.state?.order);
+    const [page, setPage] = useState(() => {
+        const localData = localStorage.getItem('PageNumber');
+        return localData ? JSON.parse(localData) : 1;
+    });
+
+    useEffect(() => {
+        dispatch(getTypeProduct())
+        dispatch(getBrandProduct())
+
+        dispatch(getProductLister({
+            isOverwrite: true,
+            brandName: selectedBrand,
+            typeName: selectedCategory,
+            size: checkedSizes,
+            price: priceRange,
+            order: sortOrder,
+            page: page
+        }))
+
+
+    }, [dispatch,]);
+
+    useEffect(() => {
+        setShow(false)
+    }, [location])
+
+
 
     return (
         <div className={style.containerHeader}>
@@ -148,7 +194,6 @@ const Header = () => {
                     <div className={style.label}>
 
                         <input
-                            className={'searchInput'}
                             onFocus={handleFocus}
                             placeholder='Search...'
                             onChange={(e) => setinpValue(e.target.value)}
@@ -186,10 +231,10 @@ const Header = () => {
                         <option
                             value="en">EN</option>
                     </select>
-                   
+
                 </div>
                 <div className={style.wrapContainer}>
-                    
+
                     <div onClick={clickOnBasket} className={classNames(style.nav, style.image)}>
                         <div className={style.basktProductCount}>
                             {basketProducts.length}
@@ -205,7 +250,86 @@ const Header = () => {
                         <SaveProductIcon />
                     </div>
 
+                    <div onClick={clickOnBurger} className={style.burgerMenu}>
+                        <BurgerMenu />
+                    </div>
                 </div>
+
+                <Offcanvas
+                    className={style.offcanvas}
+                    backdrop={false}
+                    placement={'top'}
+                    name={'top'}
+                    show={show}
+                    onHide={handleClose}
+                >
+                    {/* <Offcanvas.Header closeButton> */}
+                    {/* </Offcanvas.Header> */}
+                    <Offcanvas.Body>
+                        <div className={style.containerWrap}>
+                            <div className={style.sexsave}>
+                                {/* <div>Женщины</div> */}
+                                <div className={style.katalog} onClick={clickOnProducts}>{t('catalog')}</div>
+                                <div className={style.label}>
+
+                                    <input
+                                        onFocus={handleFocus}
+                                        placeholder='Search...'
+                                        onChange={(e) => setinpValue(e.target.value)}
+                                        value={inpValue}
+                                        type="text"
+                                        onKeyDown={onKeyDown}
+                                    />
+                                    <div onClick={clickOnSearch} className={style.searchSVG}>
+                                        <SearchIcon />
+                                    </div>
+                                    {showResults && searchProducts && searchProducts.length && searchProducts.length > 0 ? (
+                                        <div id="rusultSearch" className={style.rusultSearch}>
+                                            {searchProducts.map((el) => (
+                                                <div id="searchContainer" onClick={() => clickOnProduct(el.id)} className={style.searchContainer} key={el.id}>
+                                                    <img src={process.env.REACT_APP_API_URL + el.image[0]} alt="=(" />
+                                                    <div className={style.descriptionProductSearch}>
+                                                        <span>{el.name}</span>
+                                                        <div>{el.price}$</div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
+
+                                </div>
+
+                            </div>
+                            <div className={style.language}>
+                                <select value={i18n.resolvedLanguage} onChange={(e) => changeLanguage(e.target.value)} name="languages" id="language">
+                                    <option
+
+                                        value="ru">RU</option>
+                                    <option
+                                        value="en">EN</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div className={style.containerFilter}>
+
+                            <CategoryFilter
+
+                                typeProducts={typeProduct}
+                                setSelectedCategory={setSelectedCategory}
+                                selectedBrand={selectedBrand}
+                                checkedSizes={checkedSizes}
+                                priceRange={priceRange}
+                                sortOrder={sortOrder}
+                                setPage={setPage}
+                                showAllProductsBitton={true}
+                            />
+                        </div>
+                    </Offcanvas.Body>
+                </Offcanvas>
+
             </div>
 
         </div >

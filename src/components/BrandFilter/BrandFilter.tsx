@@ -1,10 +1,11 @@
-import React, { FC, } from "react"
+import React, { FC, useState, } from "react"
 import style from './BrandFilter.module.scss'
 import { ButtonGroup, Dropdown } from "react-bootstrap"
 import { useDispatch, } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { getProductLister } from "src/redux/reducers/productSlice"
+import OpenIcon from '../../assets/open.svg';
 
 
 
@@ -51,6 +52,7 @@ const BrandFilter: FC<BrandFilterProps> = ({
     };
 
     const handleBrandClick = (brand?: string) => {
+        setShow(!show)
         setSelectedBrand(brand)
         const newPath = buildNewPath(brand);
         setPage(1)
@@ -74,13 +76,23 @@ const BrandFilter: FC<BrandFilterProps> = ({
 
     }
 
+    const [show, setShow] = useState(false)
 
 
 
     return (
-       <div className={style.containerBrandFilter}>
-            <Dropdown as={ButtonGroup}>
-                <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : t('brand')}</Dropdown.Toggle>
+        <div className={style.containerBrandFilter}>
+            <Dropdown
+                className={style.dropdown}
+                show={show}
+                onToggle={() => {
+                    setShow(!show);
+                }}
+                as={ButtonGroup}>
+                <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-2">{selectedBrand ? selectedBrand.toUpperCase() : t('brand')}
+                    <img className={`${show ? style.showIcon : style.closeIcon}`} src={OpenIcon} alt="toggle-icon" />
+
+                </Dropdown.Toggle>
                 <Dropdown.Menu className={style.superColor}>
                     {brands.map((brand) =>
                         <Dropdown.Item
@@ -98,9 +110,9 @@ const BrandFilter: FC<BrandFilterProps> = ({
                         {t('showAllBrand')}
                     </Dropdown.Item>
                 </Dropdown.Menu>
-    
+
             </Dropdown>
-       </div>
+        </div>
     )
 }
 

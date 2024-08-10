@@ -1,6 +1,18 @@
 @import "../../styles/solors.scss";
 .containerSizes {
     display: inline;
+    @media (max-width: 830px) {
+        display: block;
+        div {
+            width: 100%;
+        }
+    }
+    .dropdown {
+        @media (max-width: 830px) {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 
     .dropDownToogle {
         text-transform: capitalize;
@@ -11,27 +23,81 @@
         background-color: #fff;
         color: $primary-dark;
         font-size: 14px;
+        img {
+            display: none;
+        }
+
         &:active {
             background-color: transparent;
             color: $primary-dark;
             border-color: $extra-light;
         }
+        @media (max-width: 830px) {
+            background-color: $extra-light;
+            border-radius: 10px;
+
+            font-size: 16px;
+            height: 52px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            img {
+                object-fit: cover;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-self: center;
+                width: 20px;
+                height: 20px;
+                transition: all 0.4s;
+                display: block;
+            }
+            .showIcon {
+                transform: rotate(-180deg);
+            }
+            .closeIcon {
+            }
+
+            &::after {
+                content: "";
+                display: none;
+            }
+        }
     }
     .superColor {
-        text-transform: capitalize;
-        background-color: #ffffff;
         width: 100%;
         padding: 0;
         padding-top: 10px;
 
+        @media (max-width: 830px) {
+            margin-top: 10px;
+            // display: block;
+            position: relative !important;
+            transform: translate(0 ) !important;
+        }
+
         .groupSizes {
             width: 80%;
             margin: auto;
+
             display: flex;
             justify-content: center;
             gap: 5px;
             flex-wrap: wrap;
             margin-bottom: 15px;
+            @media (max-width: 830px) {
+                // background-color: red;
+                // width: 100%;
+                display: flex;
+                gap: 20px;
+                margin-bottom: 10px;
+                div {
+                    max-width: 35px;
+                }
+            }
 
             label {
                 display: flex;
@@ -47,6 +113,8 @@
                 background: #eeeded;
                 cursor: pointer;
                 text-transform: uppercase;
+                @media (max-width: 830px) {
+                }
             }
             input {
                 display: none;
@@ -74,7 +142,9 @@
             &:hover {
                 background: #295a70;
             }
+            @media (max-width: 830px) {
+                font-size: 16px;
+            }
         }
-      
     }
 }

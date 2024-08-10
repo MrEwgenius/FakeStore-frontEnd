@@ -2,7 +2,8 @@
 .NameFilter {
     button {
         text-transform: capitalize;
-        background-color: #e2e1e1;
+        background-color: $extra-light;
+        font-family: Jost;
     }
 }
 .customToggle {
@@ -12,8 +13,18 @@
 }
 .allCategory .customToggle {
     background-color: $gray;
+    background-color: $primary-dark;
     padding: 7px;
     text-transform: capitalize;
+    transition: all 0.3s;
+    &:hover {
+        background-color: $primary-light;
+    }
+    div {
+        color: $white;
+        text-transform: uppercase;
+        text-align: center;
+    }
 }
 .bodyFilter {
     padding: 0;
@@ -22,4 +33,7 @@
     &:hover {
         background-color: #e2e1e1;
     }
+}
+.disabled {
+    display: none;
 }

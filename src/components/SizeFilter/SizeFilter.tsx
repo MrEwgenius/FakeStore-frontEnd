@@ -5,6 +5,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getProductLister } from "src/redux/reducers/productSlice";
 import { useState } from "react";
+import classNames from "classnames";
+import modalStyle from '../ModalFilterProducts/ModalFilterProducts.module.scss';
+import OpenIcon from '../../assets/open.svg';
 
 type SizeFilterProps = {
     selectedCategory?: string;
@@ -14,9 +17,11 @@ type SizeFilterProps = {
     sortOrder?: string;
     setPage: (page: number) => void;
     setChecked: (check: string[]) => void;
+    className?: string
 }
 
 const SizeFilter = ({
+    className,
     selectedCategory,
     selectedBrand,
     checkedSizes,
@@ -44,6 +49,8 @@ const SizeFilter = ({
     };
 
     const handleSizeClick = (size: string[],) => {
+        console.log(11);
+
         setShow(!show);
         setChecked(size)
         const newPath = buildNewPath(size);
@@ -69,6 +76,8 @@ const SizeFilter = ({
     };
 
     const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(22);
+
         let updatedList = [...checkedSizes];
         if (event.target.checked) {
             if (!checkedSizes.includes(event.target.value)) {
@@ -79,19 +88,22 @@ const SizeFilter = ({
         }
         setChecked(updatedList);
     };
-   
+
 
     return (
-        <div className={style.containerSizes}>
+        <div className={classNames(style.containerSizes)}>
             <Dropdown
+                className={style.dropdown}
                 show={show}
+                // onClick={() => setShow(!show)}
                 onToggle={() => {
                     handleSizeClick(checkedSizes);
                 }}
                 as={ButtonGroup}
             >
-                <Dropdown.Toggle className={style.dropDownToogle} id="dropdown-custom-1">
+                <Dropdown.Toggle className={classNames(style.dropDownToogle,)} id="dropdown-custom-1">
                     {checkedSizes.length ? checkedSizes.join(', ').toUpperCase() : t('size')}
+                    <img className={`${show ? style.showIcon : style.closeIcon}`} src={OpenIcon} alt="toggle-icon" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu className={style.superColor}>
                     <div className={style.groupSizes}>
