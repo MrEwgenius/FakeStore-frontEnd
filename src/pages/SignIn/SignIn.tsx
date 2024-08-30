@@ -12,8 +12,8 @@ const SignIn = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [email, setEmail] = useState("user@mail.ru");
-    const [password, setPassword] = useState("12345");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [checked, setChecked] = useState<boolean>(false)
     const [typePassword, setTypePassword] = useState<string>('password')
 

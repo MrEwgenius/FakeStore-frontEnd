@@ -13,11 +13,11 @@ const SignUp = () => {
     const dispath = useDispatch();
     const navigate = useNavigate();
 
-    const [name, setName] = useState("Ewgenii");
-    const [lastName, setLastName] = useState("Bolynskii");
-    const [email, setEmail] = useState("ewgen@mail.ru");
-    const [password, setPassword] = useState("12345");
-    const [confirmPassword, setConfirmPassword] = useState("12345");
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
 
     const onSubmit = () => {
