@@ -22,6 +22,14 @@
             background-color: $extra-light; /* цвет линии */
         }
     }
+    .emptyList {
+        font-size: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        
+    }
 
     .containerProduct {
         // width: 380px;

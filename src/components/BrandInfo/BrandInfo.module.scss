@@ -2,8 +2,11 @@
 .navigationHistory {
     display: flex;
     gap: 20px;
-    margin-left: 50px;
+    padding-left: 50px;
     margin-top: 5px;
+    @media (max-width: 900px) {
+        padding-left: 15px;
+    }
     li {
         position: relative;
         cursor: pointer;
@@ -15,7 +18,7 @@
             width: 3px;
             height: 3px;
             border-radius: 50%;
-            right:  -12px;
+            right: -12px;
             top: 10px;
             background-color: $primary-dark;
         }
@@ -37,6 +40,10 @@
         height: 549px;
         background: url("../../assets/img/BrandInfoImage/banner.png") center top no-repeat;
         margin-bottom: 120px;
+        @media (max-width: 900px) {
+            margin-bottom: 50px;
+        }
+
         &::before {
             position: absolute;
             content: "";
@@ -58,6 +65,9 @@
             justify-content: center;
             margin: auto;
             height: 100%;
+            padding: 0 15px;
+            @media (max-width: 900px) {
+            }
 
             p {
                 color: $extra-light;
@@ -95,18 +105,53 @@
     .brandInfo3 {
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 40px;
         margin-left: 120px;
         // margin-top: 120px;
         margin-bottom: 120px;
+        // background-color: red;
+        @media (max-width: 1200px) {
+            padding: 0 15px;
+            margin-left: 0;
+        }
+        @media (max-width: 900px) {
+            margin-bottom: 50px;
+        }
         .imageTextcontainer {
             display: flex;
             gap: 87px;
             align-items: center;
+            @media (max-width: 1200px) {
+                gap: 50px;
+            }
+            @media (max-width: 700px) {
+                flex-direction: column-reverse;
+                gap: 20px;
+            }
+
             .image {
+                img {
+                    @media (max-width: 1200px) {
+                        width: 260px;
+                        height: 230px;
+                        // background-color: red;
+                        @media (max-width: 700px) {
+                            width: 345px;
+                            height: 345px;
+                        }
+                        @media (max-width: 450px) {
+                            width: 260px;
+                            height: 230px;
+                        }
+                    }
+                }
             }
             .description {
                 max-width: 630px;
+                @media (max-width: 700px) {
+                    text-align: center;
+                }
                 h3 {
                     margin-bottom: 30px;
                     text-transform: uppercase;
@@ -114,6 +159,9 @@
                     font-weight: 800;
                     line-height: 34.15px;
                     color: $primary-dark;
+                    @media (max-width: 900px) {
+                        margin-bottom: 10px;
+                    }
                 }
                 p {
                     color: $gray;
@@ -122,38 +170,50 @@
                     font-weight: 400;
                     line-height: 19.12px;
                     text-align: left;
+                    @media (max-width: 700px) {
+                        text-align: center;
+                    }
                 }
             }
         }
         .oneImage {
-            width: 900px;
+            max-width: 900px;
             display: flex;
             flex-direction: column;
             align-items: end;
+            @media (max-width: 800px) {
+                display: none;
+            }
         }
     }
     .banner2 {
         background: url("../../assets/img/BrandInfoImage/banner2.png") center top no-repeat;
+        @media (max-width: 700px) {
+            display: none;
+        }
     }
     .brandInfo2 {
-        margin-left: 143px;
+        @media (max-width: 1200px) {
+        }
         .imageTextcontainer {
             display: flex;
             flex-direction: row-reverse;
             justify-content: start;
             gap: 70px;
+            @media (max-width: 800px) {
+                flex-direction: column-reverse;
+                gap: 40px;
+            }
             .description {
-                text-align: center;
-                max-width: 600px;
-                p {
-                    text-align: center;
-                }
             }
         }
         .oneImage {
             display: block;
             margin-left: 170px;
             position: relative;
+            @media (max-width: 800px) {
+                display: none;
+            }
             img:nth-last-child(1) {
                 position: absolute;
                 top: 57px;
@@ -166,6 +226,14 @@
         height: 100%;
         &::before {
             display: none;
+        }
+        max-width: 100%;
+        @media (max-width: 700px) {
+            display: none;
+        }
+        img {
+            max-width: 100%;
+            object-fit: cover;
         }
         .textBanner {
             margin-bottom: 50px;
@@ -182,6 +250,9 @@
     }
     .brandInfo3 {
         .imageTextcontainer {
+            img {
+                object-fit: contain;
+            }
             margin: 0 auto;
         }
     }

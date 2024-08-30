@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import style from "./Popular.module.scss";
 import prevIcon from "../../assets/LeftArrow.svg";
 import nextIcon from "../../assets/Right-Arrow.svg";
@@ -25,6 +25,28 @@ const Popular = () => {
         </div>
     );
 
+    const [itemsPerSlide, setItemsPerSlide] = useState(4);
+
+    useEffect(() => {
+        const updateItemsPerSlide = () => {
+            if (window.innerWidth <= 375) {
+                setItemsPerSlide(1);
+            } else if (window.innerWidth <= 768) {
+                setItemsPerSlide(2);
+            } else {
+                setItemsPerSlide(4);
+            }
+        };
+
+        updateItemsPerSlide(); // Initial check
+
+        window.addEventListener("resize", updateItemsPerSlide);
+
+        return () => {
+            window.removeEventListener("resize", updateItemsPerSlide);
+        };
+    }, []);
+
     const dispatch = useDispatch();
     const productList = useSelector(ProductSelectors.getAllProductList);
 
@@ -34,23 +56,14 @@ const Popular = () => {
         dispatch(setSavedStatus({ card, status }));
     };
     useEffect(() => {
-        // Вызываем ваш action для получения списка продуктов
-        // dispatch(getProductList())
-        // (dispatch(getProductList({page:2})))
         dispatch(
             getProductLister({
                 isOverwrite: true,
                 limit: 8,
-                // brandName: location.state?.brandName || undefined,
-                // typeName: location.state?.typeName || undefined,
-                // size: location.state?.size || undefined,
-                // price: location.state?.price || undefined,
-                // page: page
             })
         );
     }, [dispatch]);
 
-    const itemsPerSlide = 4;
 
     const slides = [];
     for (let i = 0; i < productList.length; i += itemsPerSlide) {

@@ -1,11 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react"
-import { Offcanvas, Pagination, } from "react-bootstrap";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
+import { Offcanvas, Pagination } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import style from './ShopPage.module.scss'
-import { ProductSelectors, getBrandProduct, getProductLister, getTypeProduct, } from "src/redux/reducers/productSlice";
+import style from "./ShopPage.module.scss";
+import productSlice, {
+    ProductSelectors,
+    getBrandProduct,
+    getProductLister,
+    getTypeProduct,
+} from "src/redux/reducers/productSlice";
 import CardList from "../CardList/CardList";
 import { PER_PAGE } from "src/utils/constans";
 import CategoryFilter from "src/components/CategoryFilter/CategoryFilter";
@@ -17,104 +22,112 @@ import ModalSortProduct from "src/components/ModalSortProduct/ModalSortProduct";
 import ModalFilterProducts from "src/components/ModalFilterProducts/ModalFilterProducts";
 
 const ShopPage = () => {
-
     const dispatch = useDispatch();
-    const navigate = useNavigate()
-    const location = useLocation()
-    const { t } = useTranslation()
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { t } = useTranslation();
 
     const typeProduct = useSelector(ProductSelectors.getTypeProducts);
-    const brandProducts = useSelector(ProductSelectors.getBrandProducts)
-    const totalCount = useSelector(ProductSelectors.getTotalProductCount)
-    const allProducts = useSelector(ProductSelectors.getAllProductList)
-
+    const brandProducts = useSelector(ProductSelectors.getBrandProducts);
+    const totalCount = useSelector(ProductSelectors.getTotalProductCount);
+    const allProducts = useSelector(ProductSelectors.getAllProductList);
 
     const [page, setPage] = useState(() => {
-        const localData = localStorage.getItem('PageNumber');
+        const localData = localStorage.getItem("PageNumber");
         return localData ? JSON.parse(localData) : 1;
     });
 
-
-    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(location.state?.typeName);
-    const [selectedBrand, setSelectedBrand] = useState<string | undefined>(location.state?.brandName);
-    const [checkedSizes, setСheckedSizes] = useState<string[]>(location.state?.size || [])
-    const [priceRange, setPriceRange] = useState<string[]>(location.state?.price || undefined)
-    const [sortOrder, setsortOrder] = useState<string | undefined>(location.state?.order);
-
-
+    const [selectedCategory, setSelectedCategory] = useState<
+        string | undefined
+    >(location.state?.typeName);
+    const [selectedBrand, setSelectedBrand] = useState<string | undefined>(
+        location.state?.brandName
+    );
+    const [checkedSizes, setСheckedSizes] = useState<string[]>(
+        location.state?.size || []
+    );
+    const [priceRange, setPriceRange] = useState<string[]>(
+        location.state?.price || undefined
+    );
+    const [sortOrder, setsortOrder] = useState<string | undefined>(
+        location.state?.order
+    );
 
     useEffect(() => {
-        dispatch(getTypeProduct())
-        dispatch(getBrandProduct())
+        dispatch(getTypeProduct());
+        dispatch(getBrandProduct());
 
-        dispatch(getProductLister({
-            isOverwrite: true,
-            brandName: selectedBrand,
-            typeName: selectedCategory,
-            size: checkedSizes,
-            price: priceRange,
-            order: sortOrder,
-            page: page
-        }))
-
-
+        dispatch(
+            getProductLister({
+                isOverwrite: true,
+                brandName: selectedBrand,
+                typeName: selectedCategory,
+                size: checkedSizes,
+                price: priceRange,
+                order: sortOrder,
+                page: page,
+            })
+        );
     }, [dispatch]);
 
-
     useEffect(() => {
-        localStorage.setItem('PageNumber', JSON.stringify(page));
+        localStorage.setItem("PageNumber", JSON.stringify(page));
     }, [page]);
 
-
     const clickOnHome = () => {
-        navigate(`/`)
-    }
+        navigate(`/`);
+    };
     const navigateToClothingCategory = () => {
-        setPage(1)
-        setSelectedBrand(undefined)
-        setSelectedCategory(undefined)
-        setСheckedSizes([])
-        setPriceRange([])
-        setsortOrder(undefined)
-        dispatch(getProductLister({
-            isOverwrite: true,
-            brandName: undefined,
-            typeName: undefined,
-            size: undefined,
-            price: undefined,
-            order: undefined
-        }));
-        navigate('/products/filter')
-    }
+        setPage(1);
+        setSelectedBrand(undefined);
+        setSelectedCategory(undefined);
+        setСheckedSizes([]);
+        setPriceRange([]);
+        setsortOrder(undefined);
+        dispatch(
+            getProductLister({
+                isOverwrite: true,
+                brandName: undefined,
+                typeName: undefined,
+                size: undefined,
+                price: undefined,
+                order: undefined,
+            })
+        );
+        navigate("/products/filter");
+    };
 
-
-    const pagesCount = useMemo(() =>
-        Math.ceil(totalCount / PER_PAGE),
+    const pagesCount = useMemo(
+        () => Math.ceil(totalCount / PER_PAGE),
         [totalCount, page]
     );
 
     const handlePageChange = (pageNumber: number) => {
         setPage(pageNumber);
-        localStorage.setItem('PageNumber', JSON.stringify(pageNumber))
-        dispatch(getProductLister({
-            isOverwrite: true,
-            brandName: selectedBrand,
-            typeName: selectedCategory,
-            size: checkedSizes,
-            price: priceRange,
-            order: sortOrder,
-            page: pageNumber
-        }))
-
+        localStorage.setItem("PageNumber", JSON.stringify(pageNumber));
+        dispatch(
+            getProductLister({
+                isOverwrite: true,
+                brandName: selectedBrand,
+                typeName: selectedCategory,
+                size: checkedSizes,
+                price: priceRange,
+                order: sortOrder,
+                page: pageNumber,
+            })
+        );
     };
 
     let items = [];
     for (let number = 1; number <= pagesCount; number++) {
-
         items.push(
-            <Pagination.Item onClick={() => handlePageChange(number)} key={number} active={number === page}>
+            <Pagination.Item
+                onClick={() => handlePageChange(number)}
+                key={number}
+                active={number === page}
+            >
                 {number}
-            </Pagination.Item>,
+            </Pagination.Item>
         );
     }
 
@@ -126,40 +139,29 @@ const ShopPage = () => {
     const handleShow = () => setShowSort(true);
 
     const clickOnSortButton = () => {
-
-        setShowSort(!showSort)
-
-    }
+        setShowSort(!showSort);
+    };
     const clickOnFilterButton = () => {
-
-        setShowFilter(!showFilter)
-
-    }
+        setShowFilter(!showFilter);
+    };
 
     useEffect(() => {
-        setShowSort(false)
-    }, [location])
+        setShowSort(false);
+    }, [location]);
 
     return (
         <div className={style.containerMain}>
             <ul className={style.navigationHistory}>
-                <li onClick={clickOnHome}>
-                    {t('home')}
+                <li onClick={clickOnHome}>{t("home")}</li>
+                <li className={"sd"} onClick={navigateToClothingCategory}>
+                    {t("clothes")}
                 </li>
-                <li className={'sd'} onClick={navigateToClothingCategory}>
-                    {t('clothes')}
-                </li>
-                {selectedCategory &&
-                    <li>{selectedCategory}</li>
-                }
-                {selectedBrand &&
-                    <li>{selectedBrand}
-                    </li>
-                }
+                {selectedCategory && <li>{selectedCategory}</li>}
+                {selectedBrand && <li>{selectedBrand}</li>}
             </ul>
             <div className={style.containerShopPage}>
                 <div className={style.title}>
-                    {selectedCategory ? selectedCategory : 'Одежда'}
+                    {selectedCategory ? selectedCategory : "Одежда"}
                 </div>
                 <div className={style.containerFilter}>
                     <CategoryFilter
@@ -174,11 +176,21 @@ const ShopPage = () => {
                 </div>
                 <div className={style.containerProducts}>
                     <div className={style.title}>
-                        {selectedCategory ? selectedCategory : 'Одежда'}
+                        {selectedCategory ? selectedCategory : "Одежда"}
                     </div>
                     <div className={style.sortProducts}>
-                        <button onClick={clickOnFilterButton} className={style.filterButton} >Фильтр</button>
-                        <button onClick={clickOnSortButton} className={style.sortButton} >Сортировать</button>
+                        <button
+                            onClick={clickOnFilterButton}
+                            className={style.filterButton}
+                        >
+                            Фильтр
+                        </button>
+                        <button
+                            onClick={clickOnSortButton}
+                            className={style.sortButton}
+                        >
+                            Сортировать
+                        </button>
                         <div className={style.filterSizePriceBrand}>
                             <SizeFilter
                                 selectedCategory={selectedCategory}
@@ -187,7 +199,8 @@ const ShopPage = () => {
                                 checkedSizes={checkedSizes}
                                 sortOrder={sortOrder}
                                 setChecked={setСheckedSizes}
-                                setPage={setPage} />
+                                setPage={setPage}
+                            />
                             <PriceFilter
                                 selectedCategory={selectedCategory}
                                 selectedBrand={selectedBrand}
@@ -210,7 +223,9 @@ const ShopPage = () => {
                             />
                         </div>
                         <div className={style.orderContainer}>
-                            <div className={style.countProducts}>{totalCount} товаров</div>
+                            <div className={style.countProducts}>
+                                {totalCount} товаров
+                            </div>
                             <SortFilter
                                 selectedCategory={selectedCategory}
                                 selectedBrand={selectedBrand}
@@ -223,18 +238,17 @@ const ShopPage = () => {
                         </div>
                     </div>
                     <div className={style.products}>
-                        {
-                            allProducts.length > 0
-                                ? <CardList cardsList={allProducts} />
-                                : 'По вашим фильтрам ничего не найдено'
-                        }
+                        {allProducts.length > 0 ? (
+                            <CardList cardsList={allProducts} />
+                        ) : (
+                            <div className={style.emptyList}> "По вашим фильтрам ничего не найдено"</div>
+                        )}
                     </div>
-                    <Pagination
-                        className={style.paginate}>
+                    <Pagination className={style.paginate}>
                         {items.length < 2 ? null : items}
                     </Pagination>
                 </div>
-            </div >
+            </div>
 
             <ModalSortProduct
                 selectedCategory={selectedCategory}
@@ -263,11 +277,9 @@ const ShopPage = () => {
                 setChecked={setСheckedSizes}
                 setPage={setPage}
                 setOrder={setsortOrder}
-
             />
-
         </div>
-    )
-}
+    );
+};
 
 export default ShopPage;

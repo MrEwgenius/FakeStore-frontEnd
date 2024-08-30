@@ -149,7 +149,7 @@ const FavoriteProducts = () => {
                     ))}
                 </div>
                 :
-                <div>
+                <div className={style.emptyList}>
                     {t('favoriteProduct.listEmpty')}
                 </div>
             }

@@ -58,6 +58,7 @@
             justify-content: center;
             margin: auto;
             height: 100%;
+            padding: 0 15px;
 
             p {
                 color: $extra-light;
@@ -86,6 +87,9 @@
         line-height: 19.12px;
         text-align: center;
         color: $primary-dark;
+        @media (max-width: 800px) {
+            display: none;
+        }
     }
     .groupImage {
         display: flex;
@@ -94,9 +98,32 @@
         align-items: center;
         margin-left: 50px;
         margin-bottom: 113px;
+        @media (max-width: 1200px) {
+            justify-content: center;
+            padding: 0 15px;
+            margin-left: 0;
+            margin-bottom: 50px;
+            gap: 99px;
+        }
+        @media (max-width: 800px) {
+            display: none;
+        }
+        .containerImage {
+            @media (max-width: 1200px) {
+                img {
+                    width: 345px;
+                    height: 345px;
+                }
+            }
+        }
         .containerImageFigure {
             position: relative;
-
+            @media (max-width: 900px) {
+                img:first-child {
+                    width: 255px;
+                    height: 255px;
+                }
+            }
             img:nth-last-child(1) {
                 position: absolute;
                 top: -93px;
@@ -107,44 +134,102 @@
     .aboutUsInfo {
         max-width: 650px;
         margin: 0 auto 82px;
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        @media (max-width: 900px) {
+            margin: 30px auto 42px;
+        }
+        @media (max-width: 800px) {
+            margin: 30px auto 42px;
+        }
+
         h2 {
             text-transform: uppercase;
             font-size: 27px;
             font-weight: 800;
             line-height: 34.15px;
             color: $primary-dark;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            @media (max-width: 600px) {
+                text-align: center;
+                margin-bottom: 0px;
+            }
         }
         p {
             color: $gray;
             font-size: 16px;
             font-weight: 400;
             line-height: 19.12px;
+            @media (max-width: 600px) {
+                text-align: center;
+            }
         }
     }
     .groupImageFooter {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 0 15px;
+        margin: 0 auto 80px;
+        gap: 57px;
+        justify-content: center;
         align-items: center;
-        max-width: 837px;
-        margin: 0 auto 160px;
-        gap: 147px;
+        @media (min-width: 800px) {
+            flex-direction: row;
+            gap: 50px;
+        }
+        @media (min-width: 1000px) {
+            gap: 100px;
+        }
+        @media (min-width: 1200px) {
+            gap: 170px;
+        }
+        .containerImage {
+            img {
+                width: 280px;
+                height: 280px;
+                @media (min-width: 1000px) {
+                    width: 410px;
+                    height: 410px;
+                }
+            }
+        }
         .containerImageFigure {
             position: relative;
-
+            img:first-child {
+                width: 190px;
+                height: 190px;
+            }
+            @media (min-width: 1000px) {
+                img:first-child {
+                    width: 290px;
+                    height: 290px;
+                }
+            }
             img:nth-last-child(1) {
                 position: absolute;
                 bottom: -68px;
                 left: 45%;
                 z-index: 20;
+                @media (max-width: 900px) {
+                    width: 200px;
+                    bottom: -38px;
+                    left: 25%;
+                }
             }
         }
     }
     .ecologieSubtitle {
-        height: 375px;
+        height: 305px;
         background-color: $line-grey;
         display: flex;
         flex-direction: column;
+        padding: 0 15px;
+        @media (min-width: 600px) {
+        height: 355px;
+            
+        }
         p {
             margin: auto;
             max-width: 600px;

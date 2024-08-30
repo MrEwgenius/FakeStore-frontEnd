@@ -52,12 +52,15 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                .emptyList{
+                font-size: 24px;
+                }
             }
             .title {
                 color: $primary-dark;
                 font-size: 25px;
                 font-weight: 500;
-                line-height: 100%; /* 25px */
+                line-height: 17px; /* 25px */
                 text-transform: uppercase;
                 margin-bottom: 20px;
                 display: block;

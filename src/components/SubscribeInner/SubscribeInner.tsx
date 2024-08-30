@@ -1,9 +1,8 @@
-import React, { KeyboardEvent, useState } from "react";
+import  { KeyboardEvent, useState } from "react";
 import style from './SubscribeInner.module.scss'
 import { useDispatch, useSelector } from "react-redux";
 import { subscribeUser } from "src/redux/reducers/authSlice";
 import { ProductSelectors } from "src/redux/reducers/productSlice";
-import check from '../../assets/check-user.svg'
 import { CheckBox } from "src/assets/CheckBox";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RoutesList } from "src/pages/Router";
@@ -45,7 +44,6 @@ const SubscribeInner = () => {
         if (location.pathname === RoutesList.AboutUs) {
             window.scrollTo(0, 0);
         } else {
-
             navigate(RoutesList.AboutUs)
         }
     }
@@ -54,7 +52,6 @@ const SubscribeInner = () => {
         if (location.pathname === RoutesList.BrandInfo) {
             window.scrollTo(0, 0);
         } else {
-
             navigate(RoutesList.BrandInfo)
         }
 
@@ -64,7 +61,6 @@ const SubscribeInner = () => {
         if (location.pathname === RoutesList.PopularQuestions) {
             window.scrollTo(0, 0);
         } else {
-
             navigate(RoutesList.PopularQuestions)
         }
 
@@ -79,7 +75,6 @@ const SubscribeInner = () => {
             </div>
             <div className={style.enterEmail}>
                 {responseSubscribe && responseSubscribe ?
-
                     <div className={style.responseSubscribe}> <CheckBox /> {responseSubscribe} </div>
                     :
                     <input

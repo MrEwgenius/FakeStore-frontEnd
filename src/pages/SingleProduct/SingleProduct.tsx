@@ -437,7 +437,6 @@ const SingleProduct = () => {
                                     {/* <Modal.Title>Modal heading</Modal.Title> */}
                                 </Modal.Header>
                                 <div className={style.imageContainer}>
-                                    {" "}
                                     <img src={tableSize} alt="#!" />
                                 </div>
                             </Modal.Body>

@@ -28,85 +28,124 @@ import BrandInfo from "src/components/BrandInfo/BrandInfo";
 import PopularQuestions from "src/components/PopularQuestions/PopularQuestions";
 
 export enum RoutesList {
+    Home = "/",
+    Trend = "/product",
+    Filter = "/products/filter?/:typeName?/:brandName?/:size?/:price?/:order?/",
 
-    Home = '/',
-    Trend = '/product',
-    Filter = '/products/filter?/:typeName?/:brandName?/:size?/:price?/:order?/',
+    UserAccount = "/user",
+    Registration = "/user/registration",
+    PersonalInfo = "/user/personal",
+    Login = "/user/login",
+    SingleProduct = "/product/:id",
+    AddProduct = "/user/addproduct",
+    AddType = "/user/addtype",
+    AddBrand = "/user/addbrand",
+    FavoriteProducts = "/savedproduct",
+    PersonFavoriteProducts = "/user/savedproduct",
+    Search = "/product/search/:search",
+    Basket = "/basket",
+    Adress = "/user/adress/",
+    OrderHistory = "/user/orderhistory",
+    AboutUs = "/about",
+    BrandInfo = "/brandinfo",
+    PopularQuestions = "/popularquestions",
 
-    UserAccount = '/user',
-    Registration = '/user/registration',
-    PersonalInfo = '/user/personal',
-    Login = '/user/login',
-    SingleProduct = '/product/:id',
-    AddProduct = '/user/addproduct',
-    AddType = '/user/addtype',
-    AddBrand = '/user/addbrand',
-    FavoriteProducts = '/savedproduct',
-    PersonFavoriteProducts = '/user/savedproduct',
-    Search = '/product/search/:search',
-    Basket = '/basket',
-    Adress = '/user/adress/',
-    OrderHistory = '/user/orderhistory',
-    AboutUs = '/about',
-    BrandInfo = '/brandinfo',
-    PopularQuestions = '/popularquestions',
-
-
-    Cards = '/cards',
-    Post = '/titles/:id',
-    Default = '*',
-
+    Cards = "/cards",
+    Post = "/titles/:id",
+    Default = "*",
 }
 
-
-
 const Router = () => {
-    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn)
+    const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
     return (
-        <BrowserRouter >
-            <Routes >
-                <Route path={RoutesList.Home} element={<Home />} >
-
+        <BrowserRouter>
+            <Routes>
+                <Route path={RoutesList.Home} element={<Home />}>
                     <Route path={RoutesList.AboutUs} element={<AboutUs />} />
-                    <Route path={RoutesList.BrandInfo} element={<BrandInfo />} />
-                    <Route path={RoutesList.PopularQuestions} element={<PopularQuestions />} />
+                    <Route
+                        path={RoutesList.BrandInfo}
+                        element={<BrandInfo />}
+                    />
+                    <Route
+                        path={RoutesList.PopularQuestions}
+                        element={<PopularQuestions />}
+                    />
                     <Route path={RoutesList.Filter} element={<ShopPage />} />
-                    <Route path={RoutesList.Home} element={<>
-                        <Banner />
-                        <Popular />
-                        <SectionAboutUs />
-                    </>} />
-                    <Route path={RoutesList.FavoriteProducts} element={<FavoriteProducts />} />
+                    <Route
+                        path={RoutesList.Home}
+                        element={
+                            <>
+                                <Banner />
+                                <Popular />
+                                <SectionAboutUs />
+                            </>
+                        }
+                    />
+                    <Route
+                        path={RoutesList.FavoriteProducts}
+                        element={<FavoriteProducts />}
+                    />
                     <Route path={RoutesList.Basket} element={<Basket />} />
                     <Route path={RoutesList.Login} element={<SignIn />} />
-                    <Route path={RoutesList.Registration} element={<SignUp />} />
+                    <Route
+                        path={RoutesList.Registration}
+                        element={<SignUp />}
+                    />
                     <Route path={RoutesList.Search} element={<SearchList />} />
 
-                    <Route path={RoutesList.UserAccount} element={isLoggedIn ? <UserPage /> : <SignIn />} >
-
+                    <Route
+                        path={RoutesList.UserAccount}
+                        element={isLoggedIn ? <UserPage /> : <SignIn />}
+                    >
                         {/* <Route path={RoutesList.Login} element={<SignIn />} /> */}
-                        <Route path={RoutesList.PersonalInfo} element={<PersonalInfo />} />
-                        <Route path={RoutesList.Adress} element={<PersonalAdress />} />
-                        <Route path={RoutesList.PersonFavoriteProducts} element={<PersonalFaforiteProduct />} />
-                        <Route path={RoutesList.Login} element={isLoggedIn ? <User /> : <SignIn />} />
-                        <Route path={RoutesList.OrderHistory} element={<OrderConfirmation />} />
+                        <Route
+                            path={RoutesList.PersonalInfo}
+                            element={<PersonalInfo />}
+                        />
+                        <Route
+                            path={RoutesList.Adress}
+                            element={<PersonalAdress />}
+                        />
+                        <Route
+                            path={RoutesList.PersonFavoriteProducts}
+                            element={<PersonalFaforiteProduct />}
+                        />
+                        <Route
+                            path={RoutesList.Login}
+                            element={isLoggedIn ? <User /> : <SignIn />}
+                        />
+                        <Route
+                            path={RoutesList.OrderHistory}
+                            element={<OrderConfirmation />}
+                        />
 
-
-                        <Route path={RoutesList.AddType} element={<TypeProduct />} />
-                        <Route path={RoutesList.AddProduct} element={<AddProduct />} />
-                        <Route path={RoutesList.AddBrand} element={<BrandProduct />} />
+                        <Route
+                            path={RoutesList.AddType}
+                            element={<TypeProduct />}
+                        />
+                        <Route
+                            path={RoutesList.AddProduct}
+                            element={<AddProduct />}
+                        />
+                        <Route
+                            path={RoutesList.AddBrand}
+                            element={<BrandProduct />}
+                        />
                     </Route>
                     {/* <Route path={RoutesList.Registration} element={<SignUp />} /> */}
-                    <Route path={RoutesList.SingleProduct} element={<SingleProduct />} />
+                    <Route
+                        path={RoutesList.SingleProduct}
+                        element={<SingleProduct />}
+                    />
 
                     <Route
                         path={RoutesList.Default}
                         element={<Navigate to={RoutesList.Home} />}
                     />
-                </Route >
+                </Route>
             </Routes>
         </BrowserRouter>
     );
-}
+};
 
 export default Router;

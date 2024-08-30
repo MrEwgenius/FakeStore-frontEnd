@@ -11,7 +11,8 @@ import {
 import { PER_PAGE } from "src/utils/constans";
 
 const API = create({
-    baseURL: "http://localhost:5000/api",
+    // baseURL: "http://localhost:5000/api",
+    baseURL: "https://fakestore-backend-ozwi.onrender.com/api",
 });
 const getProducts = (
     limit?: number,

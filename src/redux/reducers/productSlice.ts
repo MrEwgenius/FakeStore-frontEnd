@@ -100,7 +100,7 @@ const productSlice = createSlice({
                 JSON.stringify(state.savedProduct)
             );
         },
-       
+
         getTypeProduct: (_, __: PayloadAction<undefined>) => {},
         setTypeProduct: (state, action: PayloadAction<TypeListTypes>) => {
             state.typeProduct = action.payload;

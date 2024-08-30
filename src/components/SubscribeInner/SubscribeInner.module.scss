@@ -1,13 +1,16 @@
 @import "../../styles/solors.scss";
 
 .containerSubscribeInner {
+    padding: 0 15px;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    // background-color: red;
     padding-top: 65px;
     margin-bottom: 60px;
     border-top: 1px solid $extra-light;
+    @media (max-width: 600px) {
+    }
     .title {
         text-transform: uppercase;
         font-family: Cormorant Garamond;
@@ -17,6 +20,10 @@
         line-height: 30.75px;
         letter-spacing: 0.2em;
         text-align: left;
+        @media (max-width: 600px) {
+            text-align: center;
+            font-size: 22px;
+        }
     }
     .enterEmail {
         margin-bottom: 25px;
@@ -39,6 +46,12 @@
         }
     }
     .infoFakeStore {
+        max-width: 100%;
+        @media (max-width: 600px) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         div {
             color: #b7c1c5;
             font-size: 18px;

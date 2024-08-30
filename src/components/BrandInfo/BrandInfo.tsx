@@ -37,13 +37,12 @@ const BrandInfo = () => {
                         american vintage
                     </h3>
                     <p>
-                        {" "}
                         American Vintage - модная торговая марка по производству
-                        трикотажной одежды для мужчин и женщин.{" "}
+                        трикотажной одежды для мужчин и женщин.
                     </p>
                 </div>
             </div>
-            <div className={style.brandInfo}>
+           <div className={style.brandInfo}>
                 <div className={style.imageTextcontainer}>
                     <div className={style.image}>
                         <img src={image1} alt="#!" />
@@ -73,6 +72,7 @@ const BrandInfo = () => {
                     <img src={image2} alt="#!" />
                 </div>
             </div>
+            
             <div className={style.banner2}>
                 <div className={style.textBanner}>
                     <h3>
@@ -80,13 +80,14 @@ const BrandInfo = () => {
                         DEHA
                     </h3>
                     <p>
-                        {" "}
+                        
                         Бренд DEHA принадлежит компании Meeting Group SpA,
                         которая является лидером на итальянском рынке спортивной
-                        одежды премиум-класса.{" "}
+                        одежды премиум-класса.
                     </p>
                 </div>
             </div>
+            
             <div className={style.brandInfo2}>
                 <div className={style.imageTextcontainer}>
                     <div className={style.image}>
@@ -117,6 +118,7 @@ const BrandInfo = () => {
                     <img src={figure} alt="#!" />
                 </div>
             </div>
+
             <div className={style.banner3}>
                 <div className={style.textBanner}>
                     <h3>
@@ -124,17 +126,18 @@ const BrandInfo = () => {
                         george gina & lucy
                     </h3>
                     <p>
-                        {" "}
+                        
                         Бренд основан в 2004 году недалеко от Франкфурта, когда
                         супруги Николь Бейли и Николас Нойхаус вместе с Оливером
                         Брюном выпустили свою первую и очень удачную коллекцию
-                        сумок, каждая из которых имела свое имя.{" "}
+                        сумок, каждая из которых имела свое имя.
                     </p>
                 </div>
                 <div>
                     <img src={banner3} alt="#!" />
                 </div>
             </div>
+            
             <div className={style.brandInfo3}>
                 <div className={style.imageTextcontainer}>
                     <div className={style.image}>
@@ -164,9 +167,9 @@ const BrandInfo = () => {
                         birkenstock
                     </h3>
                     <p>
-                        {" "}
+                        
                         BIRKENSTOCK — известная немецкая компания, занимающаяся
-                        производством ортопедической обуви.{" "}
+                        производством ортопедической обуви.
                     </p>
                 </div>
             </div>

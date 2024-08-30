@@ -22,20 +22,13 @@
     @media (max-width: 750px) {
         width: 48%;
     }
-
     &:hover {
         transition: all 0.2s;
         background-color: #f4f4f4;
+        
 
         .removeProduct {
-            position: absolute;
-
             display: block;
-            top: 15px;
-            right: 15px;
-            width: 15px;
-            z-index: 100;
-            cursor: pointer;
         }
         .save {
             display: block;
@@ -49,17 +42,32 @@
         width: 20px;
         z-index: 100;
         display: none;
+        @media (max-width: 900px) {
+            display: block;
+        }
     }
 
     .removeProduct {
         display: none;
+        position: absolute;
+
+        top: 15px;
+        right: 15px;
+        width: 15px;
+        z-index: 100;
+        cursor: pointer;
+        @media (max-width: 900px) {
+            display: block;
+        }
     }
 
     .image {
         img {
             cursor: pointer;
             width: 100%;
-            object-fit: contain;
+            max-height: 320px;
+            background-color: rgb(52, 12, 228);
+            object-fit: cover;
         }
         .carousel {
             [data-bs-target] {
