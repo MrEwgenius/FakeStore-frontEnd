@@ -20,6 +20,7 @@ import SortFilter from "src/components/SortFilter/SortFilter";
 import BrandFilter from "src/components/BrandFilter/BrandFilter";
 import ModalSortProduct from "src/components/ModalSortProduct/ModalSortProduct";
 import ModalFilterProducts from "src/components/ModalFilterProducts/ModalFilterProducts";
+import Loader from "src/components/Loader/Loader";
 
 const ShopPage = () => {
     const dispatch = useDispatch();
@@ -101,6 +102,7 @@ const ShopPage = () => {
         () => Math.ceil(totalCount / PER_PAGE),
         [totalCount, page]
     );
+    const productsLoading = useSelector(ProductSelectors.getProductsLoading);
 
     const handlePageChange = (pageNumber: number) => {
         setPage(pageNumber);
@@ -148,6 +150,7 @@ const ShopPage = () => {
     useEffect(() => {
         setShowSort(false);
     }, [location]);
+    console.log(location.state?.typeName);
 
     return (
         <div className={style.containerMain}>
@@ -156,12 +159,12 @@ const ShopPage = () => {
                 <li className={"sd"} onClick={navigateToClothingCategory}>
                     {t("clothes")}
                 </li>
-                {selectedCategory && <li>{selectedCategory}</li>}
+                {location.state?.typeName && <li>{location.state?.typeName}</li>}
                 {selectedBrand && <li>{selectedBrand}</li>}
             </ul>
             <div className={style.containerShopPage}>
                 <div className={style.title}>
-                    {selectedCategory ? selectedCategory : "Одежда"}
+                    {location.state?.typeName ? location.state?.typeName : "Одежда"}
                 </div>
                 <div className={style.containerFilter}>
                     <CategoryFilter
@@ -176,7 +179,7 @@ const ShopPage = () => {
                 </div>
                 <div className={style.containerProducts}>
                     <div className={style.title}>
-                        {selectedCategory ? selectedCategory : "Одежда"}
+                        {location.state?.typeName ? location.state?.typeName : "Одежда"}
                     </div>
                     <div className={style.sortProducts}>
                         <button
@@ -237,13 +240,20 @@ const ShopPage = () => {
                             />
                         </div>
                     </div>
-                    <div className={style.products}>
-                        {allProducts.length > 0 ? (
-                            <CardList cardsList={allProducts} />
-                        ) : (
-                            <div className={style.emptyList}> "По вашим фильтрам ничего не найдено"</div>
-                        )}
-                    </div>
+                    {!productsLoading ? (
+                        <div className={style.products}>
+                            {allProducts.length > 0 ? (
+                                <CardList cardsList={allProducts} />
+                            ) : (
+                                <div className={style.emptyList}>
+                                    {" "}
+                                    "По вашим фильтрам ничего не найдено"
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <Loader />
+                    )}
                     <Pagination className={style.paginate}>
                         {items.length < 2 ? null : items}
                     </Pagination>

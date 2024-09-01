@@ -57,7 +57,7 @@
                     z-index: 1002;
                     overflow-y: scroll;
                     background-color: $extra-light;
-                    width: 350px;
+                    // max-width: 350px;
                     position: absolute;
                     top: 55px;
                     left: 0px;
@@ -220,7 +220,7 @@
                 position: relative;
                 input {
                     position: relative;
-                    width: 350px;
+                    width: 280px;
                     padding: 0 5px;
                     height: 100%;
                     border: none;
@@ -243,7 +243,7 @@
                     z-index: 1002;
                     overflow-y: scroll;
                     background-color: $extra-light;
-                    width: 350px;
+                    // max-width: 350px;
                     position: absolute;
                     top: 55px;
                     left: 0px;

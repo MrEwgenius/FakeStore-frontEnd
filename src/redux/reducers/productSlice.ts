@@ -40,6 +40,7 @@ type initialState = {
     sizeBasketProduct: SizeBasketProduct | null;
     message: string;
     orderProduct: OrderProducts;
+    productsLoading: boolean;
 };
 
 const initialState: initialState = {
@@ -58,6 +59,7 @@ const initialState: initialState = {
     sizeBasketProduct: null,
     message: "",
     orderProduct: [],
+    productsLoading: false,
 };
 const productSlice = createSlice({
     name: "productReducer",
@@ -127,6 +129,7 @@ const productSlice = createSlice({
             } else {
                 state.producrList.push(...product);
             }
+
         },
         getSearchProductLister: (
             _,
@@ -185,6 +188,9 @@ const productSlice = createSlice({
             state.orderProduct = action.payload;
         },
         addUserOrder: (_, __: PayloadAction<AddOrderPayload>) => {},
+        getProductLoading(state,action: PayloadAction<boolean>){
+            state.productsLoading = action.payload;
+        }
     },
 });
 
@@ -216,6 +222,7 @@ export const {
     getUserOrder,
     setUserOrder,
     addUserOrder,
+    getProductLoading,
 } = productSlice.actions;
 
 export const ProductSelectors = {
@@ -239,6 +246,7 @@ export const ProductSelectors = {
         state.productReducer.sizeBasketProduct,
     getUserOrderProduct: (state: Rootstate) =>
         state.productReducer.orderProduct,
+    getProductsLoading: (state: Rootstate) => state.productReducer.productsLoading,
 };
 
 export default productSlice.reducer;

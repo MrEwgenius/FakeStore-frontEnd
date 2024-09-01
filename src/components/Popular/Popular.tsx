@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import style from "./Popular.module.scss";
-import prevIcon from "../../assets/LeftArrow.svg";
-import nextIcon from "../../assets/Right-Arrow.svg";
 import { Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,16 +10,18 @@ import {
 import CardItem from "../CardItem/CardItem";
 import { ProductTypes, SaveStatus } from "src/@types";
 import { useTranslation } from "react-i18next";
+import LeftArrowIcon from "src/assets/LeftArrow";
+import RightArrowIcon from "src/assets/RightArrow";
 
 const Popular = () => {
     const indicatorStylePrevIcon = (
         <div className={style.prevIcon}>
-            <img src={prevIcon} alt="#" />
+            <LeftArrowIcon stroke="#254A5A"/>
         </div>
     );
     const indicatorStyleNextIcon = (
         <div className={style.prevIcon}>
-            <img src={nextIcon} alt="#" />
+            <RightArrowIcon stroke="#254A5A"/>
         </div>
     );
 
@@ -50,6 +50,7 @@ const Popular = () => {
     const dispatch = useDispatch();
     const productList = useSelector(ProductSelectors.getAllProductList);
 
+
     const { t } = useTranslation();
 
     const onSavedStatus = (card: ProductTypes) => (status: SaveStatus) => {
@@ -64,39 +65,47 @@ const Popular = () => {
         );
     }, [dispatch]);
 
-
     const slides = [];
     for (let i = 0; i < productList.length; i += itemsPerSlide) {
         slides.push(productList.slice(i, i + itemsPerSlide));
     }
-
+    const productsLoading = useSelector(ProductSelectors.getProductsLoading)
+    console.log(productsLoading);
     return (
-        <div className={style.containerPopular}>
-            <div className={style.title}>{t("popular")} </div>
-            <Carousel
-                indicators={false}
-                nextIcon={indicatorStyleNextIcon}
-                prevIcon={indicatorStylePrevIcon}
-                className={style.carousel}
-            >
-                {slides.map((slide, index) => (
-                    <Carousel.Item key={index}>
-                        <div className={style.containerWrapper}>
-                            {slide.map((product) => (
-                                <CardItem
-                                    onSavedClick={onSavedStatus(product)}
-                                    key={product.id}
-                                    id={product.id}
-                                    name={product.name}
-                                    price={product.price}
-                                    img={product.image}
-                                />
-                            ))}
-                        </div>
-                    </Carousel.Item>
-                ))}
-            </Carousel>
-        </div>
+        <>
+            {!productsLoading ? (
+                <div className={style.containerPopular}>
+                    <div className={style.title}>{t("popular")} </div>
+                    <Carousel
+                        indicators={false}
+                        nextIcon={indicatorStyleNextIcon}
+                        prevIcon={indicatorStylePrevIcon}
+                        className={style.carousel}
+                    >
+                        {slides.map((slide, index) => (
+                            <Carousel.Item key={index}>
+                                <div className={style.containerWrapper}>
+                                    {slide.map((product) => (
+                                        <CardItem
+                                            onSavedClick={onSavedStatus(
+                                                product
+                                            )}
+                                            key={product.id}
+                                            id={product.id}
+                                            name={product.name}
+                                            price={product.price}
+                                            img={product.image}
+                                        />
+                                    ))}
+                                </div>
+                            </Carousel.Item>
+                        ))}
+                    </Carousel>
+                </div>
+            ) : (
+                <div>Загрузка</div>
+            )}
+        </>
     );
 };
 

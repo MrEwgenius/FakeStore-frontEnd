@@ -53,11 +53,6 @@ const CardItem: FC<CardsListProps> = ({
     const accessToken = localStorage.getItem("AccessTokenFE45"); // Получите токен из локального хранилища
 
     useEffect(() => {
-        // if (accessToken == null) {
-        //     console.log(123);
-        //     dispatch(logoutUser())
-
-        // }
 
         if (accessToken) {
             const decodedToken = jwtDecode(accessToken);

@@ -5,7 +5,7 @@
         max-width: 1140px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, 480px);
+        grid-template-columns: repeat(auto-fit, minmax(280px, 480px));
         align-items: center;
         flex-wrap: wrap;
         gap: 80px;
@@ -21,6 +21,126 @@
             height: 100%;
             background-color: $extra-light; /* цвет линии */
         }
+        .containerProduct {
+            // width: 380px;
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            position: relative;
+            background-color: #ebebeb;
+            border-radius: 10px;
+            padding: 5px;
+            padding-top: 20px;
+            position: relative;
+            @media (min-width: 440px) {
+                padding-top: 5px;
+            }
+            &:nth-child(2n + 1)::after {
+                content: "";
+                position: absolute;
+                bottom: -40px;
+                left: -300px;
+                width: 1440px;
+                height: 1px;
+                background-color: $line-grey;
+            }
+            .productImage {
+                width: 140px;
+                object-fit: contain;
+                border-radius: 10px;
+            }
+            .cardInfo {
+                display: flex;
+                flex-direction: column;
+                gap: 9px;
+                
+        
+                .name {
+                    font-size: 18px;
+                    max-width: 280px;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+                .typeProduct {
+                    font-size: 16px;
+                    font-weight: 300;
+                    line-height: 22px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                }
+                .price {
+                    font-size: 16px;
+                    font-weight: 300;
+                    line-height: 22px;
+                    letter-spacing: 0em;
+                    text-align: left;
+                }
+                .sizeTable {
+                    display: inline-flex;
+                    gap: 5px;
+                    flex-wrap: wrap;
+                    .groupLable {
+                        display: inline-block;
+                    }
+                    label {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        width: 30px;
+                        height: 30px;
+                        color: $primary-dark;
+                        font-size: 12px;
+                        line-height: 170%;
+                        border: 1px solid $gray;
+                        border-radius: 5px;
+                        background: #d3d3d3;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                    }
+                    input {
+                        display: none;
+                    }
+                    .sizeLabelActive {
+                        background-color: $gray;
+                    }
+                }
+                .close {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+                }
+                .addBucketButton {
+                    max-width: 200px;
+        
+                    height: 50px;
+                    border: 1px solid $primary-dark;
+                    border-radius: 0;
+                    font-size: 16px;
+                    font-weight: 400;
+                    line-height: 19px;
+                    text-transform: uppercase;
+                    transition: all 0.2s;
+                    background-color: #d4d4d4;
+        
+                    cursor: pointer;
+                    &:disabled {
+                        border: 1px solid $gray;
+                        pointer-events: none;
+                        opacity: 0.5;
+                    }
+                    &:hover {
+                        background-color: #d4d4d4;
+                        transform: scale(1.03);
+                    }
+                }
+            }
+        }
     }
     .emptyList {
         font-size: 24px;
@@ -28,122 +148,8 @@
         flex-direction: column;
         align-items: center;
         margin-top: 50px;
-        
     }
 
-    .containerProduct {
-        // width: 380px;
-        width: 100%;
-        display: flex;
-        gap: 25px;
-        align-items: center;
-        position: relative;
-        background-color: #ebebeb;
-        border-radius: 10px;
-        padding: 5px;
-        position: relative;
-        &:nth-child(2n + 1)::after {
-            content: "";
-            position: absolute;
-            bottom: -40px;
-            left: -300px;
-            width: 1440px;
-            height: 1px;
-            background-color: $line-grey;
-        }
-    }
-    .productImage {
-        width: 140px;
-        object-fit: contain;
-        border-radius: 10px;
-    }
-    .close {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        cursor: pointer;
-        transition: all 0.2s;
-        &:hover {
-            transform: scale(1.1);
-        }
-    }
-    .cardInfo {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-        .addBucketButton {
-            width: 200px;
-
-            height: 50px;
-            border: 1px solid $primary-dark;
-            border-radius: 0;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 19px;
-            text-transform: uppercase;
-            transition: all 0.2s;
-            background-color: #d4d4d4;
-
-            cursor: pointer;
-            &:disabled {
-                border: 1px solid $gray;
-                pointer-events: none;
-                opacity: 0.5;
-            }
-            &:hover {
-                background-color: #d4d4d4;
-                transform: scale(1.03);
-            }
-        }
-
-        .name {
-            font-size: 22px;
-            max-width: 280px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .typeProduct {
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 22px;
-            letter-spacing: 0em;
-            text-align: left;
-        }
-        .price {
-            font-size: 16px;
-            font-weight: 300;
-            line-height: 22px;
-            letter-spacing: 0em;
-            text-align: left;
-        }
-    }
-}
-.sizeTable {
-    display: inline-flex;
-    gap: 5px;
-    .groupLable {
-        display: inline-block;
-    }
-    label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        color: $primary-dark;
-        font-size: 12px;
-        line-height: 170%;
-        border: 1px solid $gray;
-        border-radius: 5px;
-        background: #d3d3d3;
-        cursor: pointer;
-        text-transform: uppercase;
-    }
-    input {
-        display: none;
-    }
-    .sizeLabelActive {
-        background-color: $gray;
-    }
+   
+   
 }

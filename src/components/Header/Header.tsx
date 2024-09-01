@@ -1,16 +1,13 @@
-import React, { KeyboardEvent, useEffect, useState } from "react"
+import  { KeyboardEvent, useEffect, useState } from "react"
 import style from './Header.module.scss'
 import backet from '../../assets/Backet.svg'
-import user from '../../assets/User.svg'
-import save from 'src/assets/Save.svg'
-import searchSVG from 'src/assets/search.svg'
 
 import classNames from "classnames"
 import { useLocation, useNavigate } from "react-router-dom"
 import { RoutesList } from "src/pages/Router"
 import { useDispatch, useSelector } from "react-redux"
 import { AuthSelectors, setAccessToken } from "src/redux/reducers/authSlice"
-import { Trans, useTranslation } from "react-i18next"
+import {  useTranslation } from "react-i18next"
 import i18n from "src/i18n/i18n"
 import { Modal, Offcanvas } from "react-bootstrap"
 import { ProductSelectors, getBasketProducts, getBrandProduct, getProductLister, getSearchProductLister, getTypeProduct } from "src/redux/reducers/productSlice"
@@ -72,7 +69,6 @@ const Header = () => {
         }
     }, [inpValue, dispatch]);
 
-
     const onKeyDown = (event: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         // if (!/^[a-zA-Zа-яА-Я0-9]+$/.test(event.key)) {
         //     event.preventDefault();
@@ -80,35 +76,23 @@ const Header = () => {
         // }
         setShowResults(true)
         if (event.key === 'Enter' && inpValue) {
-
-
             setShowResults(false);
             navigate(`/product/search/${inpValue}`)
             setinpValue('')
         }
     }
-
-
-
     const clickOnSearch = () => {
         if (inpValue) {
-
             navigate(`/product/search/${inpValue}`)
             setShowResults(false);
-
             setinpValue('')
         }
-
     }
     const handleFocus = () => {
         setinpValue('')
-
-
     };
 
-
     const [showResults, setShowResults] = useState(false);
-
 
     const clickOnProduct = (id: number) => {
         setShowResults(false);

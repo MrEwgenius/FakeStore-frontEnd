@@ -1,78 +1,5 @@
 @import "../../styles/solors.scss";
-.containerBanner1 {
-    height: 460px;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: url("../../assets/img/banner-1.png") no-repeat center center;
-    &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: #3a3a3a8a;
-    }
-}
-.container {
-    // text-align: center;
-    // margin: auto;
-    // margin: 0 auto;
-}
-.carusel {
-    max-width: 1440px;
-    margin: auto;
-    height: 460px;
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
-
-    position: relative;
-    // background-color: #ca1616;
-    .carousel-indicators {
-    }
-}
-.textBanner1 {
-    // position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    // justify-content: center;
-    z-index: 100;
-    .title {
-        font-family: Cormorant;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 24px;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-        color: $extra-light;
-    }
-    .descr {
-        font-family: Cormorant Garamond;
-        text-transform: uppercase;
-        font-size: 50px;
-        font-weight: 400;
-        line-height: 61px;
-        margin-bottom: 20px;
-        color: $extra-light;
-        text-align: center;
-
-    }
-    .vievCollection {
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 22px;
-        letter-spacing: 0.045em;
-        text-align: center;
-        color: $extra-light;
-    }
-}
-.containerBanner2 {
+.containerBanner {
     height: 460px;
     width: 100%;
     margin: auto;
@@ -82,46 +9,64 @@
     justify-content: center;
     position: relative;
     text-align: center;
-    
-    background: url("../../assets/img/banner-3.png") no-repeat center;
+    background-color: red;
     &::after {
         content: "";
         position: absolute;
         width: 100%;
         height: 100%;
-
         background-color: #3a3a3a8a;
     }
 }
-.textBanner2 {
-    // position: absolute;
+.containerBanner1 {
+    background: url("../../assets/img/banner-1.png") no-repeat center center;
+}
+.containerBanner2 {
+    background: url("../../assets/img/banner-3.png") no-repeat center;
+}
+.containerBanner3 {
+    background: url("../../assets/img/banner-2.png") no-repeat center;
+    background-color: $extra-light;
+}
+.containerBanner4 {
+    background: url("../../assets/img/banner-4.png") no-repeat center;
+}
+
+.carusel {
+    max-width: 1440px;
+    margin: auto;
+    height: 460px;
+
+    position: relative;
+    a {
+        div {
+        }
+        z-index: 90;
+    }
+}
+.textBanner{
     display: flex;
     flex-direction: column;
     align-items: center;
-    // justify-content: center;
-    z-index: 100;
-
+    z-index: 10;
     .title {
         font-family: Cormorant;
         font-size: 20px;
         font-weight: 500;
         line-height: 24px;
         text-transform: uppercase;
-        margin-bottom: 10px;
-        color: $primary-dark;
         color: $extra-light;
-
     }
     .descr {
-        // width: 500px;
         font-family: Cormorant Garamond;
         text-transform: uppercase;
         font-size: 50px;
         font-weight: 400;
-        line-height: 61px;
-        margin-bottom: 20px;
-        color: $primary-dark;
-         color: $extra-light;
+        color: $extra-light;
+        text-align: center;
+        @media (max-width: 500px) {
+            font-size: 35px;
+        }
     }
     .vievCollection {
         cursor: pointer;
@@ -130,56 +75,6 @@
         line-height: 22px;
         letter-spacing: 0.045em;
         color: $red;
-         color: $extra-light;
-    }
-}
-.containerBanner3 {
-    height: 460px;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: url("../../assets/img/banner-2.png") no-repeat center;
-    background-color: $extra-light;
-    &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-
-        background-color: #3a3a3a8a;
-    }
-}
-.containerBanner4 {
-    height: 460px;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: url("../../assets/img/banner-4.png") no-repeat center ;
-    &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-
-        background-color: #3a3a3a8a;
-    }
-}
-.indicators {
-    button {
-        background-color: #914646;
-    }
-}
-
-.carousel-indicators {
-    button {
-        background-color: #914646 !important ;
+        color: $extra-light;
     }
 }

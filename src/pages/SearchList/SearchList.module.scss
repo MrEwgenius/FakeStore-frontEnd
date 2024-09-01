@@ -6,14 +6,19 @@
 
     .searchContainer {
         margin-bottom: 30px;
-        span {
+        // background-color: #f7f8fa;
+        p {
+            position: relative;
             width: 100%;
-            background-color: #f7f8fa;
             padding: 10px;
             color: $secondary;
             position: relative;
-            padding-left: 40px;
-           
+            padding-left: 30px;
+            svg {
+                top: 7px;
+                left: 0;
+                position: absolute;
+            }
         }
         .titleSearch {
             font-size: 24px;
@@ -24,18 +29,17 @@
     }
 
     .searchErrorContainer {
-        span {
-            width: 100%;
-            background-color: #f8353e;
-            padding: 10px;
-            color: $white;
+        p {
             position: relative;
-            padding-left: 40px;
-            img {
-                position: absolute;
+            width: 100%;
+            padding: 10px;
+            color: $secondary;
+            position: relative;
+            padding-left: 30px;
+            svg {
+                top: 7px;
                 left: 0;
-                top: 4px;
-                width: 35px;
+                position: absolute;
             }
         }
         .titleSearchError {
@@ -43,7 +47,6 @@
             margin-bottom: 20px;
             line-height: 28px;
             font-weight: 500;
-
         }
     }
 }

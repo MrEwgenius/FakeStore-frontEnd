@@ -50,6 +50,7 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
     };
 
     const handleCategoryClick = (category?: string) => {
+        
         setSelectedCategory(category);
         const newPath = buildNewPath(category);
         setPage(1);
@@ -71,6 +72,7 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
             }
         });
     };
+
 
 
     const CustomToggle: FC<{ children: ReactNode; eventKey: string }> = ({ children, eventKey }) => {

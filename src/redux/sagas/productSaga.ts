@@ -12,6 +12,7 @@ import {
     getBasketProducts,
     getBrandProduct,
     getProductLister,
+    getProductLoading,
     getSearchProductLister,
     getSingleProduct,
     getTypeProduct,
@@ -111,6 +112,8 @@ function* BrandProductsWorker() {
 
 function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
     try {
+        yield put(getProductLoading(true));
+
         const {
             limit,
             search,
@@ -149,6 +152,8 @@ function* getProductWorker(action: PayloadAction<GetProductListPayload>) {
     } catch (error) {
         console.error("Error fetching product list:", error);
     }
+
+    yield put(getProductLoading(false));
 }
 
 function* getSearchProductWorker(action: PayloadAction<GetProductListPayload>) {
