@@ -32,8 +32,14 @@
 }
 
 .containerSignUp {
+
     width: 521px;
     margin: 0 auto;
+    padding: 0 20px;
+    @media (max-width: 550px) {
+    width:100%;
+
+    }
     .title {
         font-size: 27px;
         font-weight: 500;
@@ -52,10 +58,16 @@
         .containerName {
             display: flex;
             gap: 20px;
+            @media (max-width: 550px) {
+                flex-direction: column;
+            }
         }
         .containerPassword {
             display: flex;
             gap: 20px;
+            @media (max-width: 550px) {
+                flex-direction: column;
+            }
         }
         input {
             position: relative;

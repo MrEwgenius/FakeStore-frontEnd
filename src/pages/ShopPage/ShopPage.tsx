@@ -53,6 +53,8 @@ const ShopPage = () => {
     const [sortOrder, setsortOrder] = useState<string | undefined>(
         location.state?.order
     );
+    console.log(selectedCategory);
+    
 
     useEffect(() => {
         dispatch(getTypeProduct());
@@ -150,7 +152,6 @@ const ShopPage = () => {
     useEffect(() => {
         setShowSort(false);
     }, [location]);
-    console.log(location.state?.typeName);
 
     return (
         <div className={style.containerMain}>

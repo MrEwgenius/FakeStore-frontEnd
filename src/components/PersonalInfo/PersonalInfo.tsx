@@ -27,7 +27,7 @@ const PersonalInfo = () => {
 
     const clickonClick = () => {
 
-        dispatch(getUserInfo())
+        // dispatch(getUserInfo())
     }
 
     const clickOnEdditName = () => {
@@ -79,8 +79,6 @@ const PersonalInfo = () => {
             setShowNumber(false)
         }
     }
-    console.log(number);
-
 
     return (
         <div>
@@ -124,7 +122,6 @@ const PersonalInfo = () => {
                                 <Inputmask mask="+375-99-999-99-99" placeholder={String(userInfo.userNumber)} onChange={(e) => setNumber((e.target.value.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')))}>
 
                                 </Inputmask>
-                                {/* <input onChange={(e) => setNumber(e.target.value)} placeholder={String(userInfo.userNumber)} type="number" /> */}
                                 <span onClick={onSubmit}>Сохранить</span>
                             </>
                         }
@@ -133,7 +130,6 @@ const PersonalInfo = () => {
                     </div>
                     <div className={style.group}>
                         <div>{userInfo.email}</div>
-                        {/* <span>редактировать</span> */}
                     </div>
                 </div>
                 :

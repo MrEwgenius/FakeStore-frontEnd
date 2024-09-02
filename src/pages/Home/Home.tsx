@@ -10,9 +10,9 @@ const Home = () => {
             <Header />
 
             <div className={styles.outlet}>
-                <div className={styles.outletContainer}>
+                {/* <div className={styles.outletContainer}> */}
                     <Outlet />
-                </div>
+                {/* </div> */}
             </div>
             <SubscribeInner />
 

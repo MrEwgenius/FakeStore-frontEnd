@@ -97,7 +97,6 @@ const Router = () => {
                         path={RoutesList.UserAccount}
                         element={isLoggedIn ? <UserPage /> : <SignIn />}
                     >
-                        {/* <Route path={RoutesList.Login} element={<SignIn />} /> */}
                         <Route
                             path={RoutesList.PersonalInfo}
                             element={<PersonalInfo />}
@@ -109,6 +108,8 @@ const Router = () => {
                         <Route
                             path={RoutesList.PersonFavoriteProducts}
                             element={<PersonalFaforiteProduct />}
+                            // element={<FavoriteProducts />}
+
                         />
                         <Route
                             path={RoutesList.Login}

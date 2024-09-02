@@ -3,29 +3,53 @@
 .containerUserInfo {
     display: flex;
     flex-direction: column;
+    align-items: start;
     gap: 20px;
+    @media (min-width: 320px) and (max-width: 500px) {
+        gap: 10px;
+
+        align-items: normal;
+    }
     .group {
         display: flex;
         gap: 40px;
         font-size: 20px;
         color: $primary-light;
         line-height: 25px;
+        @media (min-width: 320px) and (max-width: 500px) {
+            display: block;
+            // flex-direction: column;
+        }
         div,
         input {
             border: none;
             height: 25px;
-
             border-bottom: 1px solid $primary-light;
             width: 200px;
+            @media (min-width: 320px) and (max-width: 500px) {
+            margin-bottom: 5px;
+
+                width: 100%;
+            }
         }
         input {
             border-radius: 5px;
             border: 1px solid black;
+            @media (min-width: 320px) and (max-width: 500px) {
+                margin-bottom: 5px;
+            }
         }
         span {
             color: $red;
             font-size: 16px;
             cursor: pointer;
+            @media (min-width: 320px) and (max-width: 500px) {
+                // display: inline;
+                // display: block;
+                &:first-of-type{
+                margin-right: 15px;
+                }
+            }
         }
     }
 }

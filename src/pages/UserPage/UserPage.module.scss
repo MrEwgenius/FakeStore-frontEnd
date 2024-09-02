@@ -4,9 +4,9 @@
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
-    flex: 1;
+    padding: 0 15px;
+    flex: 1 0;
     overflow: hidden;
-
     .title {
         font-size: 27px;
         font-weight: 500;
@@ -19,11 +19,15 @@
     .containerWrap {
         border-top: 1px solid $line-grey;
         display: flex;
-        gap: 80px;
-        flex: 1;
+        gap: 40px;
         position: relative;
-        
+        flex: 1 0;
+        @media (max-width: 770px) {
+            display: none;
+        }
+
         .navigationUserPage {
+            flex: 0 1;
             min-width: 240px;
             border-right: 1px solid $line-grey;
             padding: 15px;
@@ -32,7 +36,11 @@
             flex-direction: column;
             position: relative;
             gap: 20px;
-            border-left: 1px solid  $line-grey;
+            flex-shrink: 1;
+
+            @media (max-width: 1024px) {
+                // border: none;
+            }
             li {
                 cursor: pointer;
                 display: flex;
@@ -43,10 +51,10 @@
                 line-height: 19.12px;
                 color: $primary-dark;
                 &.active {
-                    color:$error;
+                    color: $error;
                     position: relative;
                     &::before {
-                        content: '';
+                        content: "";
                         position: absolute;
                         left: -15px;
                         width: 5px;
@@ -57,10 +65,56 @@
             }
         }
         .outletContainer {
-            padding: 55px;
-            padding: 55px 0;
+            padding: 15px 0;
             max-width: 100%;
             flex: 1;
+        }
+    }
+    .containerAccordions {
+        .accordionName {
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 19.12px;
+            color: $primary-dark;
+            &.active {
+                color: $error;
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: -15px;
+                    width: 5px;
+                    height: 130%;
+                    background-color: $error;
+                }
+            }
+        }
+        .exit {
+            width: 200px;
+
+            button {
+                width: 100%;
+                &::after {
+                    content: "";
+                    display: none;
+                }
+                div {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    font-size: 16px;
+                    font-weight: 800;
+                    line-height: 19.12px;
+                    color: $primary-dark;
+                }
+            }
+        }
+        @media (min-width: 770px) {
+            display: none;
         }
     }
 }

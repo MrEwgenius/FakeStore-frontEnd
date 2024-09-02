@@ -35,19 +35,10 @@ const SignUp = () => {
         }
     }
 
-
-
     const checkPasswords = () => {
         return confirmPassword.length >= 1 && password === confirmPassword
     }
 
-
-    // if (confirmPassword.length >= 1 && password === confirmPassword) {
-    //     return true
-
-    // } else {
-    //     return false
-    // }
 
     const navToLogin = () => {
         navigate(RoutesList.Login)
@@ -68,7 +59,7 @@ const SignUp = () => {
     return (
         <div className={styles.containerSignUp}>
             <div className={styles.title}>Регитстрация</div>
-            <div className={styles.containerForm} >
+            <form className={styles.containerForm} >
 
                 <div className={styles.containerName}>
                     <Form.Control
@@ -108,7 +99,7 @@ const SignUp = () => {
                     />
                 </div>
 
-            </div>
+            </form>
             <div className={styles.containerCheckPassword}>
                 <input
                     checked={checked}

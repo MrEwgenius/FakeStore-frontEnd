@@ -7,8 +7,8 @@
         content: "";
         position: absolute;
         bottom: -55px;
-        left: -81px;
-        width: calc(100% + 81px);
+        left: -41px;
+        width: calc(100% + 40px);
         height: 1px;
         background-color: $line-grey;
     }
@@ -19,10 +19,15 @@
     }
     .containerWrapper {
         display: flex;
+
         justify-content: space-between;
         align-items: center;
         max-width: 600px;
-        
+        gap: 5px;
+        select {
+            width: 100%;
+        }
+
         .nameAdress {
             font-size: 18px;
             line-height: 19.6px;
